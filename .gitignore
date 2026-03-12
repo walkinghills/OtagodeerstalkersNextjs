@@ -1,0 +1,8 @@
+# API keys and secrets
+config/.env
+config/*.env
+Github key.txt
+
+# OS
+.DS_Store
+Thumbs.db
