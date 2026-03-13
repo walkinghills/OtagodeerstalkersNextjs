@@ -17,140 +17,202 @@ Outputs:
   newsletters/index.html       – updated archive listing (new card prepended)
 """
 
-import os
-import re
-import html
+import os, re, html
 from datetime import datetime
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
 # Config
 # ---------------------------------------------------------------------------
-ISSUE_NUMBER = os.environ.get("ISSUE_NUMBER", "1")
-TITLE        = os.environ.get("TITLE", "Newsletter")
-DATE_STR     = os.environ.get("DATE", datetime.today().strftime("%Y-%m-%d"))
+ISSUE_NUMBER = os.environ.get("ISSUE_NUMBER", "1").strip()
+TITLE        = os.environ.get("TITLE", "Newsletter").strip()
+DATE_STR     = os.environ.get("DATE", datetime.today().strftime("%Y-%m-%d")).strip()
 
 try:
     date_obj = datetime.strptime(DATE_STR, "%Y-%m-%d")
 except ValueError:
     date_obj = datetime.today()
 
-MONTH_YEAR   = date_obj.strftime("%B %Y")          # e.g. "April 2026"
-FILE_SLUG    = date_obj.strftime("%Y-%m")           # e.g. "2026-04"
-DATETIME_ATTR = date_obj.strftime("%Y-%m-%d")       # for <time datetime="">
-OUTPUT_FILE  = Path(f"newsletters/{FILE_SLUG}.html")
-INDEX_FILE   = Path("newsletters/index.html")
+MONTH_YEAR    = date_obj.strftime("%B %Y")
+FILE_SLUG     = date_obj.strftime("%Y-%m")
+DATETIME_ATTR = date_obj.strftime("%Y-%m-%d")
+OUTPUT_FILE   = Path(f"newsletters/{FILE_SLUG}.html")
+INDEX_FILE    = Path("newsletters/index.html")
 
 # ---------------------------------------------------------------------------
 # Read content
 # ---------------------------------------------------------------------------
 content_path = Path("/tmp/newsletter_content.txt")
-if content_path.exists():
-    raw_content = content_path.read_text(encoding="utf-8").strip()
-else:
-    raw_content = ""
+raw_content  = content_path.read_text(encoding="utf-8").strip() if content_path.exists() else ""
 
+# ---------------------------------------------------------------------------
+# Placeholder template — used when content is sparse or absent
+# ---------------------------------------------------------------------------
+PLACEHOLDER = f"""# From the Committee
+
+This edition's notes will be added shortly. In the meantime, a summary of what was covered at the {MONTH_YEAR} club meeting is below.
+
+---
+
+# Range News
+
+The Leith Valley Range is open most Saturdays 1–4pm (weather permitting). Follow the [Leith Valley Range Facebook Group](https://www.facebook.com/groups/1195200207197835/) for closure notices.
+
+- Members: $5 per session (current card required)
+- Non-members: $10
+- Hearing and eye protection are mandatory
+
+---
+
+# Coming Up
+
+- **Next club meeting** – 2nd Monday of the month, 7:30pm at 53 Malvern Street, Woodhaugh
+- **Photo competition year closes** – 31 May
+- **HUNTS Course** – contact Frans Laas on 027 230 7157 for next dates
+- **Lodge bookings** – pick up keys from Elio's Gun Shop, Allan Millars, or Gun City Dunedin
+"""
+
+def is_sparse(text: str) -> bool:
+    has_heading = bool(re.search(r"(^#{1,3}\s|\n#{1,3}\s|^[A-Z][A-Z\s]{4,}$)", text, re.M))
+    return not has_heading or len(text.strip()) < 120
+
+if not raw_content or is_sparse(raw_content):
+    # Prepend any actual content as the first section, then add placeholders
+    if raw_content and len(raw_content.strip()) > 10:
+        raw_content = f"# From the Committee\n\n{raw_content}\n\n{PLACEHOLDER.split('---', 1)[1]}"
+    else:
+        raw_content = PLACEHOLDER
+
+# ---------------------------------------------------------------------------
+# Plain-text → HTML converter
+# ---------------------------------------------------------------------------
 def plain_text_to_html(text: str) -> str:
-    """
-    Convert plain-text email body to structured HTML sections.
-    Rules:
-      - Lines starting with # or ALL CAPS (5+ chars) become <h2> headings
-      - Blank lines separate paragraphs
-      - Lines starting with - or * become <ul> list items
-      - Everything else is a <p>
-    """
-    lines = text.splitlines()
-    out   = []
-    in_ul = False
+    lines  = text.splitlines()
+    out    = []
+    in_ul  = False
+    para_buf = []
+
+    def flush_para():
+        if para_buf:
+            joined = " ".join(para_buf).strip()
+            if joined:
+                # Convert inline markdown links [text](url)
+                joined = re.sub(
+                    r'\[([^\]]+)\]\((https?://[^\)]+)\)',
+                    r'<a href="\2" target="_blank" rel="noopener">\1</a>',
+                    joined
+                )
+                out.append(f"<p>{joined}</p>")
+            para_buf.clear()
 
     for line in lines:
         stripped = line.strip()
 
-        if not stripped:
-            if in_ul:
-                out.append("</ul>")
-                in_ul = False
-            out.append("")          # paragraph break
+        if stripped in ("---", "***", "___"):
+            flush_para()
+            if in_ul: out.append("</ul>"); in_ul = False
+            out.append('<hr class="nl-divider" />')
             continue
 
-        # Heading detection: starts with # or is ALL CAPS word (5+ chars)
-        if stripped.startswith("#"):
+        if not stripped:
+            flush_para()
             if in_ul: out.append("</ul>"); in_ul = False
-            heading = stripped.lstrip("#").strip()
-            section_id = re.sub(r"[^a-z0-9]+", "-", heading.lower()).strip("-")
-            out.append(f'<h2 id="{section_id}">{html.escape(heading)}</h2>')
+            continue
 
-        elif re.match(r"^[A-Z][A-Z\s]{4,}$", stripped):
+        # Heading: # syntax
+        if stripped.startswith("#"):
+            flush_para()
             if in_ul: out.append("</ul>"); in_ul = False
-            section_id = re.sub(r"[^a-z0-9]+", "-", stripped.lower()).strip("-")
-            out.append(f'<h2 id="{section_id}">{html.escape(stripped.title())}</h2>')
+            level   = len(stripped) - len(stripped.lstrip("#"))
+            heading = stripped.lstrip("#").strip()
+            sid     = re.sub(r"[^a-z0-9]+", "-", heading.lower()).strip("-")
+            tag     = f"h{min(level+1, 4)}"
+            out.append(f'<{tag} id="{sid}">{html.escape(heading)}</{tag}>')
+            continue
+
+        # Heading: ALL CAPS line (5+ chars)
+        if re.match(r"^[A-Z][A-Z\s]{4,}$", stripped):
+            flush_para()
+            if in_ul: out.append("</ul>"); in_ul = False
+            sid = re.sub(r"[^a-z0-9]+", "-", stripped.lower()).strip("-")
+            out.append(f'<h2 id="{sid}">{html.escape(stripped.title())}</h2>')
+            continue
 
         # List item
-        elif stripped.startswith(("- ", "* ", "• ")):
-            if not in_ul:
-                out.append('<ul class="nl-list">')
-                in_ul = True
+        if stripped.startswith(("- ", "* ", "• ")):
+            flush_para()
+            if not in_ul: out.append('<ul class="nl-list">'); in_ul = True
             item = stripped[2:].strip()
-            out.append(f"  <li>{html.escape(item)}</li>")
+            # Bold **text**
+            item = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', item)
+            # Inline link
+            item = re.sub(
+                r'\[([^\]]+)\]\((https?://[^\)]+)\)',
+                r'<a href="\2" target="_blank" rel="noopener">\1</a>',
+                item
+            )
+            out.append(f"  <li>{item}</li>")
+            continue
 
-        # Normal paragraph line
-        else:
-            if in_ul: out.append("</ul>"); in_ul = False
-            out.append(f"<p>{html.escape(stripped)}</p>")
+        # Normal text — buffer into paragraph
+        if in_ul: out.append("</ul>"); in_ul = False
+        # Bold **text**
+        stripped = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', stripped)
+        para_buf.append(stripped)
 
-    if in_ul:
-        out.append("</ul>")
-
-    # Merge consecutive <p> lines separated by empty string (blank line = new para already)
+    flush_para()
+    if in_ul: out.append("</ul>")
     return "\n".join(out)
 
 
-# If content looks like it already contains HTML tags, use it mostly as-is
+# If content already has HTML tags, use mostly as-is; otherwise convert
 if re.search(r"<(p|h[2-4]|ul|li|div)\b", raw_content, re.I):
     body_html = raw_content
 else:
     body_html = plain_text_to_html(raw_content)
 
-# Extract a short excerpt for the archive card (first 200 chars of plain text)
+# Short excerpt for archive card (plain text, max 200 chars)
 excerpt_plain = re.sub(r"<[^>]+>", "", body_html)[:200].strip()
-if len(excerpt_plain) == 200:
+if len(re.sub(r"<[^>]+>", "", body_html)) > 200:
     excerpt_plain = excerpt_plain.rsplit(" ", 1)[0] + "…"
 
-# Build table of contents from h2 headings in body
+# Build table of contents from h2 tags
 toc_items = re.findall(r'<h2[^>]*id="([^"]+)"[^>]*>([^<]+)</h2>', body_html)
-
-toc_html = ""
+toc_html  = ""
 if toc_items:
-    toc_html = "<aside class=\"newsletter-toc\"><h3>In This Edition</h3><ol>"
+    toc_html = '<aside class="newsletter-toc"><h3>In This Edition</h3><ol>'
     for anchor, label in toc_items:
         toc_html += f'<li><a href="#{anchor}">{label}</a></li>'
     toc_html += "</ol></aside>"
 
 # ---------------------------------------------------------------------------
-# Newsletter page template
+# Shared nav/footer fragments (absolute paths — work regardless of base URL)
 # ---------------------------------------------------------------------------
-nav_links = """
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="../range.html">Range</a></li>
-        <li><a href="../lodge.html">Lodge</a></li>
-        <li><a href="../club-hunts.html">Club Hunts</a></li>
-        <li><a href="../hunts-course.html">HUNTS Course</a></li>
-        <li><a href="../competitions.html">Competitions</a></li>
-        <li><a href="index.html" class="active">Newsletter</a></li>
-        <li><a href="../contact.html">Contact</a></li>
-        <li><a href="../join.html" class="btn-join">Join</a></li>"""
+NAV_LINKS = """
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/range.html">Range</a></li>
+        <li><a href="/lodge.html">Lodge</a></li>
+        <li><a href="/club-hunts.html">Club Hunts</a></li>
+        <li><a href="/hunts-course.html">HUNTS Course</a></li>
+        <li><a href="/competitions.html">Competitions</a></li>
+        <li><a href="/newsletters" class="active">Newsletter</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+        <li><a href="/join.html" class="btn-join">Join</a></li>"""
 
-footer_pages = """
-          <li><a href="../index.html">Home</a></li>
-          <li><a href="../range.html">Leith Valley Range</a></li>
-          <li><a href="../lodge.html">Blue Mountains Lodge</a></li>
-          <li><a href="../club-hunts.html">Club Hunts</a></li>
-          <li><a href="../hunts-course.html">HUNTS Course</a></li>
-          <li><a href="../competitions.html">Competitions</a></li>
-          <li><a href="index.html">Newsletter</a></li>
-          <li><a href="../join.html">Join</a></li>
-          <li><a href="../contact.html">Contact</a></li>"""
+FOOTER_PAGES = """
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/range.html">Leith Valley Range</a></li>
+          <li><a href="/lodge.html">Blue Mountains Lodge</a></li>
+          <li><a href="/club-hunts.html">Club Hunts</a></li>
+          <li><a href="/hunts-course.html">HUNTS Course</a></li>
+          <li><a href="/competitions.html">Competitions</a></li>
+          <li><a href="/newsletters">Newsletter</a></li>
+          <li><a href="/join.html">Join</a></li>
+          <li><a href="/contact.html">Contact</a></li>"""
 
+# ---------------------------------------------------------------------------
+# Newsletter page HTML
+# ---------------------------------------------------------------------------
 page_html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -162,22 +224,22 @@ page_html = f"""<!DOCTYPE html>
   <meta property="og:title" content="Otago Deerstalkers Newsletter – {MONTH_YEAR}" />
   <meta property="og:description" content="{html.escape(TITLE)}" />
   <meta property="og:site_name" content="Otago Deerstalkers – NZDA" />
-  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
-  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="/css/styles.css" />
 </head>
 <body>
 
 <header class="site-header">
   <div class="container">
     <nav class="nav-inner">
-      <a href="../index.html" class="nav-brand">
+      <a href="/index.html" class="nav-brand">
         <img src="https://www.deerstalkers.org.nz/_resources/themes/NZDANational/images/logo-white-white-text.svg" alt="NZDA Logo" class="nav-logo" />
         <div class="nav-brand-text">Otago Branch<span>New Zealand Deerstalkers Association</span></div>
       </a>
       <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
-      <ul class="nav-links">{nav_links}
+      <ul class="nav-links">{NAV_LINKS}
       </ul>
     </nav>
   </div>
@@ -186,7 +248,7 @@ page_html = f"""<!DOCTYPE html>
 <section class="newsletter-masthead">
   <div class="container">
     <div class="newsletter-meta-bar">
-      <a href="index.html" class="newsletter-back">← All Editions</a>
+      <a href="/newsletters" class="newsletter-back">← All Editions</a>
       <span class="newsletter-issue-badge">Issue #{ISSUE_NUMBER}</span>
     </div>
     <h1>{html.escape(TITLE)}</h1>
@@ -208,7 +270,7 @@ page_html = f"""<!DOCTYPE html>
 
 <section class="newsletter-edition-nav">
   <div class="container">
-    <a href="index.html" class="btn btn-outline">← Back to All Editions</a>
+    <a href="/newsletters" class="btn btn-outline">← Back to All Editions</a>
   </div>
 </section>
 
@@ -219,7 +281,7 @@ page_html = f"""<!DOCTYPE html>
         <img src="https://www.deerstalkers.org.nz/_resources/themes/NZDANational/images/logo-gold-white-text.svg" alt="NZDA Logo" class="footer-logo" />
         <p>The Otago Branch of the New Zealand Deerstalkers Association. Representing hunters and recreational shooters across the Otago region.</p>
       </div>
-      <div class="footer-col"><h4>Pages</h4><ul>{footer_pages}
+      <div class="footer-col"><h4>Pages</h4><ul>{FOOTER_PAGES}
       </ul></div>
       <div class="footer-col"><h4>Links</h4><ul>
           <li><a href="https://www.deerstalkers.org.nz/" target="_blank" rel="noopener">NZDA National</a></li>
@@ -236,7 +298,7 @@ page_html = f"""<!DOCTYPE html>
   </div>
 </footer>
 
-<script src="../js/main.js"></script>
+<script src="/js/main.js"></script>
 </body>
 </html>
 """
@@ -245,10 +307,10 @@ page_html = f"""<!DOCTYPE html>
 # Write newsletter page
 # ---------------------------------------------------------------------------
 OUTPUT_FILE.write_text(page_html, encoding="utf-8")
-print(f"✓ Written: {OUTPUT_FILE}")
+print(f"[OK] Written: {OUTPUT_FILE}")
 
 # ---------------------------------------------------------------------------
-# Update newsletters/index.html – prepend new card inside ARCHIVE markers
+# Update newsletters/index.html — prepend new card, using absolute path
 # ---------------------------------------------------------------------------
 index_content = INDEX_FILE.read_text(encoding="utf-8")
 
@@ -259,17 +321,20 @@ new_card = f"""
           <time class="newsletter-date" datetime="{DATETIME_ATTR}">{MONTH_YEAR}</time>
         </div>
         <div class="newsletter-card-body">
-          <h3><a href="{FILE_SLUG}.html">{html.escape(TITLE)}</a></h3>
+          <h3><a href="/newsletters/{FILE_SLUG}">{html.escape(TITLE)}</a></h3>
           <p>{html.escape(excerpt_plain)}</p>
         </div>
-        <a href="{FILE_SLUG}.html" class="newsletter-card-link">Read edition →</a>
+        <a href="/newsletters/{FILE_SLUG}" class="newsletter-card-link">Read edition →</a>
       </article>"""
 
-# Insert after <!-- ARCHIVE_START --> marker
 marker = "<!-- ARCHIVE_START -->"
 if marker in index_content:
-    index_content = index_content.replace(marker, marker + new_card)
-    INDEX_FILE.write_text(index_content, encoding="utf-8")
-    print(f"✓ Updated: {INDEX_FILE}")
+    # Duplicate guard: skip if a card for this slug already exists in the index
+    if f'/newsletters/{FILE_SLUG}"' in index_content:
+        print(f"[SKIP] Card for {FILE_SLUG} already exists in index — not duplicating.")
+    else:
+        index_content = index_content.replace(marker, marker + new_card)
+        INDEX_FILE.write_text(index_content, encoding="utf-8")
+        print(f"[OK] Updated: {INDEX_FILE}")
 else:
-    print("⚠ Could not find ARCHIVE_START marker in index.html – index not updated")
+    print("[WARN] ARCHIVE_START marker not found in index.html")
