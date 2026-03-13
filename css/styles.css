@@ -195,14 +195,15 @@ h1, h2, h3, h4 { line-height: 1.25; font-weight: 700; font-family: 'Merriweather
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.1rem;
 }
 .nav-links a {
   color: rgba(255,255,255,0.85);
-  padding: 0.45rem 0.85rem;
+  padding: 0.45rem 0.65rem;
   border-radius: var(--radius);
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   font-weight: 500;
+  white-space: nowrap;
   transition: all var(--transition);
 }
 .nav-links a:hover, .nav-links a.active {
