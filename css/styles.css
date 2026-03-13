@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&display=swap');
+
 /* ============================================================
    Otago Deerstalkers Association – Stylesheet
    ============================================================ */
@@ -48,7 +50,7 @@ a:hover { color: var(--green-500); }
 
 ul { list-style: none; }
 
-h1, h2, h3, h4 { line-height: 1.25; font-weight: 700; }
+h1, h2, h3, h4 { line-height: 1.25; font-weight: 700; font-family: 'Merriweather', Georgia, serif; }
 
 /* --- Utility -------------------------------------------- */
 .container { max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; }
@@ -199,7 +201,7 @@ h1, h2, h3, h4 { line-height: 1.25; font-weight: 700; }
   color: rgba(255,255,255,0.85);
   padding: 0.45rem 0.85rem;
   border-radius: var(--radius);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 500;
   transition: all var(--transition);
 }
@@ -234,6 +236,13 @@ h1, h2, h3, h4 { line-height: 1.25; font-weight: 700; }
   border-radius: 2px;
   transition: all var(--transition);
 }
+
+/* --- Hero fade-in animation ----------------------------- */
+@keyframes heroFade {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero > .container { animation: heroFade 0.9s ease both; position: relative; z-index: 1; }
 
 /* --- Hero ----------------------------------------------- */
 .hero {
