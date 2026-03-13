@@ -1,0 +1,70 @@
+name: Publish Newsletter
+
+# Triggered two ways:
+#   1. Automatically via Cloudflare Email Worker (repository_dispatch)
+#   2. Manually from GitHub Actions tab (workflow_dispatch) for testing
+
+on:
+  repository_dispatch:
+    types: [new-newsletter]
+
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Issue number (e.g. 2)'
+        required: true
+        default: '2'
+      title:
+        description: 'Newsletter title (e.g. April 2026 – Hunt Results & Range News)'
+        required: true
+        default: 'Test Edition'
+      date:
+        description: 'Publication date (YYYY-MM-DD)'
+        required: true
+        default: '2026-04-01'
+      content:
+        description: 'Newsletter body content (plain text or simple HTML)'
+        required: true
+        default: 'This is a test newsletter edition.'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set inputs (dispatch vs manual)
+        id: vars
+        run: |
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            echo "ISSUE_NUMBER=${{ github.event.client_payload.issue_number }}" >> $GITHUB_ENV
+            echo "TITLE=${{ github.event.client_payload.title }}"               >> $GITHUB_ENV
+            echo "DATE=${{ github.event.client_payload.date }}"                 >> $GITHUB_ENV
+            # Content is passed as a file to avoid shell quoting issues
+            echo '${{ toJson(github.event.client_payload.content) }}' | python3 -c "
+          import sys, json
+          print(json.load(sys.stdin))
+          " > /tmp/newsletter_content.txt
+          else
+            echo "ISSUE_NUMBER=${{ github.event.inputs.issue_number }}" >> $GITHUB_ENV
+            echo "TITLE=${{ github.event.inputs.title }}"               >> $GITHUB_ENV
+            echo "DATE=${{ github.event.inputs.date }}"                 >> $GITHUB_ENV
+            printf '%s' '${{ github.event.inputs.content }}'            > /tmp/newsletter_content.txt
+          fi
+
+      - name: Generate newsletter HTML
+        run: |
+          python3 scripts/generate_newsletter.py
+
+      - name: Commit and push
+        run: |
+          git config user.name  "Newsletter Bot"
+          git config user.email "newsletter-bot@otagodeerstalkers.co.nz"
+          git add newsletters/
+          git diff --staged --quiet && echo "No changes to commit" && exit 0
+          git commit -m "Newsletter: ${{ env.TITLE }}"
+          git push
