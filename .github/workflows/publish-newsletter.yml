@@ -32,14 +32,19 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # Fetch full history so rebase has context
+          fetch-depth: 0
 
       # Use env: so GitHub Actions resolves expressions before the shell
       # sees them — avoids quoting/escaping problems with arbitrary content.
-      - name: Set inputs (dispatch vs manual)
+      - name: Set inputs
         env:
           EV_ISSUE:   ${{ github.event.client_payload.issue_number || github.event.inputs.issue_number }}
           EV_TITLE:   ${{ github.event.client_payload.title        || github.event.inputs.title }}
@@ -49,8 +54,8 @@ jobs:
           echo "ISSUE_NUMBER=${EV_ISSUE}"  >> "$GITHUB_ENV"
           echo "TITLE=${EV_TITLE}"         >> "$GITHUB_ENV"
           echo "DATE=${EV_DATE}"           >> "$GITHUB_ENV"
-          # Write content to a temp file so multiline text is handled safely
           printf '%s' "${EV_CONTENT}"      > /tmp/newsletter_content.txt
+          echo "Inputs set: Issue=${EV_ISSUE}, Title=${EV_TITLE}, Date=${EV_DATE}"
 
       - name: Generate newsletter HTML
         run: python3 scripts/generate_newsletter.py
@@ -60,6 +65,8 @@ jobs:
           git config user.name  "Newsletter Bot"
           git config user.email "newsletter-bot@otagodeerstalkers.co.nz"
           git add newsletters/
-          git diff --staged --quiet && echo "Nothing to commit" && exit 0
+          git diff --staged --quiet && echo "Nothing new to commit — skipping." && exit 0
           git commit -m "Newsletter #${ISSUE_NUMBER}: ${TITLE}"
-          git push
+          # Pull any remote changes that arrived since checkout, then push
+          git pull --rebase origin main
+          git push origin main
