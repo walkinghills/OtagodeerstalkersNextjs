@@ -10,6 +10,5 @@
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
       ]
     }
-  ],
-  "errors": [{ "statusCode": 404, "destination": "/404.html" }]
+  ]
 }
