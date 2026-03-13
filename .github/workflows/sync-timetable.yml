@@ -1,0 +1,74 @@
+name: Sync Range Timetable
+
+# Runs on the 1st of each month at 11:00 UTC (midnight NZST)
+# Also manually triggerable from GitHub Actions tab
+
+on:
+  schedule:
+    - cron: '0 11 1 * *'
+
+  workflow_dispatch:
+    inputs:
+      force_update:
+        description: 'Force update even if data is unchanged'
+        required: false
+        default: 'false'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      SHEET_ID: 1QSI53iZrA_tE4fka7oV2PJufCzZvv1Z0x1YFD_EjU84
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch timetable from Google Sheets
+        run: |
+          curl -sL \
+            "https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0" \
+            -o /tmp/range_timetable_new.csv
+          # Validate: CSV should start with the range name, not an HTML error page
+          FIRST=$(head -1 /tmp/range_timetable_new.csv)
+          if echo "$FIRST" | grep -qi "<!DOCTYPE\|<html\|Sign in\|Error"; then
+            echo "ERROR: Google Sheet returned HTML instead of CSV."
+            echo "Check that the sheet is publicly shared (View access, no login required)."
+            exit 1
+          fi
+          echo "Fetched $(wc -l < /tmp/range_timetable_new.csv) rows"
+
+      - name: Compare with stored snapshot
+        id: check
+        run: |
+          if [ "${{ github.event.inputs.force_update }}" = "true" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Force update requested"
+          elif diff -q scripts/range_timetable.csv /tmp/range_timetable_new.csv > /dev/null 2>&1; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changes detected — skipping update"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Changes detected — updating timetable"
+          fi
+
+      - name: Regenerate timetable HTML
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          python3 scripts/generate_timetable.py --csv /tmp/range_timetable_new.csv
+
+      - name: Commit and push
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          git config user.name  "Timetable Bot"
+          git config user.email "timetable-bot@otagodeerstalkers.co.nz"
+          git add range.html scripts/range_timetable.csv
+          git diff --staged --quiet && echo "Nothing to commit" && exit 0
+          git commit -m "Auto-update: Chaz Forsyth Range timetable $(date +%Y-%m-%d)"
+          git pull --rebase origin main
+          git push origin main

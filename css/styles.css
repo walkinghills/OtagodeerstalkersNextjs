@@ -957,3 +957,130 @@ h1, h2, h3, h4 { line-height: 1.25; font-weight: 700; font-family: 'Merriweather
 
 /* --- Active nav link ------------------------------------ */
 .nav-links a.active { color: var(--tan-300); font-weight: 600; }
+
+
+/* ============================================================
+   Range Timetable
+   ============================================================ */
+
+.timetable-next-open {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--green-700);
+  color: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+.tno-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--tan-300);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.tno-date {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--white);
+}
+.tno-note {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.75);
+  margin-left: auto;
+}
+.tno-note a { color: var(--tan-300); }
+.tno-note a:hover { color: var(--white); }
+
+.range-timetable {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.2rem;
+}
+
+.timetable-month {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--cream-dark);
+}
+.timetable-month.closed-month {
+  opacity: 0.7;
+}
+
+.timetable-month-heading {
+  background: var(--green-800);
+  color: var(--white);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 0.55rem 0.9rem;
+  margin: 0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-weight: 700;
+}
+.timetable-month.closed-month .timetable-month-heading {
+  background: var(--text-light);
+}
+
+.timetable-entries { padding: 0.4rem 0; }
+
+.timetable-entry {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.32rem 0.9rem;
+  font-size: 0.83rem;
+  border-bottom: 1px solid var(--cream-dark);
+}
+.timetable-entry:last-child { border-bottom: none; }
+
+.te-date {
+  width: 80px;
+  flex-shrink: 0;
+  color: var(--text-mid);
+}
+
+.te-status {
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.timetable-entry.open   .te-status { background: #d4edda; color: #155724; }
+.timetable-entry.closed .te-status { background: #f8d7da; color: #721c24; }
+
+.te-reason {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  font-style: italic;
+  margin-left: 0.25rem;
+}
+
+@media (max-width: 600px) {
+  .range-timetable { grid-template-columns: 1fr 1fr; }
+  .tno-note { display: none; }
+}
+@media (max-width: 400px) {
+  .range-timetable { grid-template-columns: 1fr; }
+}
+
+/* Timetable past/current month states */
+.timetable-month.past-month    { opacity: 0.45; }
+.timetable-month.current-month .timetable-month-heading { background: var(--tan-500); }
+.timetable-entry.past-entry    { opacity: 0.4; }
+.timetable-closed-note {
+  font-size: 0.82rem;
+  color: var(--text-light);
+  font-style: italic;
+  padding: 0.6rem 0.9rem;
+  margin: 0;
+  text-align: center;
+}
