@@ -786,12 +786,11 @@ h1, h2, h3, h4 {
 .timetable-entries { padding: 0.4rem 0; }
 .timetable-entry {
   display: grid;
-  grid-template-columns: 76px auto 1fr;
+  grid-template-columns: 76px auto;
   align-items: center;
   padding: 0.32rem 0.9rem;
   font-size: 0.81rem;
-  gap: 0.4rem;
-  column-gap: 0.5rem;
+  gap: 0.1rem 0.5rem;
 }
 .te-date { color: var(--text-dark); font-weight: 500; }
 .te-status {
@@ -808,7 +807,7 @@ h1, h2, h3, h4 {
 }
 .timetable-entry.open   .te-status { background: #e0f5e4; color: #1a5c24; }
 .timetable-entry.closed .te-status { background: #fce8e4; color: #822010; }
-.te-reason { font-size: 0.7rem; color: var(--text-light); }
+.te-reason { grid-column: 1 / -1; font-size: 0.7rem; color: var(--text-light); padding-bottom: 0.15rem; }
 .timetable-entry.past-entry { opacity: 0.48; }
 .timetable-closed-note {
   padding: 0.85rem 1rem;
@@ -1009,5 +1008,4 @@ h1, h2, h3, h4 {
   .cards-grid { grid-template-columns: 1fr; }
   .trophy-list { grid-template-columns: 1fr; }
   .timetable-entry { grid-template-columns: 68px auto; }
-  .te-reason { grid-column: 1 / -1; padding-left: 0; }
 }
