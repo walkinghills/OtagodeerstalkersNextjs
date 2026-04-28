@@ -67,6 +67,7 @@ h1, h2, h3, h4 {
 
 /* --- Utility -------------------------------------------- */
 .container { max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; }
+.container--narrow { max-width: 680px; text-align: center; }
 
 .btn {
   display: inline-block;
