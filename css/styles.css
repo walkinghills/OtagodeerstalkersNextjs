@@ -641,6 +641,10 @@ h1, h2, h3, h4 {
   background-image: url('https://images.unsplash.com/photo-1774528212558-b3b1944ccc02?fm=jpg&q=85&w=1920&auto=format&fit=crop');
   background-position: center 45%;
 }
+.page-hero--hunts {
+  background-image: url('https://images.unsplash.com/photo-1730463825700-89c6523d6f19?fm=jpg&q=85&w=1920&auto=format&fit=crop');
+  background-position: center 50%;
+}
 .page-hero::after {
   content: '';
   position: absolute;
