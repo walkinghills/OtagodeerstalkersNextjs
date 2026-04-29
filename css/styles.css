@@ -996,10 +996,20 @@ h1, h2, h3, h4 {
 /* ============================================================
    RESPONSIVE
    ============================================================ */
+/* --- Page content two-column grid ----------------------- */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+.info-grid--wide { grid-template-columns: 2fr 1fr; }
+
 @media (max-width: 900px) {
   .feature-row { grid-template-columns: 1fr; }
   .feature-row.reverse { direction: ltr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
+  .info-grid, .info-grid--wide { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 720px) {
