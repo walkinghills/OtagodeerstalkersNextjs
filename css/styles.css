@@ -223,25 +223,12 @@ h1, h2, h3, h4 {
   pointer-events: none;
 }
 .hero .container { position: relative; z-index: 1; }
-.hero-caption {
-  background: var(--charcoal-800);
-  padding: 0.65rem 1.5rem;
-  display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
-}
-.hero-caption-name {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--amber-400);
-}
-.hero-caption-role {
+.photo-caption {
   font-size: 0.78rem;
-  color: rgba(255,255,255,0.6);
-  letter-spacing: 0.02em;
+  color: var(--text-light);
+  text-align: center;
+  margin-top: 0.6rem;
+  font-style: italic;
 }
 
 .hero-content {
