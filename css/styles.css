@@ -250,15 +250,6 @@ h1, h2, h3, h4 {
 .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
 
 
-/* Mountain ridge transition */
-.hero-ridge {
-  display: block;
-  line-height: 0;
-  position: relative;
-  z-index: 2;
-}
-.hero-ridge svg { width: 100%; display: block; }
-
 /* --- Quick Links ---------------------------------------- */
 .quick-links {
   display: grid;
