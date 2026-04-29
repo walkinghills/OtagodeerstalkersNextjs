@@ -301,9 +301,14 @@ h1, h2, h3, h4 {
 
 /* --- Cards Grid ----------------------------------------- */
 .cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.5rem;
+}
+.cards-grid > * {
+  flex: 1 1 300px;
+  max-width: calc(50% - 0.75rem);
 }
 .card {
   background: var(--white);
@@ -1053,7 +1058,7 @@ h1, h2, h3, h4 {
 }
 
 @media (max-width: 480px) {
-  .cards-grid { grid-template-columns: 1fr; }
+  .cards-grid > * { flex-basis: 100%; max-width: 100%; }
   .trophy-list { grid-template-columns: 1fr; }
   .timetable-entry { grid-template-columns: 68px auto; }
 }
