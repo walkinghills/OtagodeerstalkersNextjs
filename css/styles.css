@@ -407,29 +407,16 @@ h1, h2, h3, h4 {
 .feature-content .btn { margin-top: 0.5rem; }
 
 /* --- Detail List ---------------------------------------- */
-.detail-list { display: flex; flex-direction: column; gap: 0.65rem; }
+.detail-list { list-style: none; padding: 0; margin: 0; }
 .detail-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
   font-size: 0.92rem;
   color: var(--text-mid);
-  line-height: 1.55;
+  line-height: 1.6;
+  padding: 0.6rem 0;
+  border-top: 1px solid var(--cream-dark);
 }
-.detail-list li .di {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--charcoal-800);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  margin-top: 0.1rem;
-  font-size: 0.62rem;
-  color: var(--white);
-  line-height: 1;
-}
+.detail-list li:first-child { border-top: none; }
+.detail-list li .di { display: none; }
 
 /* --- Info Box ------------------------------------------- */
 .info-box {
