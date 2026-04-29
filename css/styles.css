@@ -418,10 +418,16 @@ h1, h2, h3, h4 {
 .feature-visual--collage::before { display: none; }
 .feature-visual--collage .collage-img {
   flex: 1;
-  min-height: 180px;
+  min-height: 220px;
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-md);
+}
+.feature-visual--collage .collage-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .feature-visual--collage .collage-img img {
   width: 100%;
