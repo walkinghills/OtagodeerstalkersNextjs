@@ -447,6 +447,15 @@ h1, h2, h3, h4 {
 .feature-content h2 { font-size: 1.75rem; color: var(--charcoal-800); margin-bottom: 1rem; }
 .feature-content p { color: var(--text-mid); margin-bottom: 1rem; font-size: 0.96rem; }
 .feature-content .btn { margin-top: 0.5rem; }
+.list-label {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--amber-600);
+  margin: 1.25rem 0 0.6rem;
+}
 
 /* --- Detail List ---------------------------------------- */
 .detail-list { list-style: none; padding: 0; margin: 0; }
