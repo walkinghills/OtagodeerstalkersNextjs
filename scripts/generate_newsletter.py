@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
 Otago Deerstalkers – Newsletter Generator
 ==========================================
@@ -56,7 +56,7 @@ This edition's notes will be added shortly. In the meantime, a summary of what w
 
 # Range News
 
-The Chaz Forsyth Range is open most Saturdays 1–4pm (weather permitting). Follow the [Chaz Forsyth Range Facebook Group](https://www.facebook.com/groups/1195200207197835/) for closure notices.
+The Chaz Forsyth Rifle Range is open most Saturdays 1–4pm (weather permitting). Follow the [Chaz Forsyth Rifle Range Facebook Group](https://www.facebook.com/groups/1195200207197835/) for closure notices.
 
 - Members: $5 per session (current card required)
 - Non-members: $10
@@ -201,7 +201,7 @@ NAV_LINKS = """
 
 FOOTER_PAGES = """
           <li><a href="/index.html">Home</a></li>
-          <li><a href="/range.html">Chaz Forsyth Range</a></li>
+          <li><a href="/range.html">Chaz Forsyth Rifle Range</a></li>
           <li><a href="/lodge.html">Blue Mountains Lodge</a></li>
           <li><a href="/club-hunts.html">Club Hunts</a></li>
           <li><a href="/hunts-course.html">HUNTS Course</a></li>

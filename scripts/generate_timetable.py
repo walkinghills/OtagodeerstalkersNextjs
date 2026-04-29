@@ -1,6 +1,6 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
-Chaz Forsyth Range – Timetable HTML Generator
+Chaz Forsyth Rifle Range – Timetable HTML Generator
 ==============================================
 Reads scripts/range_timetable.csv (sourced from Google Sheets)
 and generates the HTML timetable section injected into range.html.

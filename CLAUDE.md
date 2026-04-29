@@ -1,4 +1,4 @@
-# Otago Deerstalkers Website – CLAUDE.md
+﻿# Otago Deerstalkers Website – CLAUDE.md
 
 ## Project Overview
 
@@ -10,7 +10,7 @@ Vercel auto-deploys on every push to `main`.
 
 ```
 index.html              Home page
-range.html              Chaz Forsyth Range (rifle range)
+range.html              Chaz Forsyth Rifle Range (rifle range)
 lodge.html              Blue Mountains Lodge
 club-hunts.html         Club Hunts
 hunts-course.html       HUNTS Course (hunter education)
@@ -57,7 +57,7 @@ vercel.json               Vercel config: cleanUrls, trailingSlash:false, securit
 
 ## Key Content Facts
 
-- **Rifle range:** Chaz Forsyth Range, Leith Valley Road, Dunedin
+- **Rifle range:** Chaz Forsyth Rifle Range, Leith Valley Road, Dunedin
   - Google Maps pin: `https://maps.app.goo.gl/N8Eh2acjfGkaandNA`
   - Open most Saturdays 1–4pm | Members $5, non-members $10
   - Facebook group for closure notices: `https://www.facebook.com/groups/1195200207197835/`
