@@ -406,6 +406,29 @@ h1, h2, h3, h4 {
   display: block;
   margin: auto;
 }
+.feature-visual--collage {
+  background: transparent;
+  box-shadow: none;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 0;
+}
+.feature-visual--collage::before { display: none; }
+.feature-visual--collage .collage-img {
+  flex: 1;
+  min-height: 180px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.feature-visual--collage .collage-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
 .feature-content h2 { font-size: 1.75rem; color: var(--charcoal-800); margin-bottom: 1rem; }
 .feature-content p { color: var(--text-mid); margin-bottom: 1rem; font-size: 0.96rem; }
