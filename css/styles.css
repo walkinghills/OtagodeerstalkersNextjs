@@ -376,6 +376,14 @@ h1, h2, h3, h4 {
     rgba(255,255,255,0.022) 22px, rgba(255,255,255,0.022) 23px
   );
 }
+.feature-visual-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+}
 .feature-visual-icon {
   width: 88px; height: 88px;
   color: var(--gold-400);
@@ -598,6 +606,10 @@ h1, h2, h3, h4 {
 }
 .page-hero--club-hunts {
   background-image: url('https://images.unsplash.com/photo-1634030632647-a9fdb894bba0?fm=jpg&q=85&w=1920&auto=format&fit=crop');
+}
+.page-hero--competitions {
+  background-image: url('https://images.unsplash.com/photo-1755397467747-6160983f9694?fm=jpg&q=85&w=1920&auto=format&fit=crop');
+  background-position: center 30%;
 }
 .page-hero::after {
   content: '';
