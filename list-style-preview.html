@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>List Style — Refined Options</title>
+<link rel="stylesheet" href="css/styles.css" />
+<style>
+  body { background: var(--cream); padding: 3rem 0; }
+
+  .rec-banner {
+    background: var(--charcoal-800);
+    color: var(--cream);
+    padding: 1.25rem 2.5rem;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0;
+  }
+  .rec-banner strong { color: var(--amber-400); }
+
+  .section-title {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    background: var(--cream-dark);
+    padding: 0.75rem 2.5rem;
+    border-bottom: 1px solid var(--stone);
+  }
+
+  .options { display: flex; flex-direction: column; gap: 0; }
+
+  .option {
+    background: var(--white);
+    border-bottom: 1px solid var(--cream-dark);
+    padding: 0;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+  }
+  .option:last-child { border-bottom: none; }
+
+  .option-meta {
+    background: var(--cream);
+    border-right: 1px solid var(--cream-dark);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .option-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber-600);
+  }
+  .option-meta h4 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--charcoal-700);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .option-meta p {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    line-height: 1.55;
+    margin-top: 0.5rem;
+  }
+  .option-meta .tag {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+  }
+  .tag--rec { background: var(--amber-600); color: white; }
+  .tag--alt { background: var(--cream-dark); color: var(--text-light); }
+
+  .option-demo {
+    padding: 2rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .demo-context {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 0.5rem;
+  }
+
+  /* =========================================================
+     OPTION A — Pure spacing, nothing else
+     Benchmark: DOC NZ, Patagonia
+     ========================================================= */
+  .opt-a {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .opt-a li {
+    font-size: 0.92rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+
+  /* =========================================================
+     OPTION B — Hairline row rules
+     Benchmark: FT, RSPCA, Weta Workshop
+     ========================================================= */
+  .opt-b {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .opt-b li {
+    font-size: 0.92rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    padding: 0.6rem 0;
+    border-top: 1px solid var(--cream-dark);
+  }
+  .opt-b li:first-child { border-top: none; }
+
+  /* =========================================================
+     OPTION C — Bold lead phrase (typographic hierarchy)
+     Benchmark: DOC NZ fact sheets, NZ Govt design system
+     ========================================================= */
+  .opt-c {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .opt-c li {
+    font-size: 0.92rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+  .opt-c li strong {
+    color: var(--charcoal-700);
+    font-weight: 600;
+  }
+
+  /* =========================================================
+     OPTION D — Row rules + amber left accent on whole list
+     (single track, not per-item — cleaner than left rule per item)
+     ========================================================= */
+  .opt-d-wrap {
+    border-left: 2px solid var(--amber-500);
+    padding-left: 1.1rem;
+  }
+  .opt-d {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .opt-d li {
+    font-size: 0.92rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    padding: 0.5rem 0;
+    border-top: 1px solid var(--cream-dark);
+  }
+  .opt-d li:first-child { border-top: none; }
+
+  @media (max-width: 720px) {
+    .option { grid-template-columns: 1fr; }
+    .option-meta { border-right: none; border-bottom: 1px solid var(--cream-dark); }
+  }
+</style>
+</head>
+<body>
+<div class="container container--narrow">
+
+  <div class="rec-banner">
+    Research basis: <strong>DOC NZ · Patagonia · NZDA National · FT Weekend</strong> — all use no decorative markers. Structure comes from spacing or rules, not icons.
+  </div>
+
+  <div class="options">
+
+    <!-- OPTION A -->
+    <div class="option">
+      <div class="option-meta">
+        <div class="option-label">Option A</div>
+        <h4>Pure Spacing</h4>
+        <p>No marks, no rules. Items breathe through gap alone. Cleanest possible — exactly what DOC NZ and Patagonia use.</p>
+        <span class="tag tag--alt">Very minimal</span>
+      </div>
+      <div class="option-demo">
+        <div>
+          <div class="demo-context">Lodge facilities</div>
+          <ul class="opt-a">
+            <li>Log burner with Wet Back, Zip, 2x Al gas rings</li>
+            <li>Diesel heater and 16 bed capacity</li>
+            <li>Electric lights and plug sockets</li>
+            <li>Male and female toilets &amp; dog kennels</li>
+          </ul>
+        </div>
+        <div>
+          <div class="demo-context">Membership benefits</div>
+          <ul class="opt-a">
+            <li>Annual event for branch members</li>
+            <li>Experienced members available to guide newer hunters</li>
+            <li>Trophy entries welcomed for the annual competition</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- OPTION B -->
+    <div class="option">
+      <div class="option-meta">
+        <div class="option-label">Option B</div>
+        <h4>Hairline Row Rules</h4>
+        <p>1px cream-dark rule between each item. Creates rhythm and scannability without any decorative element. Used by Weta Workshop, FT, and quality editorial sites.</p>
+        <span class="tag tag--rec">Recommended</span>
+      </div>
+      <div class="option-demo">
+        <div>
+          <div class="demo-context">Lodge facilities</div>
+          <ul class="opt-b">
+            <li>Log burner with Wet Back, Zip, 2x Al gas rings</li>
+            <li>Diesel heater and 16 bed capacity</li>
+            <li>Electric lights and plug sockets</li>
+            <li>Male and female toilets &amp; dog kennels</li>
+          </ul>
+        </div>
+        <div>
+          <div class="demo-context">Membership benefits</div>
+          <ul class="opt-b">
+            <li>Annual event for branch members</li>
+            <li>Experienced members available to guide newer hunters</li>
+            <li>Trophy entries welcomed for the annual competition</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- OPTION C -->
+    <div class="option">
+      <div class="option-meta">
+        <div class="option-label">Option C</div>
+        <h4>Bold Lead Word</h4>
+        <p>First word or phrase bolded. Typographic hierarchy does the visual work — no symbols needed. DOC NZ fact sheets and NZ Govt design system use this.</p>
+        <span class="tag tag--alt">Requires content edits</span>
+      </div>
+      <div class="option-demo">
+        <div>
+          <div class="demo-context">Lodge facilities</div>
+          <ul class="opt-c">
+            <li><strong>Heating</strong> — log burner with Wet Back, Zip, 2x Al gas rings</li>
+            <li><strong>Sleeping</strong> — diesel heater and 16 bed capacity</li>
+            <li><strong>Power</strong> — electric lights and plug sockets</li>
+            <li><strong>Facilities</strong> — male and female toilets &amp; dog kennels</li>
+          </ul>
+        </div>
+        <div>
+          <div class="demo-context">Membership benefits</div>
+          <ul class="opt-c">
+            <li><strong>Annual hunt</strong> — exclusive club event for branch members</li>
+            <li><strong>Mentorship</strong> — experienced members guide newer hunters</li>
+            <li><strong>Competition</strong> — trophy entries for the annual award</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- OPTION D -->
+    <div class="option">
+      <div class="option-meta">
+        <div class="option-label">Option D</div>
+        <h4>Row Rules + Single Amber Track</h4>
+        <p>One amber left border on the whole list block (not per item), then hairline rules inside. The amber is structural — it frames the content, doesn't decorate each line.</p>
+        <span class="tag tag--alt">Use sparingly</span>
+      </div>
+      <div class="option-demo">
+        <div>
+          <div class="demo-context">Lodge facilities</div>
+          <div class="opt-d-wrap">
+            <ul class="opt-d">
+              <li>Log burner with Wet Back, Zip, 2x Al gas rings</li>
+              <li>Diesel heater and 16 bed capacity</li>
+              <li>Electric lights and plug sockets</li>
+              <li>Male and female toilets &amp; dog kennels</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="demo-context">Membership benefits</div>
+          <div class="opt-d-wrap">
+            <ul class="opt-d">
+              <li>Annual event for branch members</li>
+              <li>Experienced members available to guide newer hunters</li>
+              <li>Trophy entries welcomed for the annual competition</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /options -->
+
+  <div style="background:var(--charcoal-700);color:var(--cream);padding:1.5rem 2.5rem;font-size:0.85rem;line-height:1.7;">
+    <strong style="font-family:'Josefin Sans',sans-serif;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber-400);display:block;margin-bottom:0.5rem;">Recommendation</strong>
+    <strong>B (row rules)</strong> for facility and feature lists — enough structure to aid scanning, zero decoration.
+    <strong>A (pure spacing)</strong> works in card contexts where the card border already frames the list.
+    <strong>C</strong> is the strongest typographically but requires reformatting list content — worth it for the lodge and range pages.
+    <strong>D</strong> is too decorative for general use; save it for a single prominent call-out if needed.
+  </div>
+
+</div>
+</body>
+</html>
