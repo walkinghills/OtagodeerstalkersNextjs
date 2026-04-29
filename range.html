@@ -363,5 +363,33 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script>
+(function () {
+  var monthMap = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+  var today = new Date();
+  today.setHours(0, 0, 0, 0);
+  var entries = document.querySelectorAll('.timetable-entry.open');
+  for (var i = 0; i < entries.length; i++) {
+    var span = entries[i].querySelector('.te-date');
+    if (!span) continue;
+    var monthBlock = entries[i].closest('.timetable-month');
+    if (!monthBlock) continue;
+    var heading = monthBlock.querySelector('.timetable-month-heading');
+    if (!heading) continue;
+    var ym = heading.textContent.match(/(\d{4})/);
+    if (!ym) continue;
+    var year = parseInt(ym[1], 10);
+    var parts = span.textContent.trim().split(/\s+/);
+    var day = parseInt(parts[1], 10);
+    var mon = monthMap[parts[2]];
+    if (isNaN(day) || mon === undefined) continue;
+    var d = new Date(year, mon, day);
+    if (d >= today) {
+      document.querySelector('.tno-date').textContent = parts[0] + ' ' + parts[1] + ' ' + parts[2];
+      break;
+    }
+  }
+})();
+</script>
 </body>
 </html>
