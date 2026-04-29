@@ -205,7 +205,10 @@ h1, h2, h3, h4 {
 
 /* --- Hero (Homepage) ------------------------------------ */
 .hero {
-  background: linear-gradient(155deg, var(--charcoal-900) 0%, var(--charcoal-800) 50%, #3d2810 100%);
+  background-image: url('https://images.unsplash.com/photo-1640135516563-b45e2e6a03ab?fm=jpg&q=85&w=1920&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  background-color: var(--charcoal-900);
   padding: 7rem 0 0;
   color: var(--white);
   position: relative;
@@ -215,11 +218,7 @@ h1, h2, h3, h4 {
   content: '';
   position: absolute;
   inset: 0;
-  background: repeating-linear-gradient(
-    -48deg,
-    transparent, transparent 60px,
-    rgba(255,255,255,0.013) 60px, rgba(255,255,255,0.013) 61px
-  );
+  background: linear-gradient(135deg, rgba(26,26,24,0.72) 0%, rgba(26,26,24,0.55) 100%);
   pointer-events: none;
 }
 .hero .container { position: relative; z-index: 1; }
