@@ -616,8 +616,13 @@ h1, h2, h3, h4 {
   border-radius: var(--radius);
   padding: 0.5rem 0.75rem;
   text-align: center;
-  min-width: 56px;
+  width: 4.5rem;
+  min-height: 56px;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .event-date strong {
   display: block;
