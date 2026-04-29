@@ -621,6 +621,10 @@ h1, h2, h3, h4 {
   background-image: url('https://images.unsplash.com/photo-1755397467747-6160983f9694?fm=jpg&q=85&w=1920&auto=format&fit=crop');
   background-position: center 30%;
 }
+.page-hero--newsletter {
+  background-image: url('https://images.unsplash.com/photo-1575715289849-205b47918f39?fm=jpg&q=85&w=1920&auto=format&fit=crop');
+  background-position: center 55%;
+}
 .page-hero::after {
   content: '';
   position: absolute;
