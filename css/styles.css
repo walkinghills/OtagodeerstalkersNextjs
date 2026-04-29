@@ -499,6 +499,16 @@ h1, h2, h3, h4 {
 .pricing-table tr:last-child td { border-bottom: none; }
 .pricing-table tr:nth-child(even) td { background: var(--cream); }
 .pricing-table td strong { color: var(--amber-700); font-weight: 700; }
+.email-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--amber-700);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.email-link:hover { color: var(--amber-600); }
 .pricing-table tr.price-highlight td {
   background: #fdf5e8;
   border-left: 3px solid var(--amber-600);
