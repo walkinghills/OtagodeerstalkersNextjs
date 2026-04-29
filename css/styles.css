@@ -47,12 +47,13 @@
 
 /* --- Reset & Base --------------------------------------- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
 body {
   font-family: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
   background: var(--cream);
   color: var(--text-dark);
   line-height: 1.7;
+  overflow-x: hidden;
 }
 img { max-width: 100%; display: block; }
 a { color: var(--amber-600); text-decoration: none; transition: color var(--transition); }
@@ -1012,6 +1013,9 @@ h1, h2, h3, h4 {
   .nav-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 998; }
   .nav-backdrop.open { display: block; }
   .hero { padding-top: 4.5rem; }
+  .hero h1 { font-size: clamp(1.65rem, 7.5vw, 2.2rem); }
+  .hero-actions { flex-direction: column; align-items: center; }
+  .hero-actions .btn { width: 100%; max-width: 280px; text-align: center; }
   .quick-links { margin-top: 1rem; }
   .footer-grid { grid-template-columns: 1fr; }
   .contact-strip-inner { flex-direction: column; align-items: flex-start; }
