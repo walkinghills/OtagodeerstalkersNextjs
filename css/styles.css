@@ -230,6 +230,13 @@ h1, h2, h3, h4 {
   margin-top: 0.6rem;
   font-style: italic;
 }
+.feature-visual-wrap {
+  display: flex;
+  flex-direction: column;
+}
+.feature-visual-wrap .feature-visual {
+  flex: 1;
+}
 
 .hero-content {
   padding-bottom: 4rem;
