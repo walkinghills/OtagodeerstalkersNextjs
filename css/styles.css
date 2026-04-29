@@ -223,6 +223,16 @@ h1, h2, h3, h4 {
   pointer-events: none;
 }
 .hero .container { position: relative; z-index: 1; }
+.hero-credit {
+  position: absolute;
+  bottom: 0.6rem;
+  right: 1rem;
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.04em;
+  margin: 0;
+  z-index: 1;
+}
 
 .hero-content {
   padding-bottom: 4rem;
@@ -422,12 +432,6 @@ h1, h2, h3, h4 {
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-md);
-}
-.feature-visual--collage .collage-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
 }
 .feature-visual--collage .collage-img img {
   width: 100%;
