@@ -44,6 +44,9 @@ export default function SiteFooter() {
           <span>&copy; 2026 NZDA Otago Branch. All rights reserved.</span>
           <a href="https://www.deerstalkers.org.nz/" target="_blank" rel="noopener">deerstalkers.org.nz</a>
         </div>
+        <div className="footer-credit">
+          Designed, coded &amp; published by Sal Martin
+        </div>
       </div>
     </footer>
   )

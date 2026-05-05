@@ -827,6 +827,13 @@ h1, h2, h3, h4 {
 }
 .footer-bottom a { color: var(--gold-400); font-size: 0.78rem; }
 .footer-bottom a:hover { color: var(--white); }
+.footer-credit {
+  text-align: center;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.25);
+  padding-top: 1rem;
+  letter-spacing: 0.02em;
+}
 
 /* ============================================================
    TIMETABLE — class names locked (auto-injected by script)
