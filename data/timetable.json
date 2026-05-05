@@ -1,0 +1,119 @@
+{
+  "generated": "2026-04-01",
+  "year": "2026–2027",
+  "months": [
+    {
+      "month": "January 2026",
+      "entries": [
+        { "isoDate": "2026-01-03", "status": "closed", "reason": "New Year break" },
+        { "isoDate": "2026-01-10", "status": "closed", "reason": "New Year break" },
+        { "isoDate": "2026-01-17", "status": "open" },
+        { "isoDate": "2026-01-24", "status": "open" },
+        { "isoDate": "2026-01-31", "status": "open" }
+      ]
+    },
+    {
+      "month": "February 2026",
+      "entries": [
+        { "isoDate": "2026-02-07", "status": "closed", "reason": "Waitangi weekend" },
+        { "isoDate": "2026-02-14", "status": "open" },
+        { "isoDate": "2026-02-21", "status": "open" },
+        { "isoDate": "2026-02-28", "status": "open" }
+      ]
+    },
+    {
+      "month": "March 2026",
+      "entries": [
+        { "isoDate": "2026-03-07", "status": "open" },
+        { "isoDate": "2026-03-14", "status": "open" },
+        { "isoDate": "2026-03-21", "status": "closed", "reason": "Otago Anniversary" },
+        { "isoDate": "2026-03-28", "status": "open" }
+      ]
+    },
+    {
+      "month": "April 2026",
+      "entries": [
+        { "isoDate": "2026-04-04", "status": "closed", "reason": "Easter" },
+        { "isoDate": "2026-04-11", "status": "open" },
+        { "isoDate": "2026-04-18", "status": "open" },
+        { "isoDate": "2026-04-25", "status": "closed", "reason": "ANZAC weekend" }
+      ]
+    },
+    {
+      "month": "May 2026",
+      "entries": [
+        { "isoDate": "2026-05-02", "status": "open" },
+        { "isoDate": "2026-05-09", "status": "open" },
+        { "isoDate": "2026-05-16", "status": "open" },
+        { "isoDate": "2026-05-23", "status": "open" },
+        { "isoDate": "2026-05-30", "status": "closed", "reason": "Kings Birthday weekend" }
+      ]
+    },
+    {
+      "month": "June 2026",
+      "closedMonth": true,
+      "closedReason": "Winter + Maintenance"
+    },
+    {
+      "month": "July 2026",
+      "closedMonth": true,
+      "closedReason": "Winter + Maintenance"
+    },
+    {
+      "month": "August 2026",
+      "entries": [
+        { "isoDate": "2026-08-01", "status": "open" },
+        { "isoDate": "2026-08-08", "status": "open" },
+        { "isoDate": "2026-08-15", "status": "open" },
+        { "isoDate": "2026-08-22", "status": "open" },
+        { "isoDate": "2026-08-29", "status": "open" }
+      ]
+    },
+    {
+      "month": "September 2026",
+      "entries": [
+        { "isoDate": "2026-09-05", "status": "open" },
+        { "isoDate": "2026-09-12", "status": "open" },
+        { "isoDate": "2026-09-19", "status": "open" },
+        { "isoDate": "2026-09-26", "status": "open" }
+      ]
+    },
+    {
+      "month": "October 2026",
+      "entries": [
+        { "isoDate": "2026-10-03", "status": "open" },
+        { "isoDate": "2026-10-10", "status": "open" },
+        { "isoDate": "2026-10-17", "status": "open" },
+        { "isoDate": "2026-10-24", "status": "closed", "reason": "Labour Day" },
+        { "isoDate": "2026-10-31", "status": "open" }
+      ]
+    },
+    {
+      "month": "November 2026",
+      "entries": [
+        { "isoDate": "2026-11-07", "status": "open" },
+        { "isoDate": "2026-11-14", "status": "open" },
+        { "isoDate": "2026-11-21", "status": "open" },
+        { "isoDate": "2026-11-28", "status": "open" }
+      ]
+    },
+    {
+      "month": "December 2026",
+      "entries": [
+        { "isoDate": "2026-12-05", "status": "open" },
+        { "isoDate": "2026-12-12", "status": "open" },
+        { "isoDate": "2026-12-19", "status": "closed", "reason": "Christmas" },
+        { "isoDate": "2026-12-26", "status": "closed", "reason": "Christmas" }
+      ]
+    },
+    {
+      "month": "January 2027",
+      "entries": [
+        { "isoDate": "2027-01-02", "status": "closed", "reason": "Christmas" },
+        { "isoDate": "2027-01-09", "status": "closed", "reason": "Christmas" },
+        { "isoDate": "2027-01-16", "status": "open", "reason": "Range Opens 2027" },
+        { "isoDate": "2027-01-23", "status": "open" }
+      ]
+    }
+  ]
+}

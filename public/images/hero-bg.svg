@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 560" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a1a0e"/>
+      <stop offset="70%" stop-color="#1a3320"/>
+      <stop offset="100%" stop-color="#1e3d24"/>
+    </linearGradient>
+    <linearGradient id="midrange" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a3320"/>
+      <stop offset="100%" stop-color="#152a1a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="1440" height="560" fill="url(#sky)"/>
+
+  <!-- Stars / texture dots -->
+  <g fill="#ffffff" opacity="0.12">
+    <circle cx="120" cy="60" r="1.2"/><circle cx="240" cy="35" r="0.8"/>
+    <circle cx="380" cy="55" r="1.1"/><circle cx="520" cy="28" r="0.9"/>
+    <circle cx="660" cy="48" r="1.3"/><circle cx="800" cy="22" r="0.8"/>
+    <circle cx="940" cy="42" r="1.0"/><circle cx="1080" cy="30" r="1.2"/>
+    <circle cx="1200" cy="55" r="0.9"/><circle cx="1340" cy="38" r="1.1"/>
+    <circle cx="180" cy="90" r="0.8"/><circle cx="440" cy="75" r="1.0"/>
+    <circle cx="700" cy="82" r="0.9"/><circle cx="960" cy="68" r="0.8"/>
+    <circle cx="1260" cy="78" r="1.1"/>
+  </g>
+
+  <!-- Far mountain range (pale) -->
+  <path d="M0 560 L0 310
+    L60 275 L120 295 L200 230 L280 260 L360 195 L440 220
+    L520 170 L580 190 L640 150 L720 175 L800 135 L860 158
+    L940 118 L1020 142 L1100 108 L1160 130 L1240 95 L1320 120
+    L1380 100 L1440 115 L1440 560 Z"
+    fill="#2a5230" opacity="0.45"/>
+
+  <!-- Mid mountain range -->
+  <path d="M0 560 L0 360
+    L80 320 L160 345 L260 295 L360 325 L460 275 L540 305
+    L620 260 L700 288 L790 245 L870 272 L960 230 L1040 258
+    L1140 218 L1220 245 L1310 210 L1400 238 L1440 228 L1440 560 Z"
+    fill="url(#midrange)" opacity="0.7"/>
+
+  <!-- Foreground ridgeline -->
+  <path d="M0 560 L0 430
+    L120 400 L260 420 L400 390 L520 408 L640 378 L760 398
+    L880 368 L1000 390 L1120 362 L1240 385 L1360 358 L1440 372
+    L1440 560 Z"
+    fill="#0d1f12" opacity="0.85"/>
+
+  <!-- Dark foreground base -->
+  <path d="M0 560 L0 490 Q360 470 720 480 Q1080 490 1440 472 L1440 560 Z"
+    fill="#0a1a0e"/>
+
+  <!-- Subtle tree silhouettes on ridge -->
+  <g fill="#0a1a0e">
+    <!-- Left cluster -->
+    <polygon points="145,400 150,375 155,400"/>
+    <polygon points="155,403 162,372 169,403"/>
+    <polygon points="167,401 173,378 179,401"/>
+    <!-- Mid cluster -->
+    <polygon points="640,378 646,352 652,378"/>
+    <polygon points="652,381 659,349 666,381"/>
+    <polygon points="664,379 671,356 678,379"/>
+    <!-- Right cluster -->
+    <polygon points="1130,362 1136,336 1142,362"/>
+    <polygon points="1142,365 1149,333 1156,365"/>
+    <polygon points="1154,363 1161,340 1168,363"/>
+  </g>
+</svg>

@@ -1,13 +1,29 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false,
+  "redirects": [
+    { "source": "/index.html",           "destination": "/",              "permanent": true },
+    { "source": "/range.html",           "destination": "/range",         "permanent": true },
+    { "source": "/lodge.html",           "destination": "/lodge",         "permanent": true },
+    { "source": "/club-hunts.html",      "destination": "/club-hunts",    "permanent": true },
+    { "source": "/hunts-course.html",    "destination": "/hunts-course",  "permanent": true },
+    { "source": "/competitions.html",    "destination": "/competitions",  "permanent": true },
+    { "source": "/contact.html",         "destination": "/contact",       "permanent": true },
+    { "source": "/join.html",            "destination": "/join",          "permanent": true },
+    { "source": "/404.html",             "destination": "/",              "permanent": true },
+    { "source": "/newsletters/index.html", "destination": "/newsletters", "permanent": true },
+    { "source": "/newsletters/:slug.html", "destination": "/newsletters/:slug", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+        { "key": "X-Content-Type-Options",  "value": "nosniff" },
+        { "key": "X-Frame-Options",         "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy",         "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy",      "value": "camera=(), microphone=(), geolocation=()" },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.deerstalkers.org.nz; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+        }
       ]
     }
   ]

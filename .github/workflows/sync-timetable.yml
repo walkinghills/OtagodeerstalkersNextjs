@@ -1,4 +1,4 @@
-﻿name: Sync Range Timetable
+name: Sync Range Timetable
 
 # Runs on the 1st of each month at 11:00 UTC (midnight NZST)
 # Also manually triggerable from GitHub Actions tab
@@ -34,7 +34,6 @@ jobs:
           curl -sL \
             "https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0" \
             -o /tmp/range_timetable_new.csv
-          # Validate: CSV should start with the range name, not an HTML error page
           FIRST=$(head -1 /tmp/range_timetable_new.csv)
           if echo "$FIRST" | grep -qi "<!DOCTYPE\|<html\|Sign in\|Error"; then
             echo "ERROR: Google Sheet returned HTML instead of CSV."
@@ -57,7 +56,7 @@ jobs:
             echo "Changes detected — updating timetable"
           fi
 
-      - name: Regenerate timetable HTML
+      - name: Regenerate timetable JSON
         if: steps.check.outputs.changed == 'true'
         run: |
           python3 scripts/generate_timetable.py --csv /tmp/range_timetable_new.csv
@@ -67,7 +66,7 @@ jobs:
         run: |
           git config user.name  "Timetable Bot"
           git config user.email "timetable-bot@otagodeerstalkers.co.nz"
-          git add range.html scripts/range_timetable.csv
+          git add data/timetable.json scripts/range_timetable.csv
           git diff --staged --quiet && echo "Nothing to commit" && exit 0
           git commit -m "Auto-update: Chaz Forsyth Rifle Range timetable $(date +%Y-%m-%d)"
           git pull --rebase origin main

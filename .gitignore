@@ -2,7 +2,25 @@
 config/.env
 config/*.env
 Github key.txt
+.env
+.env.local
+.env*.local
+
+# Next.js
+.next/
+out/
+.preview-url
+
+# Node
+node_modules/
 
 # OS
 .DS_Store
 Thumbs.db
+
+# Lighthouse CI
+.lighthouseci/
+
+# Playwright
+test-results/
+playwright-report/

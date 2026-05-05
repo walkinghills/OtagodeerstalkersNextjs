@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="6" fill="#1a3320"/>
+  <!-- Simplified deer antler / stag silhouette -->
+  <g fill="#c9a030">
+    <!-- Body -->
+    <ellipse cx="16" cy="21" rx="6" ry="5"/>
+    <!-- Head -->
+    <circle cx="16" cy="13" r="3.5"/>
+    <!-- Antlers left -->
+    <path d="M13 11 L10 6 M10 6 L8 3 M10 6 L12 4" stroke="#c9a030" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <!-- Antlers right -->
+    <path d="M19 11 L22 6 M22 6 L24 3 M22 6 L20 4" stroke="#c9a030" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <!-- Legs -->
+    <rect x="12" y="25" width="2" height="4" rx="1"/>
+    <rect x="18" y="25" width="2" height="4" rx="1"/>
+  </g>
+</svg>
