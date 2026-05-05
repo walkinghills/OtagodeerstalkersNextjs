@@ -834,6 +834,104 @@ h1, h2, h3, h4 {
   padding-top: 1rem;
   letter-spacing: 0.02em;
 }
+.footer-credit-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.footer-credit-btn:hover { color: rgba(255,255,255,0.5); }
+
+/* --- Footer contact modal --------------------------------- */
+.fc-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+.fc-modal {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 460px;
+  position: relative;
+  color: var(--charcoal-900);
+}
+.fc-modal h3 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  margin-bottom: 0.4rem;
+  color: var(--charcoal-900);
+}
+.fc-modal p {
+  font-size: 0.88rem;
+  color: var(--text-mid);
+  margin-bottom: 1.25rem;
+}
+.fc-modal form { display: flex; flex-direction: column; gap: 1rem; }
+.fc-modal label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.fc-modal input,
+.fc-modal textarea {
+  border: 1px solid var(--stone-300);
+  border-radius: 6px;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.92rem;
+  font-family: inherit;
+  color: var(--charcoal-900);
+  background: var(--white);
+  width: 100%;
+}
+.fc-modal input:focus,
+.fc-modal textarea:focus {
+  outline: 2px solid var(--amber-600);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+.fc-modal textarea { resize: vertical; }
+.fc-submit {
+  background: var(--amber-600);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.fc-submit:hover { background: var(--amber-700, #b45309); }
+.fc-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-light);
+  cursor: pointer;
+  line-height: 1;
+}
+.fc-close:hover { color: var(--charcoal-900); }
 
 /* ============================================================
    TIMETABLE — class names locked (auto-injected by script)
