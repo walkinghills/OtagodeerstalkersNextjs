@@ -246,7 +246,7 @@ export default function HomePage() {
               </div>
             </div>
             <div className="event-item">
-              <div className="event-date"><strong>Nov</strong><span>Dec</span></div>
+              <div className="event-date"><strong>End</strong><span>of Year</span></div>
               <div className="event-info">
                 <h4>Annual Prize-Giving</h4>
                 <p>End-of-year function with competition prize-giving across all categories. All members and partners welcome.</p>
