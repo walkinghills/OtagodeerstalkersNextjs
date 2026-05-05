@@ -225,7 +225,7 @@ export default function HomePage() {
               </div>
             </div>
             <div className="event-item">
-              <div className="event-date"><strong>TBC</strong></div>
+              <div className="event-date"><strong>27</strong><span>Jun</span></div>
               <div className="event-info">
                 <h4>Annual Deer Hunt</h4>
                 <p>Limited spots &#8212; register your interest at any club meeting.</p>
