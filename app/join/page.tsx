@@ -16,7 +16,7 @@ export default function JoinPage() {
         <div className="container">
           <p className="breadcrumb"><Link href="/">Home</Link> / Join</p>
           <h1>Join the Otago Branch</h1>
-          <p>Become a member of the NZDA Otago Branch and connect with a community of hunters and shooters across the region.</p>
+          <p>Become a member of the NZDA Otago Branch and connect with a community of hunters across the region.</p>
         </div>
       </section>
 
@@ -25,17 +25,17 @@ export default function JoinPage() {
           <div className="feature-row">
             <div className="feature-content">
               <h2>Why Join?</h2>
-              <p>Membership gives you access to everything the Otago Branch has to offer &#8211; from our rifle range and backcountry lodge to club hunts, education courses, and our monthly social nights.</p>
+              <p>Membership gives you access to everything the Otago Branch has to offer, from our rifle range and backcountry lodge to club hunts, education courses, and our monthly social nights.</p>
               <ul className="detail-list" style={{ marginBottom: '1.5rem' }}>
-                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Chaz Forsyth Rifle Range</strong> &#8211; Members rate of $5/session (vs $10 for non-members)</div></li>
-                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Blue Mountains Lodge</strong> &#8211; $10/night for Otago members</div></li>
-                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Club Hunts</strong> &#8211; Annual organised hunts for deer, goat, tahr, and more</div></li>
-                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>HUNTS Course</strong> &#8211; Access to our nationally recognised hunter education programme</div></li>
-                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Competitions</strong> &#8211; Trophy, photography, and video competitions open to members</div></li>
-                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Monthly Meetings</strong> &#8211; Guest speakers, trip planning, and a welcoming community</div></li>
-                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>NZ Hunting &amp; Wildlife</strong> &#8211; Quarterly NZDA magazine delivered to your door</div></li>
-                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Advocacy</strong> &#8211; A voice for hunters and shooters on legislation and land access</div></li>
-                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Deerstalkers App</strong> &#8211; 50+ member discount partners nationwide, from ammo to taxidermy</div></li>
+                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Chaz Forsyth Rifle Range</strong>:Members rate of $5/session (vs $10 for non-members)</div></li>
+                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Blue Mountains Lodge</strong>:$10/night for Otago members</div></li>
+                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Club Hunts</strong>:Annual organised hunts for deer, goat, tahr, and more</div></li>
+                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>HUNTS Course</strong>:Access to our nationally recognised hunter education programme</div></li>
+                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Competitions</strong>:Trophy, photography, and video competitions open to members</div></li>
+                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Monthly Meetings</strong>:Guest speakers, trip planning, and a welcoming community</div></li>
+                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>NZ Hunting &amp; Wildlife</strong>:Quarterly NZDA magazine delivered to your door</div></li>
+                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Advocacy</strong>:A voice for hunters on legislation and land access</div></li>
+                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Deerstalkers App</strong>:50+ member discount partners nationwide, from ammo to taxidermy</div></li>
               </ul>
             </div>
             <div className="feature-visual">
@@ -80,10 +80,10 @@ export default function JoinPage() {
               </div>
               <div className="card-body">
                 <ul className="detail-list">
-                  <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div>You&rsquo;ll receive a <strong>membership card</strong> by post &#8211; allow 1&#8211;2 weeks</div></li>
+                  <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div>You&rsquo;ll receive a <strong>membership card</strong> by post. Allow 1 to 2 weeks.</div></li>
                   <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div>Bring your card to the <strong>range</strong> for the $5 member rate</div></li>
                   <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div>Show your card at any key pickup location to <strong>access the lodge</strong></div></li>
-                  <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div>Come along to the next <strong>club meeting</strong> &#8211; 2nd Monday, 7:30pm, 53 Malvern St</div></li>
+                  <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div>Come along to the next <strong>club meeting</strong>: 2nd Monday, 7:30pm, 53 Malvern St</div></li>
                   <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div>You&rsquo;ll also receive the <strong>NZ Hunting &amp; Wildlife</strong> magazine quarterly</div></li>
                 </ul>
               </div>
@@ -92,7 +92,7 @@ export default function JoinPage() {
 
           <div className="alert alert-success" style={{ maxWidth: '700px', margin: '0 auto 1.5rem' }}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18" height="18"><circle cx="10" cy="8" r="3"/><path d="M5 18c0-2.76 2.24-5 5-5s5 2.24 5 5"/></svg>
-            <span><strong>New to the branch?</strong> Introduce yourself at the next club meeting &#8211; the committee and members are happy to help you get oriented, whether you&rsquo;re new to hunting or an experienced shooter looking for a community.</span>
+            <span><strong>New to the branch?</strong> Introduce yourself at the next club meeting. The committee and members are happy to help you get oriented, whether you&rsquo;re new to hunting or an experienced hunter looking for a community.</span>
           </div>
 
           <div className="alert alert-info" style={{ maxWidth: '700px', margin: '0 auto 1.5rem' }}>
@@ -149,7 +149,7 @@ export default function JoinPage() {
                 <h3>Deerstalkers App</h3>
               </div>
               <div className="card-body">
-                <p>NZDA membership includes access to the Deerstalkers App &#8211; <strong>50+ member discount partners</strong> across New Zealand, from ammo to taxidermy.</p>
+                <p>NZDA membership includes access to the Deerstalkers App: <strong>50+ member discount partners</strong> across New Zealand, from ammo to taxidermy.</p>
               </div>
             </div>
           </div>
@@ -161,7 +161,7 @@ export default function JoinPage() {
           <div className="contact-strip-inner">
             <div>
               <h2>Questions?</h2>
-              <p>Come along to any club meeting &#8211; visitors are always welcome.</p>
+              <p>Come along to any club meeting. Visitors are always welcome.</p>
             </div>
             <div className="contact-items">
               <div className="contact-item">
