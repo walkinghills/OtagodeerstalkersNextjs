@@ -68,6 +68,10 @@ export default function JoinPage() {
               <p className="feature-visual-caption">Members get free access to the NZDA app and 50+ partner discounts &mdash; see below.</p>
             </aside>
           </div>
+
+          <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+            <a href="https://www.deerstalkers.org.nz/branches/south-island/otago/" target="_blank" rel="noopener" className="btn btn-primary" style={{ fontSize: '1.05rem', padding: '0.85rem 2rem' }}>Join Now via NZDA &rarr;</a>
+          </div>
         </div>
       </section>
 
