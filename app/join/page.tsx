@@ -99,12 +99,8 @@ export default function JoinPage() {
           </div>
 
           <p className="partner-note">Plus Go Fuel, and dozens more across insurance, retail, freight, and outdoor brands. Full list visible inside the NZDA app.</p>
-        </div>
-      </section>
 
-      <section className="section section-alt">
-        <div className="container">
-          <div style={{ textAlign: 'center' }}>
+          <div style={{ textAlign: 'center', marginTop: '2rem' }}>
             <a href="https://www.deerstalkers.org.nz/branches/south-island/otago/" target="_blank" rel="noopener" className="btn btn-primary" style={{ fontSize: '1.05rem', padding: '0.85rem 2rem' }}>Join Now via NZDA &rarr;</a>
           </div>
         </div>
