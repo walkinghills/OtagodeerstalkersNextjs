@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Favicon Drafts – Otago Deerstalkers</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #f0ede8; color: #1a1a18; padding: 2rem; }
+  h1 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .subtitle { color: #666; font-size: 0.9rem; margin-bottom: 0.5rem; }
+  h2.section-head { font-size: 1rem; font-weight: 700; color: #444; margin: 2rem 0 0.25rem; border-bottom: 2px solid #ddd; padding-bottom: 0.4rem; }
+  p.section-note { font-size: 0.82rem; color: #888; margin-bottom: 1.25rem; }
+  .concepts { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 1rem; }
+  .concept { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .concept h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.2rem; letter-spacing: 0.03em; text-transform: uppercase; color: #444; }
+  .concept p { font-size: 0.8rem; color: #888; margin-bottom: 1.25rem; line-height: 1.4; }
+  .sizes { display: flex; align-items: flex-end; gap: 1.25rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .size-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+  .size-label { font-size: 0.7rem; color: #aaa; }
+  /* Square favicon container */
+  .fav { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .fav img { width: auto; height: 100%; object-fit: contain; }
+  .fav.dark-green { background: #1a3320; border-radius: 10px; }
+  .fav.gold-bg { background: #c9a030; border-radius: 50%; }
+  .fav.white-bg { background: #fff; border-radius: 10px; border: 1px solid #eee; }
+  .fav.dark-bg { background: #111; border-radius: 10px; }
+  /* Tab simulation */
+  .tab-sim { background: #e8e4df; border-radius: 6px 6px 0 0; padding: 0.4rem 0.75rem; display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: #555; border: 1px solid #d0cbc5; border-bottom: none; margin-top: 1rem; width: 180px; }
+  .tab-sim img, .tab-sim .tab-icon { flex-shrink: 0; width: 16px; height: 16px; }
+  .tab-sim .tab-icon { display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 3px; }
+  .tab-sim .tab-icon img { width: auto; height: 16px; }
+  hr.divider { border: none; border-top: 1px solid #eee; margin: 1.25rem 0; }
+  /* Checkered bg for transparency preview */
+  .checker { background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%); background-size: 8px 8px; background-position: 0 0, 0 4px, 4px -4px, -4px 0px; background-color: #fff; }
+  /* Custom hand-drawn concepts inline SVG */
+  .fav svg { display: block; }
+</style>
+</head>
+<body>
+
+<h1>Favicon Drafts — Otago Deerstalkers</h1>
+<p class="subtitle">Actual NZDA artwork and custom concepts. Shown at 128px, 64px, 32px, 16px. Browser tab simulation at bottom of each card.</p>
+
+<!-- ======================================================= -->
+<h2 class="section-head">NZDA Source Artwork — on different backgrounds</h2>
+<p class="section-note">The real NZDA deer motif extracted from their logo SVG. The deer is a tall narrow shape so it appears narrow in a square — this is what it would actually look like as a favicon.</p>
+
+<div class="concepts">
+
+  <!-- E: NZDA on Dark Green -->
+  <div class="concept">
+    <h3>E — NZDA Deer · Dark Green</h3>
+    <p>Actual NZDA gold gradient deer on the site's dark green. Closest match to existing brand.</p>
+    <div class="sizes">
+      <div class="size-wrap">
+        <div class="fav dark-green" style="width:128px;height:128px;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">128px</span>
+      </div>
+      <div class="size-wrap">
+        <div class="fav dark-green" style="width:64px;height:64px;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">64px</span>
+      </div>
+      <div class="size-wrap">
+        <div class="fav dark-green" style="width:32px;height:32px;border-radius:5px;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">32px</span>
+      </div>
+      <div class="size-wrap">
+        <div class="fav dark-green" style="width:16px;height:16px;border-radius:3px;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">16px</span>
+      </div>
+    </div>
+    <div class="tab-sim">
+      <div class="tab-icon" style="background:#1a3320;border-radius:4px;"><img src="/nzda-deer-icon.svg" alt="" style="height:16px;width:auto;"></div>
+      Otago Deerstalkers
+    </div>
+  </div>
+
+  <!-- E-circle: NZDA on Dark Green Circle -->
+  <div class="concept">
+    <h3>E2 — NZDA Deer · Dark Green Circle</h3>
+    <p>Same dark green as E but circular like F. Green and gold have good contrast — the badge outline reads clearly.</p>
+    <div class="sizes">
+      <div class="size-wrap">
+        <div class="fav dark-green" style="width:128px;height:128px;border-radius:50%;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">128px</span>
+      </div>
+      <div class="size-wrap">
+        <div class="fav dark-green" style="width:64px;height:64px;border-radius:50%;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">64px</span>
+      </div>
+      <div class="size-wrap">
+        <div class="fav dark-green" style="width:32px;height:32px;border-radius:50%;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">32px</span>
+      </div>
+      <div class="size-wrap">
+        <div class="fav dark-green" style="width:16px;height:16px;border-radius:50%;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">16px</span>
+      </div>
+    </div>
+    <div class="tab-sim">
+      <div class="tab-icon dark-green" style="border-radius:50%;"><img src="/nzda-deer-icon.svg" alt="" style="height:16px;width:auto;"></div>
+      Otago Deerstalkers
+    </div>
+  </div>
+
+  <!-- F: NZDA on Gold Circle -->
+  <div class="concept">
+    <h3>F — NZDA Deer · Gold Circle</h3>
+    <p>NZDA deer on a gold circle background. The deer's own gold tones merge with the background — low contrast.</p>
+    <div class="sizes">
+      <div class="size-wrap">
+        <div class="fav gold-bg" style="width:128px;height:128px;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">128px</span>
+      </div>
+      <div class="size-wrap">
+        <div class="fav gold-bg" style="width:64px;height:64px;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">64px</span>
+      </div>
+      <div class="size-wrap">
+        <div class="fav gold-bg" style="width:32px;height:32px;border-radius:50%;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">32px</span>
+      </div>
+      <div class="size-wrap">
+        <div class="fav gold-bg" style="width:16px;height:16px;border-radius:50%;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">16px</span>
+      </div>
+    </div>
+    <div class="tab-sim">
+      <div class="tab-icon" style="background:#c9a030;border-radius:50%;"><img src="/nzda-deer-icon.svg" alt="" style="height:16px;width:auto;"></div>
+      Otago Deerstalkers
+    </div>
+  </div>
+
+  <!-- G: NZDA on Dark (near-black) -->
+  <div class="concept">
+    <h3>G — NZDA Deer · Dark</h3>
+    <p>The deer on near-black — maximum contrast for the gold gradient, very visible in dark-mode browser chrome.</p>
+    <div class="sizes">
+      <div class="size-wrap">
+        <div class="fav dark-bg" style="width:128px;height:128px;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">128px</span>
+      </div>
+      <div class="size-wrap">
+        <div class="fav dark-bg" style="width:64px;height:64px;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">64px</span>
+      </div>
+      <div class="size-wrap">
+        <div class="fav dark-bg" style="width:32px;height:32px;border-radius:5px;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">32px</span>
+      </div>
+      <div class="size-wrap">
+        <div class="fav dark-bg" style="width:16px;height:16px;border-radius:3px;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">16px</span>
+      </div>
+    </div>
+    <div class="tab-sim">
+      <div class="tab-icon" style="background:#111;border-radius:4px;"><img src="/nzda-deer-icon.svg" alt="" style="height:16px;width:auto;"></div>
+      Otago Deerstalkers
+    </div>
+  </div>
+
+  <!-- G-circle: NZDA on Dark Circle -->
+  <div class="concept">
+    <h3>G2 — NZDA Deer · Dark Circle</h3>
+    <p>Same near-black as G but circular like F. Maximum gold contrast, works in both light and dark browser chrome.</p>
+    <div class="sizes">
+      <div class="size-wrap">
+        <div class="fav dark-bg" style="width:128px;height:128px;border-radius:50%;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">128px</span>
+      </div>
+      <div class="size-wrap">
+        <div class="fav dark-bg" style="width:64px;height:64px;border-radius:50%;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">64px</span>
+      </div>
+      <div class="size-wrap">
+        <div class="fav dark-bg" style="width:32px;height:32px;border-radius:50%;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">32px</span>
+      </div>
+      <div class="size-wrap">
+        <div class="fav dark-bg" style="width:16px;height:16px;border-radius:50%;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">16px</span>
+      </div>
+    </div>
+    <div class="tab-sim">
+      <div class="tab-icon dark-bg" style="border-radius:50%;"><img src="/nzda-deer-icon.svg" alt="" style="height:16px;width:auto;"></div>
+      Otago Deerstalkers
+    </div>
+  </div>
+
+  <!-- H: NZDA deer transparent / natural -->
+  <div class="concept">
+    <h3>H — NZDA Deer · Natural (no bg)</h3>
+    <p>The deer artwork with no background — checkerboard shows transparency. On a white browser tab it would look like this.</p>
+    <div class="sizes">
+      <div class="size-wrap">
+        <div class="fav checker" style="width:128px;height:128px;border-radius:10px;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">128px</span>
+      </div>
+      <div class="size-wrap">
+        <div class="fav checker" style="width:64px;height:64px;border-radius:8px;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">64px</span>
+      </div>
+      <div class="size-wrap">
+        <div class="fav checker" style="width:32px;height:32px;border-radius:5px;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">32px</span>
+      </div>
+      <div class="size-wrap">
+        <div class="fav checker" style="width:16px;height:16px;border-radius:3px;"><img src="/nzda-deer-icon.svg" alt=""></div>
+        <span class="size-label">16px</span>
+      </div>
+    </div>
+    <div class="tab-sim" style="background:#fff;">
+      <img src="/nzda-deer-icon.svg" alt="" style="width:auto;height:16px;flex-shrink:0;">
+      Otago Deerstalkers
+    </div>
+  </div>
+
+</div>
+
+<!-- ======================================================= -->
+<h2 class="section-head">deerstalkers.org.nz — Current Site Favicon</h2>
+<p class="section-note">What the NZDA national website uses right now as its browser tab icon.</p>
+
+<div class="concepts">
+  <div class="concept">
+    <h3>NZDA National — Current favicon.ico</h3>
+    <p>Fetched directly from deerstalkers.org.nz. This is what shows in the browser tab on their site.</p>
+    <div class="sizes">
+      <div class="size-wrap">
+        <img src="https://www.deerstalkers.org.nz/favicon.ico" width="128" height="128" style="image-rendering:pixelated;" alt="NZDA favicon">
+        <span class="size-label">128px (scaled)</span>
+      </div>
+      <div class="size-wrap">
+        <img src="https://www.deerstalkers.org.nz/favicon.ico" width="64" height="64" style="image-rendering:pixelated;" alt="NZDA favicon">
+        <span class="size-label">64px (scaled)</span>
+      </div>
+      <div class="size-wrap">
+        <img src="https://www.deerstalkers.org.nz/favicon.ico" width="32" height="32" style="image-rendering:pixelated;" alt="NZDA favicon">
+        <span class="size-label">32px (native)</span>
+      </div>
+      <div class="size-wrap">
+        <img src="https://www.deerstalkers.org.nz/favicon.ico" width="16" height="16" style="image-rendering:pixelated;" alt="NZDA favicon">
+        <span class="size-label">16px (native)</span>
+      </div>
+    </div>
+    <div class="tab-sim">
+      <img src="https://www.deerstalkers.org.nz/favicon.ico" width="16" height="16" alt="" style="flex-shrink:0;">
+      Deerstalkers NZ
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<h2 class="section-head">Custom Hand-Drawn Concepts</h2>
+<p class="section-note">Simplified SVG stag icons drawn for maximum clarity at 16px. Compare legibility against the real NZDA artwork above.</p>
+
+<div class="concepts">
+
+  <!-- CONCEPT A: Dark Forest -->
+  <div class="concept">
+    <h3>A — Dark Forest</h3>
+    <p>Dark green ground, gold stag head. Matches the site's primary colour palette exactly.</p>
+    <div class="sizes">
+      <div class="size-wrap">
+        <svg width="128" height="128" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="6" fill="#1a3320"/>
+          <path d="M13.5 14 L11 9 L9.5 5.5 M11 9 L9 7 M11 9 L13 7.5" stroke="#c9a030" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M18.5 14 L21 9 L22.5 5.5 M21 9 L23 7 M21 9 L19 7.5" stroke="#c9a030" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <ellipse cx="16" cy="18" rx="4.5" ry="5" fill="#c9a030"/>
+          <path d="M11.5 15.5 L9.5 12.5 L13 14.5Z" fill="#c9a030"/>
+          <path d="M20.5 15.5 L22.5 12.5 L19 14.5Z" fill="#c9a030"/>
+          <ellipse cx="16" cy="22" rx="2.8" ry="2" fill="#c9a030"/>
+          <circle cx="14.2" cy="17.5" r="0.7" fill="#1a3320"/>
+        </svg>
+        <span class="size-label">128px</span>
+      </div>
+      <div class="size-wrap">
+        <svg width="64" height="64" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="6" fill="#1a3320"/>
+          <path d="M13.5 14 L11 9 L9.5 5.5 M11 9 L9 7 M11 9 L13 7.5" stroke="#c9a030" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M18.5 14 L21 9 L22.5 5.5 M21 9 L23 7 M21 9 L19 7.5" stroke="#c9a030" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <ellipse cx="16" cy="18" rx="4.5" ry="5" fill="#c9a030"/>
+          <path d="M11.5 15.5 L9.5 12.5 L13 14.5Z" fill="#c9a030"/>
+          <path d="M20.5 15.5 L22.5 12.5 L19 14.5Z" fill="#c9a030"/>
+          <ellipse cx="16" cy="22" rx="2.8" ry="2" fill="#c9a030"/>
+          <circle cx="14.2" cy="17.5" r="0.7" fill="#1a3320"/>
+        </svg>
+        <span class="size-label">64px</span>
+      </div>
+      <div class="size-wrap">
+        <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="6" fill="#1a3320"/>
+          <path d="M13.5 14 L11 9 L9.5 5.5 M11 9 L9 7 M11 9 L13 7.5" stroke="#c9a030" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M18.5 14 L21 9 L22.5 5.5 M21 9 L23 7 M21 9 L19 7.5" stroke="#c9a030" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <ellipse cx="16" cy="18" rx="4.5" ry="5" fill="#c9a030"/>
+          <path d="M11.5 15.5 L9.5 12.5 L13 14.5Z" fill="#c9a030"/>
+          <path d="M20.5 15.5 L22.5 12.5 L19 14.5Z" fill="#c9a030"/>
+          <ellipse cx="16" cy="22" rx="2.8" ry="2" fill="#c9a030"/>
+          <circle cx="14.2" cy="17.5" r="0.7" fill="#1a3320"/>
+        </svg>
+        <span class="size-label">32px</span>
+      </div>
+      <div class="size-wrap">
+        <svg width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="6" fill="#1a3320"/>
+          <path d="M13.5 14 L11 9 L9.5 5.5 M11 9 L9 7 M11 9 L13 7.5" stroke="#c9a030" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M18.5 14 L21 9 L22.5 5.5 M21 9 L23 7 M21 9 L19 7.5" stroke="#c9a030" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <ellipse cx="16" cy="18" rx="4.5" ry="5" fill="#c9a030"/>
+          <path d="M11.5 15.5 L9.5 12.5 L13 14.5Z" fill="#c9a030"/>
+          <path d="M20.5 15.5 L22.5 12.5 L19 14.5Z" fill="#c9a030"/>
+          <ellipse cx="16" cy="22" rx="2.8" ry="2" fill="#c9a030"/>
+          <circle cx="14.2" cy="17.5" r="0.7" fill="#1a3320"/>
+        </svg>
+        <span class="size-label">16px</span>
+      </div>
+    </div>
+    <div class="tab-sim">
+      <svg width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+        <rect width="32" height="32" rx="6" fill="#1a3320"/>
+        <path d="M13.5 14 L11 9 L9.5 5.5 M11 9 L9 7 M11 9 L13 7.5" stroke="#c9a030" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M18.5 14 L21 9 L22.5 5.5 M21 9 L23 7 M21 9 L19 7.5" stroke="#c9a030" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <ellipse cx="16" cy="18" rx="4.5" ry="5" fill="#c9a030"/>
+        <path d="M11.5 15.5 L9.5 12.5 L13 14.5Z" fill="#c9a030"/>
+        <path d="M20.5 15.5 L22.5 12.5 L19 14.5Z" fill="#c9a030"/>
+        <ellipse cx="16" cy="22" rx="2.8" ry="2" fill="#c9a030"/>
+        <circle cx="14.2" cy="17.5" r="0.7" fill="#1a3320"/>
+      </svg>
+      Otago Deerstalkers
+    </div>
+  </div>
+
+  <!-- CONCEPT B: Gold Circle -->
+  <div class="concept">
+    <h3>B — Gold Circle</h3>
+    <p>Warm gold disc with a dark stag silhouette. Stands out strongly against both light and dark browser chrome.</p>
+    <div class="sizes">
+      <div class="size-wrap">
+        <svg width="128" height="128" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="16" fill="#c9a030"/>
+          <path d="M13.5 16 L11 11 L9.5 7.5 M11 11 L9 9 M11 11 L13 9.5" stroke="#1a1a0a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M18.5 16 L21 11 L22.5 7.5 M21 11 L23 9 M21 11 L19 9.5" stroke="#1a1a0a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <ellipse cx="16" cy="19" rx="4.5" ry="5" fill="#1a1a0a"/>
+          <path d="M11.5 17.5 L9.5 14.5 L13 16.5Z" fill="#1a1a0a"/>
+          <path d="M20.5 17.5 L22.5 14.5 L19 16.5Z" fill="#1a1a0a"/>
+          <ellipse cx="16" cy="23" rx="2.8" ry="2" fill="#1a1a0a"/>
+          <circle cx="14.2" cy="18.5" r="0.7" fill="#c9a030"/>
+        </svg>
+        <span class="size-label">128px</span>
+      </div>
+      <div class="size-wrap">
+        <svg width="64" height="64" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="16" fill="#c9a030"/>
+          <path d="M13.5 16 L11 11 L9.5 7.5 M11 11 L9 9 M11 11 L13 9.5" stroke="#1a1a0a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M18.5 16 L21 11 L22.5 7.5 M21 11 L23 9 M21 11 L19 9.5" stroke="#1a1a0a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <ellipse cx="16" cy="19" rx="4.5" ry="5" fill="#1a1a0a"/>
+          <path d="M11.5 17.5 L9.5 14.5 L13 16.5Z" fill="#1a1a0a"/>
+          <path d="M20.5 17.5 L22.5 14.5 L19 16.5Z" fill="#1a1a0a"/>
+          <ellipse cx="16" cy="23" rx="2.8" ry="2" fill="#1a1a0a"/>
+          <circle cx="14.2" cy="18.5" r="0.7" fill="#c9a030"/>
+        </svg>
+        <span class="size-label">64px</span>
+      </div>
+      <div class="size-wrap">
+        <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="16" fill="#c9a030"/>
+          <path d="M13.5 16 L11 11 L9.5 7.5 M11 11 L9 9 M11 11 L13 9.5" stroke="#1a1a0a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M18.5 16 L21 11 L22.5 7.5 M21 11 L23 9 M21 11 L19 9.5" stroke="#1a1a0a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <ellipse cx="16" cy="19" rx="4.5" ry="5" fill="#1a1a0a"/>
+          <path d="M11.5 17.5 L9.5 14.5 L13 16.5Z" fill="#1a1a0a"/>
+          <path d="M20.5 17.5 L22.5 14.5 L19 16.5Z" fill="#1a1a0a"/>
+          <ellipse cx="16" cy="23" rx="2.8" ry="2" fill="#1a1a0a"/>
+          <circle cx="14.2" cy="18.5" r="0.7" fill="#c9a030"/>
+        </svg>
+        <span class="size-label">32px</span>
+      </div>
+      <div class="size-wrap">
+        <svg width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="16" fill="#c9a030"/>
+          <path d="M13.5 16 L11 11 L9.5 7.5 M11 11 L9 9 M11 11 L13 9.5" stroke="#1a1a0a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M18.5 16 L21 11 L22.5 7.5 M21 11 L23 9 M21 11 L19 9.5" stroke="#1a1a0a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <ellipse cx="16" cy="19" rx="4.5" ry="5" fill="#1a1a0a"/>
+          <path d="M11.5 17.5 L9.5 14.5 L13 16.5Z" fill="#1a1a0a"/>
+          <path d="M20.5 17.5 L22.5 14.5 L19 16.5Z" fill="#1a1a0a"/>
+          <ellipse cx="16" cy="23" rx="2.8" ry="2" fill="#1a1a0a"/>
+          <circle cx="14.2" cy="18.5" r="0.7" fill="#c9a030"/>
+        </svg>
+        <span class="size-label">16px</span>
+      </div>
+    </div>
+    <div class="tab-sim">
+      <svg width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+        <circle cx="16" cy="16" r="16" fill="#c9a030"/>
+        <path d="M13.5 16 L11 11 L9.5 7.5 M11 11 L9 9 M11 11 L13 9.5" stroke="#1a1a0a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M18.5 16 L21 11 L22.5 7.5 M21 11 L23 9 M21 11 L19 9.5" stroke="#1a1a0a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <ellipse cx="16" cy="19" rx="4.5" ry="5" fill="#1a1a0a"/>
+        <path d="M11.5 17.5 L9.5 14.5 L13 16.5Z" fill="#1a1a0a"/>
+        <path d="M20.5 17.5 L22.5 14.5 L19 16.5Z" fill="#1a1a0a"/>
+        <ellipse cx="16" cy="23" rx="2.8" ry="2" fill="#1a1a0a"/>
+        <circle cx="14.2" cy="18.5" r="0.7" fill="#c9a030"/>
+      </svg>
+      Otago Deerstalkers
+    </div>
+  </div>
+
+  <!-- CONCEPT C: Antler Mark -->
+  <div class="concept">
+    <h3>C — Antler Mark</h3>
+    <p>Antlers only — no head or body. Maximally legible at tiny sizes. Clean, iconic, and immediately recognisable to hunters.</p>
+    <div class="sizes">
+      <div class="size-wrap">
+        <svg width="128" height="128" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="6" fill="#1a2a1a"/>
+          <path d="M16 26 L13 20 L10 14 L8 8 M10 14 L7 11 M10 14 L12 11" stroke="#c9a030" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M16 26 L19 20 L22 14 L24 8 M22 14 L25 11 M22 14 L20 11" stroke="#c9a030" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span class="size-label">128px</span>
+      </div>
+      <div class="size-wrap">
+        <svg width="64" height="64" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="6" fill="#1a2a1a"/>
+          <path d="M16 26 L13 20 L10 14 L8 8 M10 14 L7 11 M10 14 L12 11" stroke="#c9a030" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M16 26 L19 20 L22 14 L24 8 M22 14 L25 11 M22 14 L20 11" stroke="#c9a030" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span class="size-label">64px</span>
+      </div>
+      <div class="size-wrap">
+        <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="6" fill="#1a2a1a"/>
+          <path d="M16 26 L13 20 L10 14 L8 8 M10 14 L7 11 M10 14 L12 11" stroke="#c9a030" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M16 26 L19 20 L22 14 L24 8 M22 14 L25 11 M22 14 L20 11" stroke="#c9a030" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span class="size-label">32px</span>
+      </div>
+      <div class="size-wrap">
+        <svg width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="6" fill="#1a2a1a"/>
+          <path d="M16 26 L13 20 L10 14 L8 8 M10 14 L7 11 M10 14 L12 11" stroke="#c9a030" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M16 26 L19 20 L22 14 L24 8 M22 14 L25 11 M22 14 L20 11" stroke="#c9a030" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span class="size-label">16px</span>
+      </div>
+    </div>
+    <div class="tab-sim">
+      <svg width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+        <rect width="32" height="32" rx="6" fill="#1a2a1a"/>
+        <path d="M16 26 L13 20 L10 14 L8 8 M10 14 L7 11 M10 14 L12 11" stroke="#c9a030" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M16 26 L19 20 L22 14 L24 8 M22 14 L25 11 M22 14 L20 11" stroke="#c9a030" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      Otago Deerstalkers
+    </div>
+  </div>
+
+  <!-- CONCEPT D: Full Stag -->
+  <div class="concept">
+    <h3>D — Full Stag</h3>
+    <p>Complete stag silhouette — head, neck, and chest — in the style of the NZDA logo. More illustrative, works best at larger sizes.</p>
+    <div class="sizes">
+      <div class="size-wrap">
+        <svg width="128" height="128" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="6" fill="#1a3320"/>
+          <path d="M13 13 L11 8 L9 5 M11 8 L8.5 6.5 M11 8 L13 6.5" stroke="#c9a030" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M19 13 L21 8 L23 5 M21 8 L23.5 6.5 M21 8 L19 6.5" stroke="#c9a030" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M10.5 14 L9 11.5 L11.5 13Z" fill="#c9a030"/>
+          <path d="M21.5 14 L23 11.5 L20.5 13Z" fill="#c9a030"/>
+          <ellipse cx="16" cy="16.5" rx="4" ry="4.5" fill="#c9a030"/>
+          <ellipse cx="16" cy="21" rx="2.5" ry="2" fill="#c9a030"/>
+          <path d="M10 22 Q12 19 14 20 Q16 21 18 20 Q20 19 22 22 Q20 26 16 27 Q12 26 10 22Z" fill="#c9a030"/>
+          <circle cx="14.5" cy="16" r="0.6" fill="#1a3320"/>
+        </svg>
+        <span class="size-label">128px</span>
+      </div>
+      <div class="size-wrap">
+        <svg width="64" height="64" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="6" fill="#1a3320"/>
+          <path d="M13 13 L11 8 L9 5 M11 8 L8.5 6.5 M11 8 L13 6.5" stroke="#c9a030" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M19 13 L21 8 L23 5 M21 8 L23.5 6.5 M21 8 L19 6.5" stroke="#c9a030" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M10.5 14 L9 11.5 L11.5 13Z" fill="#c9a030"/>
+          <path d="M21.5 14 L23 11.5 L20.5 13Z" fill="#c9a030"/>
+          <ellipse cx="16" cy="16.5" rx="4" ry="4.5" fill="#c9a030"/>
+          <ellipse cx="16" cy="21" rx="2.5" ry="2" fill="#c9a030"/>
+          <path d="M10 22 Q12 19 14 20 Q16 21 18 20 Q20 19 22 22 Q20 26 16 27 Q12 26 10 22Z" fill="#c9a030"/>
+          <circle cx="14.5" cy="16" r="0.6" fill="#1a3320"/>
+        </svg>
+        <span class="size-label">64px</span>
+      </div>
+      <div class="size-wrap">
+        <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="6" fill="#1a3320"/>
+          <path d="M13 13 L11 8 L9 5 M11 8 L8.5 6.5 M11 8 L13 6.5" stroke="#c9a030" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M19 13 L21 8 L23 5 M21 8 L23.5 6.5 M21 8 L19 6.5" stroke="#c9a030" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M10.5 14 L9 11.5 L11.5 13Z" fill="#c9a030"/>
+          <path d="M21.5 14 L23 11.5 L20.5 13Z" fill="#c9a030"/>
+          <ellipse cx="16" cy="16.5" rx="4" ry="4.5" fill="#c9a030"/>
+          <ellipse cx="16" cy="21" rx="2.5" ry="2" fill="#c9a030"/>
+          <path d="M10 22 Q12 19 14 20 Q16 21 18 20 Q20 19 22 22 Q20 26 16 27 Q12 26 10 22Z" fill="#c9a030"/>
+          <circle cx="14.5" cy="16" r="0.6" fill="#1a3320"/>
+        </svg>
+        <span class="size-label">32px</span>
+      </div>
+      <div class="size-wrap">
+        <svg width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="6" fill="#1a3320"/>
+          <path d="M13 13 L11 8 L9 5 M11 8 L8.5 6.5 M11 8 L13 6.5" stroke="#c9a030" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M19 13 L21 8 L23 5 M21 8 L23.5 6.5 M21 8 L19 6.5" stroke="#c9a030" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M10.5 14 L9 11.5 L11.5 13Z" fill="#c9a030"/>
+          <path d="M21.5 14 L23 11.5 L20.5 13Z" fill="#c9a030"/>
+          <ellipse cx="16" cy="16.5" rx="4" ry="4.5" fill="#c9a030"/>
+          <ellipse cx="16" cy="21" rx="2.5" ry="2" fill="#c9a030"/>
+          <path d="M10 22 Q12 19 14 20 Q16 21 18 20 Q20 19 22 22 Q20 26 16 27 Q12 26 10 22Z" fill="#c9a030"/>
+          <circle cx="14.5" cy="16" r="0.6" fill="#1a3320"/>
+        </svg>
+        <span class="size-label">16px</span>
+      </div>
+    </div>
+    <div class="tab-sim">
+      <svg width="16" height="16" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+        <rect width="32" height="32" rx="6" fill="#1a3320"/>
+        <path d="M13 13 L11 8 L9 5 M11 8 L8.5 6.5 M11 8 L13 6.5" stroke="#c9a030" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M19 13 L21 8 L23 5 M21 8 L23.5 6.5 M21 8 L19 6.5" stroke="#c9a030" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M10.5 14 L9 11.5 L11.5 13Z" fill="#c9a030"/>
+        <path d="M21.5 14 L23 11.5 L20.5 13Z" fill="#c9a030"/>
+        <ellipse cx="16" cy="16.5" rx="4" ry="4.5" fill="#c9a030"/>
+        <ellipse cx="16" cy="21" rx="2.5" ry="2" fill="#c9a030"/>
+        <path d="M10 22 Q12 19 14 20 Q16 21 18 20 Q20 19 22 22 Q20 26 16 27 Q12 26 10 22Z" fill="#c9a030"/>
+        <circle cx="14.5" cy="16" r="0.6" fill="#1a3320"/>
+      </svg>
+      Otago Deerstalkers
+    </div>
+  </div>
+
+</div>
+
+<p style="font-size:0.82rem;color:#999;margin-top:1.5rem;">Pick a favourite (E, F, G, A, B, C, or D) and I'll drop it in as the live favicon.</p>
+
+</body>
+</html>
