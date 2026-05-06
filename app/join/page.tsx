@@ -70,7 +70,7 @@ export default function JoinPage() {
           </div>
 
           <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-            <a href="https://www.deerstalkers.org.nz/branches/south-island/otago/" target="_blank" rel="noopener" className="btn btn-primary" style={{ fontSize: '1.05rem', padding: '0.85rem 2rem' }}>Join Now via NZDA &rarr;</a>
+            <a href="https://www.deerstalkers.org.nz/branches/south-island/otago/" target="_blank" rel="noopener" className="btn btn-primary" style={{ fontSize: '1.05rem', padding: '0.85rem 2rem' }}>Join &rarr;</a>
           </div>
         </div>
       </section>
@@ -101,7 +101,7 @@ export default function JoinPage() {
           <p className="partner-note">Plus Go Fuel, and dozens more across insurance, retail, freight, and outdoor brands. Full list visible inside the NZDA app.</p>
 
           <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <a href="https://www.deerstalkers.org.nz/branches/south-island/otago/" target="_blank" rel="noopener" className="btn btn-primary" style={{ fontSize: '1.05rem', padding: '0.85rem 2rem' }}>Join Now via NZDA &rarr;</a>
+            <a href="https://www.deerstalkers.org.nz/branches/south-island/otago/" target="_blank" rel="noopener" className="btn btn-primary" style={{ fontSize: '1.05rem', padding: '0.85rem 2rem' }}>Join &rarr;</a>
           </div>
         </div>
       </section>
