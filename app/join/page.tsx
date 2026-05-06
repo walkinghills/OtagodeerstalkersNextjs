@@ -100,12 +100,6 @@ export default function JoinPage() {
 
       <section className="section section-alt">
         <div className="container">
-          <div className="section-heading">
-            <h2>How to Join</h2>
-            <div className="divider"></div>
-            <p>Membership is managed through the NZDA national website. It takes just a few minutes to sign up online.</p>
-          </div>
-
           <div style={{ textAlign: 'center' }}>
             <a href="https://www.deerstalkers.org.nz/branches/south-island/otago/" target="_blank" rel="noopener" className="btn btn-primary" style={{ fontSize: '1.05rem', padding: '0.85rem 2rem' }}>Join Now via NZDA &rarr;</a>
           </div>
