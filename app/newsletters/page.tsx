@@ -47,6 +47,31 @@ export default function NewslettersPage() {
           )}
         </div>
       </section>
+
+      <section className="contact-strip">
+        <div className="container">
+          <div className="contact-strip-inner">
+            <div>
+              <h2>Questions?</h2>
+              <p>Come along to any club meeting. Visitors are always welcome.</p>
+            </div>
+            <div className="contact-items">
+              <div className="contact-item">
+                <span className="ci-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="22" height="22"><path d="M10 2C7.24 2 5 4.24 5 7c0 3.75 5 11 5 11s5-7.25 5-11c0-2.76-2.24-5-5-5z"/><circle cx="10" cy="7" r="2"/></svg>
+                </span>
+                <div><strong>Clubrooms</strong><span>53 Malvern St, Woodhaugh, Dunedin 9010</span></div>
+              </div>
+              <div className="contact-item">
+                <span className="ci-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="22" height="22"><rect x="3" y="4" width="14" height="14" rx="2"/><line x1="3" y1="8" x2="17" y2="8"/><line x1="7" y1="2" x2="7" y2="6"/><line x1="13" y1="2" x2="13" y2="6"/></svg>
+                </span>
+                <div><strong>Meetings</strong><span>2nd Monday, 7:30pm (excl. Jan &amp; Apr)</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   )
 }
