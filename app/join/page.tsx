@@ -29,11 +29,11 @@ export default function JoinPage() {
               <div className="benefits-grid">
                 <div className="benefit">
                   <h4>Chaz Forsyth Rifle Range</h4>
-                  <p>$5/session for members, $10 non-members.</p>
+                  <p>Members $5 per visit, non-members $10.</p>
                 </div>
                 <div className="benefit">
                   <h4>Blue Mountains Lodge</h4>
-                  <p>$10/night for Otago Branch members.</p>
+                  <p>Otago Branch members $10 per night.</p>
                 </div>
                 <div className="benefit">
                   <h4>Club Hunts</h4>
