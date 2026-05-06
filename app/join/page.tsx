@@ -106,28 +106,6 @@ export default function JoinPage() {
             <p>Membership is managed through the NZDA national website. It takes just a few minutes to sign up online.</p>
           </div>
 
-          <div className="cards-grid" style={{ maxWidth: '900px', margin: '0 auto 2.5rem' }}>
-            <div className="card">
-              <div className="card-header">
-                <span className="icon">1</span>
-                <h3>Visit the National Site</h3>
-              </div>
-              <div className="card-body">
-                <p>Head to the NZDA Otago Branch page on the national website to access the membership form.</p>
-                <a href="https://www.deerstalkers.org.nz/branches/south-island/otago/" target="_blank" rel="noopener" className="btn btn-primary" style={{ marginTop: '0.5rem' }}>Go to Membership Form &rarr;</a>
-              </div>
-            </div>
-            <div className="card">
-              <div className="card-header">
-                <span className="icon">2</span>
-                <h3>Complete the Form</h3>
-              </div>
-              <div className="card-body">
-                <p>Fill in your details and select the <strong>Otago Branch</strong> as your local branch. Membership fees are collected at this step.</p>
-              </div>
-            </div>
-          </div>
-
           <div style={{ textAlign: 'center' }}>
             <a href="https://www.deerstalkers.org.nz/branches/south-island/otago/" target="_blank" rel="noopener" className="btn btn-primary" style={{ fontSize: '1.05rem', padding: '0.85rem 2rem' }}>Join Now via NZDA &rarr;</a>
           </div>
