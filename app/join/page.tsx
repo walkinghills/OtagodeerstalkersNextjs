@@ -22,26 +22,79 @@ export default function JoinPage() {
 
       <section className="section">
         <div className="container">
-          <div className="feature-row">
+          <div className="feature-row feature-row--benefits">
             <div className="feature-content">
-              <h2>Why Join?</h2>
-              <p>Membership gives you access to everything the Otago Branch has to offer, from our rifle range and backcountry lodge to club hunts, education courses, and our monthly social nights.</p>
-              <ul className="detail-list" style={{ marginBottom: '1.5rem' }}>
-                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Chaz Forsyth Rifle Range</strong>:Members rate of $5/session (vs $10 for non-members)</div></li>
-                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Blue Mountains Lodge</strong>:$10/night for Otago members</div></li>
-                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Club Hunts</strong>:Annual organised hunts for deer, goat, tahr, and more</div></li>
-                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>HUNTS Course</strong>:Access to our nationally recognised hunter education programme</div></li>
-                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Competitions</strong>:Trophy, photography, and video competitions open to members</div></li>
-                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Monthly Meetings</strong>:Guest speakers, trip planning, and a welcoming community</div></li>
-                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>NZ Hunting &amp; Wildlife</strong>:Quarterly NZDA magazine delivered to your door</div></li>
-                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Advocacy</strong>:A voice for hunters on legislation and land access</div></li>
-                <li><span className="di"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="4,10 8,15 16,6"/></svg></span><div><strong>Deerstalkers App</strong>:50+ member discount partners nationwide, from ammo to taxidermy</div></li>
-              </ul>
+              <h2>More than a membership card</h2>
+              <p>NZDA Otago membership is your way into a wider community of New Zealand hunters, with practical perks that more than cover the annual fee.</p>
+              <div className="benefits-grid">
+                <div className="benefit">
+                  <h4>Chaz Forsyth Rifle Range</h4>
+                  <p>$5/session for members, $10 non-members.</p>
+                </div>
+                <div className="benefit">
+                  <h4>Blue Mountains Lodge</h4>
+                  <p>$10/night for Otago Branch members.</p>
+                </div>
+                <div className="benefit">
+                  <h4>Club Hunts</h4>
+                  <p>Organised hunts for deer, goat, and tahr.</p>
+                </div>
+                <div className="benefit">
+                  <h4>HUNTS Course</h4>
+                  <p>Nationally recognised hunter education.</p>
+                </div>
+                <div className="benefit">
+                  <h4>NZ Hunting &amp; Wildlife</h4>
+                  <p>Quarterly NZDA magazine to your door.</p>
+                </div>
+                <div className="benefit">
+                  <h4>Public Liability Insurance</h4>
+                  <p>Cover for hunting and NZDA activities.</p>
+                </div>
+                <div className="benefit">
+                  <h4>Advocacy</h4>
+                  <p>A voice for hunters on legislation and land access.</p>
+                </div>
+                <div className="benefit">
+                  <h4>Branch Meetings</h4>
+                  <p>Guest speakers second Monday of every month.</p>
+                </div>
+              </div>
             </div>
-            <div className="feature-visual">
-              <img src="https://www.deerstalkers.org.nz/_resources/themes/NZDANational/images/logo-gold-white-text.svg" alt="New Zealand Deerstalkers Association" className="feature-visual-logo" />
-            </div>
+            <aside className="feature-visual feature-visual--app">
+              <a href="https://www.deerstalkers.org.nz/membership/members/app" target="_blank" rel="noopener" className="app-promo">
+                <img src="/images/nzda/Copy-of-APP-Homepage-Ads.png" alt="Download the official NZDA app" />
+              </a>
+              <p className="feature-visual-caption">Members get free access to the NZDA app and 50+ partner discounts &mdash; see below.</p>
+            </aside>
           </div>
+        </div>
+      </section>
+
+      <section className="section section-alt">
+        <div className="container">
+          <div className="section-heading">
+            <h2>Discounts at 50+ retail and service partners</h2>
+            <div className="divider"></div>
+            <p>Your NZDA membership unlocks ongoing discounts through the Deerstalkers App &mdash; from your weekly fuel to a backcountry helicopter flight.</p>
+          </div>
+
+          <div className="partner-grid">
+            <figure className="partner-tile"><img src="/images/nzda/Heli-Sika.jpg" alt="Helisika" /><figcaption><strong>Helisika</strong>10% off helicopter flights</figcaption></figure>
+            <figure className="partner-tile"><img src="/images/nzda/Murchison-Heli-Tours.jpg" alt="Murchison Heli Tours" /><figcaption><strong>Murchison Heli Tours</strong>10% off flights</figcaption></figure>
+            <figure className="partner-tile"><img src="/images/nzda/DOC-Back-Country-Hut-Pass.jpg" alt="Department of Conservation" /><figcaption><strong>Department of Conservation</strong>20% off Backcountry Hut Pass</figcaption></figure>
+            <figure className="partner-tile"><img src="/images/nzda/Interislander.jpg" alt="Interislander Ferry" /><figcaption><strong>Interislander Ferry</strong>Group booking discount</figcaption></figure>
+            <figure className="partner-tile"><img src="/images/nzda/Swazi-Pro-Deal.jpg" alt="Swazi" /><figcaption><strong>Swazi</strong>Pro Deal trade pricing</figcaption></figure>
+            <figure className="partner-tile"><img src="/images/nzda/Kilwell.jpg" alt="Kilwell Sports" /><figcaption><strong>Kilwell Sports</strong>15% off web orders</figcaption></figure>
+            <figure className="partner-tile"><img src="/images/nzda/Bush-Life-NZ.jpg" alt="Bush Life NZ" /><figcaption><strong>Bush Life NZ</strong>20% off web orders</figcaption></figure>
+            <figure className="partner-tile"><img src="/images/nzda/AJ-Productions.jpg" alt="AJ Productions" /><figcaption><strong>AJ Productions</strong>10% off game callers and trail cameras</figcaption></figure>
+            <figure className="partner-tile"><img src="/images/nzda/Twin-Needle.jpg" alt="TwinNeedle" /><figcaption><strong>TwinNeedle</strong>10% off gear repairs</figcaption></figure>
+            <figure className="partner-tile"><img src="/images/nzda/Parachute-First-Aid-v2.jpg" alt="Parachute First Aid" /><figcaption><strong>Parachute First Aid</strong>15% off Wilderness First Aid Kit</figcaption></figure>
+            <figure className="partner-tile"><img src="/images/nzda/Go-Native.jpg" alt="Go Native" /><figcaption><strong>Go Native</strong>20% off outdoor meals and snacks</figcaption></figure>
+            <figure className="partner-tile"><img src="/images/nzda/NZ-Taxidermy-Ltd.jpg" alt="NZ Taxidermy" /><figcaption><strong>NZ Taxidermy</strong>10% off mounts</figcaption></figure>
+          </div>
+
+          <p className="partner-note">Plus Go Fuel, and dozens more across insurance, retail, freight, and outdoor brands. Full list visible inside the NZDA app.</p>
         </div>
       </section>
 
