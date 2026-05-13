@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getAllNewsletters, formatNewsletterDate } from '@/lib/newsletters'
 import { SITE_URL } from '@/lib/siteConfig'
+import TrackedNextLink from '@/components/TrackedNextLink'
 
 export const metadata: Metadata = {
   title: 'Newsletter',
@@ -19,7 +20,7 @@ export default function NewslettersPage() {
         <div className="container">
           <p className="breadcrumb"><Link href="/">Home</Link> / Newsletter</p>
           <h1>Newsletter</h1>
-          <p>Monthly updates from the Otago Branch &#8211; hunt reports, range news, competition results, and member stories.</p>
+          <p>Monthly updates from the Otago Branch: hunt reports, range news, competition results, and member stories.</p>
         </div>
       </section>
 
@@ -37,10 +38,10 @@ export default function NewslettersPage() {
                     <time className="newsletter-card-date" dateTime={nl.date}>{formatNewsletterDate(nl.date)}</time>
                   </div>
                   <div className="newsletter-card-body">
-                    <h3><Link href={`/newsletters/${nl.slug}`}>{nl.title}</Link></h3>
+                    <h3><TrackedNextLink event="newsletter_edition_open" eventProps={{ slug: nl.slug, source: 'title' }} href={`/newsletters/${nl.slug}`}>{nl.title}</TrackedNextLink></h3>
                     <p>{nl.excerpt}</p>
                   </div>
-                  <Link href={`/newsletters/${nl.slug}`} className="newsletter-card-arrow">Read edition &rarr;</Link>
+                  <TrackedNextLink event="newsletter_edition_open" eventProps={{ slug: nl.slug, source: 'arrow' }} href={`/newsletters/${nl.slug}`} className="newsletter-card-arrow">Read edition &rarr;</TrackedNextLink>
                 </article>
               ))}
             </div>

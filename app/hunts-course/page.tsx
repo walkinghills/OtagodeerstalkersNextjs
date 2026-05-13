@@ -1,17 +1,19 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SITE_URL } from '@/lib/siteConfig'
+import { huntsCourseSchema, jsonLdScript } from '@/lib/structuredData'
 
 export const metadata: Metadata = {
   title: 'HUNTS Course',
-  description: 'HUNTS – Hunter National Training Scheme. New to hunting? Learn safe and responsible hunting from experienced NZDA instructors.',
-  openGraph: { title: 'HUNTS Hunter Education Course – NZDA Otago Branch', description: 'HUNTS – Hunter National Training Scheme. New to hunting? Learn safe and responsible hunting from experienced NZDA instructors.' },
+  description: 'HUNTS, the Hunter National Training Scheme. New to hunting? Learn safe and responsible hunting from experienced NZDA instructors.',
+  openGraph: { title: 'HUNTS Hunter Education Course – NZDA Otago Branch', description: 'HUNTS, the Hunter National Training Scheme. New to hunting? Learn safe and responsible hunting from experienced NZDA instructors.' },
   alternates: { canonical: SITE_URL + '/hunts-course' },
 }
 
 export default function HuntsCoursePage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(huntsCourseSchema())} />
       <section className="page-hero page-hero--photo page-hero--hunts">
         <div className="container">
           <p className="breadcrumb"><Link href="/">Home</Link> / HUNTS Course</p>

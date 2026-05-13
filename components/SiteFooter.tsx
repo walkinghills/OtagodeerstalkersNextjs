@@ -12,7 +12,7 @@ export default function SiteFooter() {
               alt="NZDA Logo"
               className="footer-logo"
             />
-            <p>The Otago Branch of the New Zealand Deerstalkers Association. Representing hunters and recreational shooters across the Otago region.</p>
+            <p>The Otago Branch of the New Zealand Deerstalkers Association. Representing hunters across the Otago region.</p>
           </div>
           <div className="footer-col">
             <h4>Pages</h4>
@@ -36,7 +36,7 @@ export default function SiteFooter() {
               <li><a href="https://www.facebook.com/share/g/1M5wZNSjde/" target="_blank" rel="noopener">Club Facebook Group</a></li>
               <li><a href="https://www.facebook.com/groups/1195200207197835/" target="_blank" rel="noopener">Range Facebook Group</a></li>
               <li><a href="https://www.fishandgame.org.nz/" target="_blank" rel="noopener">Fish &amp; Game NZ</a></li>
-              <li><a href="https://www.doc.govt.nz/parks-and-recreation/things-to-do/hunting/" target="_blank" rel="noopener">DOC &#8211; Hunting Info</a></li>
+              <li><a href="https://www.doc.govt.nz/parks-and-recreation/things-to-do/hunting/" target="_blank" rel="noopener">DOC: Hunting Info</a></li>
               <li><a href="https://www.colfo.org.nz/" target="_blank" rel="noopener">COLFO</a></li>
             </ul>
           </div>
@@ -45,6 +45,7 @@ export default function SiteFooter() {
           <span>&copy; 2026 NZDA Otago Branch. All rights reserved.</span>
           <a href="https://www.deerstalkers.org.nz/" target="_blank" rel="noopener">deerstalkers.org.nz</a>
         </div>
+        <p className="footer-privacy">We use anonymous traffic analytics (Vercel, Cloudflare) and a Meta pixel for future Facebook page promotion. No cross-site tracking. Data is not sold.</p>
         <FooterCredit />
       </div>
     </footer>

@@ -1,53 +1,22 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SITE_URL } from '@/lib/siteConfig'
+import { organizationSchema, jsonLdScript } from '@/lib/structuredData'
 
 export const metadata: Metadata = {
   title: 'Otago Deerstalkers Association',
-  description: 'The Otago Branch of the New Zealand Deerstalkers Association – supporting hunters and shooters across the Otago region.',
+  description: 'The Otago Branch of the New Zealand Deerstalkers Association, supporting hunters across the Otago region.',
   openGraph: {
     title: 'Otago Deerstalkers Association – NZDA Otago Branch',
-    description: 'The Otago Branch of the New Zealand Deerstalkers Association – supporting hunters and shooters across the Otago region.',
+    description: 'The Otago Branch of the New Zealand Deerstalkers Association, supporting hunters across the Otago region.',
   },
   alternates: { canonical: SITE_URL + '/' },
-  other: {
-    'script:ld+json': JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'SportsOrganization',
-      name: 'NZDA Otago Branch – Otago Deerstalkers',
-      url: 'https://otagodeerstalkers.co.nz',
-      description: 'The Otago Branch of the New Zealand Deerstalkers Association. Representing hunters and recreational shooters across the Otago region.',
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: '53 Malvern Street',
-        addressLocality: 'Woodhaugh, Dunedin',
-        postalCode: '9010',
-        addressCountry: 'NZ',
-      },
-      memberOf: {
-        '@type': 'Organization',
-        name: 'New Zealand Deerstalkers Association',
-        url: 'https://www.deerstalkers.org.nz/',
-      },
-    }),
-  },
 }
 
 export default function HomePage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'SportsOrganization',
-          name: 'NZDA Otago Branch – Otago Deerstalkers',
-          url: 'https://otagodeerstalkers.co.nz',
-          description: 'The Otago Branch of the New Zealand Deerstalkers Association. Representing hunters and recreational shooters across the Otago region.',
-          address: { '@type': 'PostalAddress', streetAddress: '53 Malvern Street', addressLocality: 'Woodhaugh, Dunedin', postalCode: '9010', addressCountry: 'NZ' },
-          memberOf: { '@type': 'Organization', name: 'New Zealand Deerstalkers Association', url: 'https://www.deerstalkers.org.nz/' },
-        }) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(organizationSchema())} />
 
       <section className="hero">
         <div className="container">

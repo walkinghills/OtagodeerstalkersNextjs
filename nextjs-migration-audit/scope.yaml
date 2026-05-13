@@ -1,0 +1,10 @@
+constraints: 'TypeScript only. Static export (output: export). Must deploy to Vercel.
+  Must preserve all existing URLs exactly. No CMS. No database. Timetable and newsletter
+  systems must continue to function.'
+domain_context: ''
+goal: A complete, actionable migration plan that a developer can follow step by step,
+  covering all pages, shared components, data systems, and deployment with no gaps
+  or ambiguities.
+non_negotiables: ''
+success_criteria: Plan is specific enough to implement without further research. Every
+  existing page and system is accounted for. No hand-wavy steps.

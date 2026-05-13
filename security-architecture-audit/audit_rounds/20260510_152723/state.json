@@ -1,0 +1,233 @@
+{
+  "run_id": "20260510_152723",
+  "project_name": "security-architecture-audit",
+  "builder_model": "claude-opus-4-7",
+  "auditor_model": "gpt-5.5",
+  "max_rounds": 2,
+  "scope": {
+    "goal": "Phase 2 system that survives external security review and a Privacy Act complaint without negligent-design findings, while remaining maintainable by a single volunteer developer for an incorporated society club.",
+    "constraints": "Stack: Next.js 15 + Vercel (syd1, Pro tier at launch) + Supabase (Auth + Postgres ap-southeast-2) + Cloudflare DNS. Single developer maintenance. Volunteer-led incorporated society client (NZDA Otago Branch). Budget zero to twenty NZD per month recurring. AU hosting acceptable per informal DOC arrangement. Gate codes rotate weekly at 12:00 noon Monday NZT. All user actions logged. No formal MoU with DOC.",
+    "success_criteria": "Every material risk identified across security, NZ Privacy Act 2020 compliance, operational, and developer-personal-liability dimensions. Each risk paired with concrete remediation step plus owner plus when (pre-launch / launch / post-launch). Output usable as a pre-launch checklist."
+  },
+  "issues": [
+    {
+      "id": "A001",
+      "title": "A001",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": 2,
+      "builder_proposed": "addressed",
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "Audit coverage expanded beyond mutating routes to authenticated requests, sensitive-read RPCs, auth/MFA/security events, and role changes.",
+      "required_change": "",
+      "concrete_alternative": "Replace T-APP-05 with an audit middleware/server wrapper for all authenticated handlers plus explicit DB audit triggers for sensitive table SELECT-equivalent RPCs; add tests for permit view, hunter view, export, login, failed authz, role grant/revoke, and reveal."
+    },
+    {
+      "id": "A002",
+      "title": "A002",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": 2,
+      "builder_proposed": "addressed",
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "Reveal boundary, no-cache/no-log controls, redaction, and log-grep verification are now specified.",
+      "required_change": "",
+      "concrete_alternative": "Implement reveal as a Supabase Edge Function/RPC that decrypts only for the authorized allocation, returns `Cache-Control: no-store`, disables request/response logging for the code field, redacts errors, and has tests that grep Vercel/Supabase logs for revealed test codes after E2E runs."
+    },
+    {
+      "id": "A003",
+      "title": "A003",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": 2,
+      "builder_proposed": "addressed",
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "Plan now states the real boundary: DB controls are not superuser-proof; external signed R2 checkpoints provide tamper evidence.",
+      "required_change": "",
+      "concrete_alternative": "Keep DB insert-only controls, but require per-row hash chain plus daily signed checkpoint exported to an immutable/versioned R2 object with retention lock and emailed to chair; pass criteria must include tamper by privileged DB role is detected by external checkpoint mismatch."
+    },
+    {
+      "id": "A004",
+      "title": "A004",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": 2,
+      "builder_proposed": "addressed",
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "R2 buckets, lifecycle, Object Lock, token scope, access review, and verification criteria are now specified.",
+      "required_change": "",
+      "concrete_alternative": "Create T-OPS-06 for R2: separate private buckets for raw uploads/backups/exports, public access disabled, object lifecycle matching retention schedule, bucket access logs reviewed monthly, scoped API tokens, retention lock for audit checkpoints, and restore/export deletion tests."
+    },
+    {
+      "id": "A005",
+      "title": "A005",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": 2,
+      "builder_proposed": "addressed",
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "Plaintext fallback CSV was removed and replaced with encrypted break-glass export plus paper log and audit backfill.",
+      "required_change": "",
+      "concrete_alternative": "Replace daily plaintext CSV with encrypted break-glass export stored in R2, decryptable only by chair plus one admin, with every manual disclosure recorded on a signed paper/offline log and backfilled into audit_log within 24h; add pass criteria for fallback drill."
+    },
+    {
+      "id": "A006",
+      "title": "A006",
+      "severity": "minor",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": 2,
+      "builder_proposed": "addressed",
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "Cost model and explicit committee exception gate now address the NZD 20/month conflict.",
+      "required_change": "",
+      "concrete_alternative": "Add T-GOV-01 `docs/ops/COST_MODEL.md` with monthly NZD costs, owner, free-tier limits, overage alerts, and a launch blocker that recurring paid services are <= NZD 20 unless the committee signs an exception."
+    },
+    {
+      "id": "A007",
+      "title": "A007-auth-event-source",
+      "severity": "major",
+      "status": "open",
+      "raised_by": "auditor",
+      "round_opened": 2,
+      "round_resolved": null,
+      "builder_proposed": null,
+      "auditor_proposed": "open",
+      "python_finalized": "open",
+      "claim": "Plan claims login, MFA enrollment/challenge, and password reset events are audited, but Supabase Auth events do not automatically pass through Next.js middleware or DB RPCs. Without an explicit event source, pass criteria #21 and #23 are not implementable.",
+      "required_change": "Specify the authoritative mechanism that captures Supabase Auth lifecycle events with actor, timestamp, IP, resource/action, and outcome.",
+      "concrete_alternative": "Add T-AUTH-01: configure Supabase Auth hooks/webhooks or a dedicated auth callback Edge Function for login, logout, MFA enroll/challenge pass/fail, password reset requested/completed; insert audit rows server-side; add tests that trigger real Supabase Auth flows and assert audit_log rows."
+    },
+    {
+      "id": "A008",
+      "title": "A008-rls-denial-logging",
+      "severity": "major",
+      "status": "open",
+      "raised_by": "auditor",
+      "round_opened": 2,
+      "round_resolved": null,
+      "builder_proposed": null,
+      "auditor_proposed": "open",
+      "python_finalized": "open",
+      "claim": "RLS denials surfaced via `pg_stat_statements` is not a valid audit design. `pg_stat_statements` aggregates query fingerprints and does not preserve actor, IP, resource instance, or per-event denial outcome.",
+      "required_change": "Remove `pg_stat_statements` as an audit source for failed authorization and define an auditable denial path.",
+      "concrete_alternative": "Force all app data access through RPCs that explicitly check authorization, write an audit row with `outcome=denied`, then raise; for route-level denial, middleware writes 401/403 rows. Add pgTAP tests for unauthorized RPC calls producing denial audit rows."
+    },
+    {
+      "id": "A009",
+      "title": "A009-edge-function-plaintext",
+      "severity": "major",
+      "status": "open",
+      "raised_by": "auditor",
+      "round_opened": 2,
+      "round_resolved": null,
+      "builder_proposed": null,
+      "auditor_proposed": "open",
+      "python_finalized": "open",
+      "claim": "T-APP-08 says decryption happens in Supabase Edge Function, but A002 says plaintext must be absent from Supabase logs. Edge Function exceptions, console logging, and platform request logging can still expose returned plaintext unless logging is explicitly constrained at that boundary.",
+      "required_change": "Define no-body logging and error discipline inside the Edge Function, not only in the Next.js proxy.",
+      "concrete_alternative": "Move decrypt into a SECURITY DEFINER Postgres function returning only the code, or keep Edge Function but ban `console.*` in reveal code via lint/test, wrap errors before plaintext variables enter messages, and include Supabase Edge Function logs in T-VERIFY-03 grep."
+    },
+    {
+      "id": "A010",
+      "title": "A010-email-checkpoint-leakage",
+      "severity": "minor",
+      "status": "open",
+      "raised_by": "auditor",
+      "round_opened": 2,
+      "round_resolved": null,
+      "builder_proposed": null,
+      "auditor_proposed": "open",
+      "python_finalized": "open",
+      "claim": "Daily checkpoint hash emailed to chair and secretary is useful evidence, but email delivery/account compromise is not covered. If the same compromised club email controls R2 and receives checkpoints, rollback detection evidence is weaker.",
+      "required_change": "Separate checkpoint notification evidence from the infrastructure account recovery channel.",
+      "concrete_alternative": "Send checkpoint digest to chair and secretary personal/club-independent addresses or print/store monthly digests in 1Password as signed PDFs; document this in T-OPS-07 and ACCESS_MATRIX."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "D001",
+      "decision": "Audit emission is enforced via authenticated request middleware, not per-route ESLint.",
+      "rationale": "Lint catches missing calls only on mutating routes and is bypassable. Middleware wraps every authenticated handler and emits a structured audit row with actor + IP + UA + resource + action + outcome. Sensitive reads use SECURITY DEFINER RPCs that emit audit rows from inside the DB, so a forgotten middleware call still produces a DB-side trail.",
+      "round_set": 1,
+      "status": "accepted"
+    },
+    {
+      "id": "D002",
+      "decision": "Gate-code plaintext exists only in the response body of one RPC and the user's browser memory.",
+      "rationale": "Decryption happens inside a Supabase Edge Function calling pgsodium, never in Next.js server runtime. Response sets Cache-Control: no-store, Pragma: no-cache, and the structured logger has a field-name redaction list including 'code', 'plaintext', 'gate_code'. Errors return an opaque correlation ID; the actual code is never in an error string.",
+      "round_set": 1,
+      "status": "accepted"
+    },
+    {
+      "id": "D003",
+      "decision": "Audit immutability is achieved by external append-only evidence, not DB controls alone.",
+      "rationale": "Postgres cannot prevent a privileged role from rewriting a table. The honest immutability boundary is: (a) hash chain detects tampering after the fact, (b) daily checkpoint signed with an offline key and written to R2 Object Lock (Compliance mode, 7y retention) provides external evidence, (c) chair receives daily checkpoint hash by email so a silent rollback is detectable.",
+      "round_set": 1,
+      "status": "accepted"
+    },
+    {
+      "id": "D004",
+      "decision": "Vercel Pro is a committee-approved exception to the NZD 20 budget, or downgrade to Hobby.",
+      "rationale": "Pro tier was specified in constraints but conflicts with budget. Either (a) chair minutes the exception (~NZD 33/mo for one seat) and the cost model documents it, or (b) launch on Hobby with documented limitations (no team seats, function timeout 10s, no commercial use clause review). Decision required from chair before T-INFRA-01 closes.",
+      "round_set": 1,
+      "status": "accepted"
+    }
+  ],
+  "round_manifest": [
+    {
+      "round_num": 1,
+      "role": "codex",
+      "filename": "round_01_codex.md",
+      "parse_valid": true,
+      "status": "OPEN_ISSUES",
+      "content_hash": "ef1b1e8073ee"
+    },
+    {
+      "round_num": 1,
+      "role": "claude",
+      "filename": "round_01_claude.md",
+      "parse_valid": true,
+      "status": "REVISED_PLAN",
+      "content_hash": "e0f9956a3147"
+    },
+    {
+      "round_num": 2,
+      "role": "codex",
+      "filename": "round_02_codex.md",
+      "parse_valid": true,
+      "status": "OPEN_ISSUES",
+      "content_hash": "29658f58b6ca"
+    }
+  ],
+  "context_files": [
+    {
+      "path": "c:/Users/User/Projects AI/otago-deerstalkers/security-architecture-audit/plan.md",
+      "exists": true,
+      "included": true,
+      "content_hash": "41ff740e9468",
+      "truncated": false
+    }
+  ],
+  "issue_counter": 10,
+  "decision_counter": 4,
+  "rounds_completed": 2,
+  "outcome": "MAX_ROUNDS"
+}

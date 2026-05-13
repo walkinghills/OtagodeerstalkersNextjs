@@ -1,0 +1,18 @@
+constraints: 'Stack: Next.js 15 + Vercel (syd1, Pro tier at launch) + Supabase (Auth
+  + Postgres ap-southeast-2) + Cloudflare DNS. Single developer maintenance. Volunteer-led
+  incorporated society client (NZDA Otago Branch). Budget zero to twenty NZD per month
+  recurring. AU hosting acceptable per informal DOC arrangement. Gate codes rotate
+  weekly at 12:00 noon Monday NZT. All user actions logged. No formal MoU with DOC.'
+domain_context: ''
+goal: Phase 2 system that survives external security review and a Privacy Act complaint
+  without negligent-design findings, while remaining maintainable by a single volunteer
+  developer for an incorporated society club.
+non_negotiables: Audit log immutability enforced at DB level. Gate codes never logged
+  in plaintext outside the audit trail. Two-admin minimum on all infrastructure accounts
+  before Phase 2 launches. All user actions logged with actor + timestamp + IP + resource.
+  Volunteer agreement signed by club chair before any code touches DOC data. TOTP
+  second factor for operator and admin roles.
+success_criteria: Every material risk identified across security, NZ Privacy Act 2020
+  compliance, operational, and developer-personal-liability dimensions. Each risk
+  paired with concrete remediation step plus owner plus when (pre-launch / launch
+  / post-launch). Output usable as a pre-launch checklist.

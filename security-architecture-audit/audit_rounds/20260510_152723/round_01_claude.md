@@ -1,0 +1,171 @@
+---
+role: builder
+round: 2
+status: REVISED_PLAN
+proposed_resolutions:
+  - ref: A001
+    proposed_status: addressed
+    action: "Replaced T-APP-05 with audit middleware covering all authenticated requests (read + write + auth + authz events). Added T-DB-07 for SECURITY DEFINER RPC wrappers on sensitive reads. Added pass criteria #21–#24 covering read/login/failed-authz/role-change audit coverage."
+  - ref: A002
+    proposed_status: addressed
+    action: "Added T-APP-08 reveal RPC boundary spec: Supabase RPC decrypts server-side, response carries Cache-Control: no-store + Vercel x-vercel-cache bypass, code field stripped from structured logs via redaction allowlist, error handler returns opaque token. Added T-VERIFY-03 log-grep test that fails CI if test code plaintext appears in any Vercel/Supabase log export after E2E run."
+  - ref: A003
+    proposed_status: addressed
+    action: "Reframed T-DB-03 immutability claim: DB controls are tamper-evident for app/service roles only. Added T-OPS-07 daily signed hash-chain checkpoint exported to R2 Object Lock bucket (Compliance mode, 7y) and emailed to chair + secretary. Pass criteria #6 rewritten to require external checkpoint mismatch detection by privileged-role tamper test."
+  - ref: A004
+    proposed_status: addressed
+    action: "Added T-OPS-06 R2 bucket security: four buckets (raw-uploads, db-backups, audit-checkpoints, break-glass-exports), public access disabled, scoped tokens per bucket, lifecycle rules matching T-DB-06 retention, Object Lock on audit-checkpoints, monthly access-log review, two-admin token rotation."
+  - ref: A005
+    proposed_status: addressed
+    action: "T-OPS-04 fallback redesigned: replaced daily plaintext CSV with age-encrypted break-glass export (recipients = chair + one admin) in R2 break-glass bucket. Manual disclosures recorded on offline signed log, backfilled into audit_log within 24h via T-APP-09 backfill RPC. Added pass criteria #25 fallback drill."
+  - ref: A006
+    proposed_status: addressed
+    action: "Added T-GOV-01 cost model. Vercel Pro flagged as exception requiring committee minute (one Pro seat ≈ NZD 33/mo exceeds 20 NZD cap). Documented as approved exception or downgrade-to-Hobby decision pending. All other paid services confirmed inside free tiers or marked donated."
+new_decisions:
+  - id: D_TEMP_7
+    decision: "Audit emission is enforced via authenticated request middleware, not per-route ESLint."
+    rationale: "Lint catches missing calls only on mutating routes and is bypassable. Middleware wraps every authenticated handler and emits a structured audit row with actor + IP + UA + resource + action + outcome. Sensitive reads use SECURITY DEFINER RPCs that emit audit rows from inside the DB, so a forgotten middleware call still produces a DB-side trail."
+  - id: D_TEMP_8
+    decision: "Gate-code plaintext exists only in the response body of one RPC and the user's browser memory."
+    rationale: "Decryption happens inside a Supabase Edge Function calling pgsodium, never in Next.js server runtime. Response sets Cache-Control: no-store, Pragma: no-cache, and the structured logger has a field-name redaction list including 'code', 'plaintext', 'gate_code'. Errors return an opaque correlation ID; the actual code is never in an error string."
+  - id: D_TEMP_9
+    decision: "Audit immutability is achieved by external append-only evidence, not DB controls alone."
+    rationale: "Postgres cannot prevent a privileged role from rewriting a table. The honest immutability boundary is: (a) hash chain detects tampering after the fact, (b) daily checkpoint signed with an offline key and written to R2 Object Lock (Compliance mode, 7y retention) provides external evidence, (c) chair receives daily checkpoint hash by email so a silent rollback is detectable."
+  - id: D_TEMP_10
+    decision: "Vercel Pro is a committee-approved exception to the NZD 20 budget, or downgrade to Hobby."
+    rationale: "Pro tier was specified in constraints but conflicts with budget. Either (a) chair minutes the exception (~NZD 33/mo for one seat) and the cost model documents it, or (b) launch on Hobby with documented limitations (no team seats, function timeout 10s, no commercial use clause review). Decision required from chair before T-INFRA-01 closes."
+open_questions:
+  - "Chair decision on Vercel Pro exception vs. Hobby downgrade (blocks T-GOV-01 sign-off)."
+  - "Confirm R2 Object Lock available on chosen Cloudflare R2 plan (Object Lock GA'd 2024 but verify on free tier)."
+---
+
+### Scope
+
+Unchanged. Goal, constraints, and success criteria from Round 0 stand. Auditor exposed scope-vs-non-negotiable mismatches inside the plan, not in the framing.
+
+### Open Decisions
+
+**A001 — CONCEDE.** Auditor is right. ESLint-enforced audit calls on mutating routes leaves operator reads, login events, MFA events, role changes, failed authz, and exports uncovered, which directly violates the "all user actions logged" non-negotiable.
+
+Update:
+- T-APP-05 rewritten as middleware-based emitter covering every authenticated request.
+- New T-DB-07 wraps sensitive reads (permits, hunters, allocations export) in SECURITY DEFINER RPCs that emit audit rows DB-side, so coverage doesn't depend on the Next.js layer alone.
+- Login, MFA enrollment, MFA challenge pass/fail, password reset, role grant/revoke, and failed authorization (RLS denials surfaced via `pg_stat_statements` + app-side 401/403 emitter) all generate audit rows.
+- Pass criteria #21–#24 added.
+
+**A002 — CONCEDE.** Plaintext lifecycle was hand-waved. "Never stored" is necessary but insufficient when Vercel function logs, Edge Function logs, Sentry traces, and browser dev-tools cache can each capture plaintext.
+
+Update:
+- T-APP-08 (new) defines reveal RPC: pgsodium decrypt inside Supabase, response body is the only place plaintext appears. Middleware sets `Cache-Control: no-store`, `Pragma: no-cache`, `X-Vercel-Cache: BYPASS`. Structured logger has a field redaction allowlist; the reveal handler bypasses request/response body logging entirely. Errors carry only a correlation ID.
+- T-VERIFY-03 (new) runs E2E with seeded test codes, exports last hour of Vercel + Supabase logs, greps for the test code plaintext, fails CI if any hit.
+- Browser side: code rendered into a DOM node with `autocomplete="off"`, no `localStorage`/`sessionStorage` write, copy-to-clipboard clears after 30s.
+
+**A003 — CONCEDE.** I overclaimed. DB-local controls cannot bind a privileged role; "tamper-evident" is the honest word, "immutable" is not.
+
+Update:
+- T-DB-03 description rewritten: "tamper-evident at the application and service-role boundary; not a defense against compromised superuser/dashboard access."
+- T-OPS-07 (new): daily cron writes the audit hash-chain head + row count + signed (age or minisign with offline key) checkpoint to R2 bucket `audit-checkpoints` with Object Lock Compliance retention 7y. Chair + secretary receive the checkpoint hash by email.
+- Verifier script (T-DB-04) recomputes chain end-to-end and asserts equality with most recent R2 checkpoint; mismatch is a P0 incident.
+- Pass criteria #6 rewritten: "Privileged-role tamper test (manually rewrite a row as `postgres`) is detected within 24h by external checkpoint mismatch."
+
+**A004 — CONCEDE.** R2 was treated as a pipe, not a storage tier with its own controls.
+
+Update — T-OPS-06 (new):
+- Four buckets: `nzdao-raw-uploads`, `nzdao-db-backups`, `nzdao-audit-checkpoints`, `nzdao-break-glass`.
+- All buckets: public access disabled, default encryption on, no website hosting.
+- `audit-checkpoints`: Object Lock Compliance mode, 7y retention.
+- `db-backups`: Object Lock Governance mode, 30d minimum + monthly long-term copies retained 12 months.
+- `raw-uploads`: lifecycle delete after 30 days (originals only retained for forensic chain; parsed data lives in DB).
+- `break-glass`: lifecycle delete 90 days after upload; access requires chair + one admin token both present (split via `age` recipients, not bucket policy).
+- Scoped API tokens per bucket; rotation quarterly; tokens stored in club 1Password; two-admin rotation procedure.
+- Bucket access logs reviewed monthly by chair, finding logged in `docs/ops/ACCESS_REVIEW.md`.
+- Pass criteria #26–#28 added.
+
+**A005 — CONCEDE.** The fallback violated the plaintext non-negotiable. The cached CSV idea was lazy.
+
+Update — T-OPS-04 fallback section rewritten:
+- No plaintext CSV anywhere.
+- Daily encrypted break-glass export: current week's allocations encrypted with `age` to two recipients (chair key + admin key), written to R2 `break-glass` bucket.
+- During outage: chair + admin both present, decrypt locally, disclose codes by phone or email (member's choice); each disclosure recorded on a numbered offline paper log (template in `docs/ops/BREAK_GLASS_LOG.pdf`).
+- Within 24h of restoration: T-APP-09 (new) `/admin/backfill-disclosure` form takes the offline log entries and writes corresponding audit_log rows tagged `source=break_glass` with the paper log's serial number.
+- Pass criteria #25: fallback drill quarterly with documented decrypt + backfill round-trip; chair signs.
+
+**A006 — CONCEDE.** Budget constraint was acknowledged in the framing but not enforced in the plan. Vercel Pro alone (~USD 20 / NZD 33) can blow the cap.
+
+Update — T-GOV-01 (new) `docs/ops/COST_MODEL.md`:
+
+| Service | Monthly NZD | Tier | Owner | Overage alert |
+|---|---|---|---|---|
+| Vercel Pro (1 seat) | ~33 | Pro | committee exception | Vercel usage email |
+| Supabase | 0 | Free | dev | DB > 400MB email |
+| Cloudflare DNS + R2 | 0 | Free | dev | R2 > 8GB email |
+| 1Password Families | donated | existing | chair | n/a |
+| Upstash Redis | 0 | Free | dev | 8k req/day email |
+| Domain | ~2/mo amortized | annual | chair | n/a |
+| Email aliases (Workspace nonprofit) | 0 | nonprofit | chair | n/a |
+
+- **Launch blocker:** total recurring > NZD 20 requires committee minute. Currently Vercel Pro is the only line item that pushes over. Two paths: (a) committee approves exception, (b) launch on Hobby tier with documented limitations.
+- Pass criteria #29 added.
+
+### Steelman Risks
+
+Round 1 risks (R1–R14) stand. New risks exposed by audit:
+
+**R15 — Audit middleware bypassed by direct Supabase client calls from browser.** A member tier could query allowed views directly via `supabase-js` and bypass Next.js middleware audit. *Mitigation:* sensitive tables exposed only via SECURITY DEFINER RPCs (T-DB-07); RLS on base tables denies direct SELECT for non-admin roles; pgTAP test proves it.
+
+**R16 — R2 Object Lock not available or misconfigured.** Compliance mode is unrecoverable; Governance mode can be bypassed by token holder. *Mitigation:* T-OPS-06 verifies Object Lock at bucket creation; staging-bucket test proves a delete attempt fails before prod use.
+
+**R17 — Offline signing key for checkpoint lost.** No more verifiable checkpoints. *Mitigation:* age key pair printed + sealed in two physical envelopes (chair + secretary); rotation procedure in T-DOC-04.
+
+**R18 — Vercel Hobby tier "no commercial use" clause if club takes any donation through the site.** Could force migration mid-cycle. *Mitigation:* T-GOV-01 cost model flags this; if Hobby is chosen, ToS reviewed by chair; donation flow stays off-site.
+
+### Build Plan
+
+Changes from Round 0 only; unchanged tasks omitted for brevity.
+
+**Modified:**
+
+- T-APP-05 | `apps/members/src/middleware.ts`, `lib/audit.ts` | **Rewritten.** Middleware wraps every authenticated request: extract actor, IP (CF-Connecting-IP fallback x-forwarded-for), UA, route, method, response status; emit audit row asynchronously. Login/MFA/role events emitted from auth callbacks. Failed authorization (401/403) emitted with `outcome=denied`. | Tests: every authenticated route produces an audit row; denied request produces `outcome=denied` row; logout emits row.
+- T-DB-03 | `supabase/migrations/0003_audit_tamper_evidence.sql` | Renamed from "immutability." Same DB controls (REVOKE, trigger), but doc string clarifies tamper-evident, not tamper-proof. | Same tests; doc review.
+- T-OPS-04 | `docs/ops/RUNBOOK_INCIDENT.md`, `scripts/break_glass_export.ts`, `docs/ops/BREAK_GLASS_LOG.pdf` | Encrypted break-glass workflow; offline paper log; backfill RPC. | Quarterly drill with chair.
+
+**New:**
+
+- T-DB-07 | `supabase/migrations/0007_sensitive_read_rpcs.sql` | SECURITY DEFINER RPCs for permit list, hunter detail, allocation export; each RPC INSERTs to audit_log before returning rows. Base tables denied direct SELECT for member/operator roles. | pgTAP: direct SELECT denied; RPC returns rows AND emits audit row.
+- T-APP-08 | `supabase/functions/reveal-code/index.ts`, `apps/members/src/app/api/reveal/route.ts` | Reveal RPC boundary: Edge Function decrypts via pgsodium, returns single code + correlation ID. Next.js route proxies with `Cache-Control: no-store`, redacts `code` field from logger, error handler returns opaque ID only. | Unit + E2E + log-grep (T-VERIFY-03).
+- T-APP-09 | `apps/members/src/app/(admin)/backfill-disclosure/page.tsx` | Admin-only form: paste paper log serial + member + permit + timestamp + reason; writes audit row with `source=break_glass`, `evidence_ref=<serial>`. | E2E: backfill row appears in audit; non-admin denied.
+- T-OPS-06 | `docs/ops/R2_BUCKETS.md`, `terraform/r2.tf` (or Cloudflare dashboard runbook) | Four-bucket setup with policies above. | Public-access test (curl) returns 403; Object Lock delete-attempt test fails as expected.
+- T-OPS-07 | `scripts/audit_checkpoint.ts`, `supabase/cron/daily_checkpoint.sql` | Daily cron: read latest hash-chain head + row count, sign with offline-derived age key, write to R2 audit-checkpoints, email chair + secretary. | First checkpoint visible in R2; tamper test detected within 24h.
+- T-GOV-01 | `docs/ops/COST_MODEL.md` | Costed BoM; exception process; overage alert configuration. | Committee minute attached if exception used.
+- T-VERIFY-03 | `tests/e2e/no-plaintext-in-logs.spec.ts`, `scripts/grep_logs.ts` | After reveal E2E, fetch last hour of Vercel + Supabase logs, grep for seeded test code, assert zero hits. | CI red on any hit.
+
+### Pass Criteria
+
+Round 0 items 1–20 stand with these substitutions and additions:
+
+**Replaced:**
+
+- #6 (was: "verifier exits 0; tampering exits non-zero") → **#6 (new):** Privileged-role tamper test — manually UPDATE a row in `audit_log` as `postgres` role; daily checkpoint job detects mismatch and fires alert within 24h. Recovery procedure documented.
+
+**Added:**
+
+21. Audit middleware emits a row for every authenticated request including reads; pgTAP/Playwright proves 100% coverage on a representative request matrix (member view, operator view, admin view, login, logout, MFA enrol, MFA fail, role grant, role revoke, failed authz).
+22. Sensitive base tables (`permits`, `hunters`, `allocations`) deny direct SELECT for member and operator roles; only SECURITY DEFINER RPCs return rows; each RPC writes an audit row before returning.
+23. Login, MFA enrollment, MFA challenge pass/fail, password reset request, password reset complete each produce a distinct `action` value in audit_log (asserted by test).
+24. Role grant/revoke produces an audit row including granter, grantee, role, before/after.
+25. Break-glass fallback drill: chair + admin decrypt latest R2 break-glass export, simulate disclosure of one code, write paper log entry, backfill into audit_log via T-APP-09; pass/fail documented; quarterly recurrence in calendar.
+26. R2 buckets: `curl https://<bucket>.r2.dev/<key>` returns 403 for all four buckets; `wrangler r2 object delete` against an Object-Locked checkpoint fails with retention error.
+27. R2 access logs enabled; first monthly review entry filed in `docs/ops/ACCESS_REVIEW.md`.
+28. R2 token rotation runbook executed once before launch (proves two-admin procedure works).
+29. T-GOV-01 cost model: total recurring NZD ≤ 20, OR committee minute attached approving named exceptions; chair signature.
+30. T-VERIFY-03 log-grep test green on staging: seeded gate-code plaintext absent from Vercel + Supabase log exports for the last hour.
+
+### Not Claimed / Deferred
+
+Round 0 list stands, plus:
+
+- Real-time SIEM forwarding of audit_log to external store (deferred; daily R2 checkpoint is the launch-tier substitute).
+- Hardware Security Module for the offline checkpoint signing key (deferred; sealed paper backup is launch-tier substitute).
+- Automated R2 bucket policy as code via Terraform (optional; runbook is acceptable for launch given single-developer constraint).
+- Vercel log drain to external store (deferred unless committee approves spend).
+- WebAuthn for admin tier (still deferred; TOTP remains the non-negotiable floor).

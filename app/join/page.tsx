@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SITE_URL } from '@/lib/siteConfig'
+import { joinFaqSchema, jsonLdScript } from '@/lib/structuredData'
+import TrackedLink from '@/components/TrackedLink'
 
 export const metadata: Metadata = {
   title: 'Join',
@@ -9,9 +11,17 @@ export const metadata: Metadata = {
   alternates: { canonical: SITE_URL + '/join' },
 }
 
+const joinFaqs = [
+  { q: 'How much does membership cost?', a: 'NZDA membership is managed nationally. Pricing and signup are on the NZDA national website. Otago Branch members get local benefits including the $5 rifle range rate and $10 per night lodge access.' },
+  { q: 'What do I get as a member?', a: 'Rifle range access at member rate ($5 per visit), Blue Mountains Lodge ($10 per night for Otago Branch members), club hunts for deer, goat and tahr, the HUNTS hunter education course, the quarterly NZ Hunting & Wildlife magazine, public liability insurance, advocacy on hunters\' interests, and 50+ retailer discounts via the Deerstalkers app.' },
+  { q: 'How do I join?', a: 'Sign up on the NZDA national website. Select the Otago Branch as your local branch during signup. Membership fees are collected at that step.' },
+  { q: 'Where does the branch meet?', a: 'The clubrooms are at 53 Malvern Street, Woodhaugh, Dunedin. Meetings are held the second Monday of each month at 7:30pm (no meeting in January or April).' },
+]
+
 export default function JoinPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(joinFaqSchema(joinFaqs))} />
       <section className="page-hero page-hero--photo page-hero--join">
         <div className="container">
           <p className="breadcrumb"><Link href="/">Home</Link> / Join</p>
@@ -62,15 +72,15 @@ export default function JoinPage() {
               </div>
             </div>
             <aside className="feature-visual feature-visual--app">
-              <a href="https://www.deerstalkers.org.nz/membership/members/app" target="_blank" rel="noopener" className="app-promo">
+              <TrackedLink event="outbound_nzda_national_click" eventProps={{ link: 'app_promo' }} href="https://www.deerstalkers.org.nz/membership/members/app" target="_blank" rel="noopener" className="app-promo">
                 <img src="/images/nzda/Copy-of-APP-Homepage-Ads.png" alt="Download the official NZDA app" />
-              </a>
-              <p className="feature-visual-caption">Members get free access to the NZDA app and 50+ partner discounts &mdash; see below.</p>
+              </TrackedLink>
+              <p className="feature-visual-caption">Members get free access to the NZDA app and 50+ partner discounts, see below.</p>
             </aside>
           </div>
 
           <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-            <a href="https://www.deerstalkers.org.nz/branches/south-island/otago/" target="_blank" rel="noopener" className="btn btn-primary" style={{ fontSize: '1.05rem', padding: '0.85rem 2rem' }}>Join &rarr;</a>
+            <TrackedLink event="cta_join_click" href="https://www.deerstalkers.org.nz/branches/south-island/otago/" target="_blank" rel="noopener" className="btn btn-primary" style={{ fontSize: '1.05rem', padding: '0.85rem 2rem' }}>Join &rarr;</TrackedLink>
           </div>
         </div>
       </section>
@@ -101,7 +111,7 @@ export default function JoinPage() {
           <p className="partner-note">Plus Go Fuel, and dozens more across insurance, retail, freight, and outdoor brands. Full list visible inside the NZDA app.</p>
 
           <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <a href="https://www.deerstalkers.org.nz/branches/south-island/otago/" target="_blank" rel="noopener" className="btn btn-primary" style={{ fontSize: '1.05rem', padding: '0.85rem 2rem' }}>Join &rarr;</a>
+            <TrackedLink event="cta_join_click" href="https://www.deerstalkers.org.nz/branches/south-island/otago/" target="_blank" rel="noopener" className="btn btn-primary" style={{ fontSize: '1.05rem', padding: '0.85rem 2rem' }}>Join &rarr;</TrackedLink>
           </div>
         </div>
       </section>

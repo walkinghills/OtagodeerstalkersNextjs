@@ -1,17 +1,19 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SITE_URL } from '@/lib/siteConfig'
+import { lodgeSchema, jsonLdScript } from '@/lib/structuredData'
 
 export const metadata: Metadata = {
   title: 'Blue Mountains Lodge',
-  description: 'Blue Mountains Lodge near Beaumont – 16-bed bunkhouse, 6 private huts, meat storage, and dog kennels. Members from $10/night.',
-  openGraph: { title: 'Blue Mountains Lodge – NZDA Otago Branch', description: 'Blue Mountains Lodge near Beaumont – 16-bed bunkhouse, 6 private huts, meat storage, and dog kennels. Members from $10/night.' },
+  description: 'Blue Mountains Lodge near Beaumont, 16-bed bunkhouse, 6 private huts, meat storage, and dog kennels. Otago Branch members $10 per night.',
+  openGraph: { title: 'Blue Mountains Lodge – NZDA Otago Branch', description: 'Blue Mountains Lodge near Beaumont, 16-bed bunkhouse, 6 private huts, meat storage, and dog kennels. Otago Branch members $10 per night.' },
   alternates: { canonical: SITE_URL + '/lodge' },
 }
 
 export default function LodgePage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(lodgeSchema())} />
       <section className="page-hero page-hero--photo page-hero--lodge">
         <div className="container">
           <p className="breadcrumb"><Link href="/">Home</Link> / Lodge</p>

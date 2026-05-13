@@ -1,0 +1,360 @@
+{
+  "run_id": "20260429_214532",
+  "project_name": "nextjs-migration-audit",
+  "builder_model": "claude-opus-4-7",
+  "auditor_model": "gpt-5.5",
+  "max_rounds": 3,
+  "scope": {
+    "goal": "A complete, actionable migration plan that a developer can follow step by step, covering all pages, shared components, data systems, and deployment with no gaps or ambiguities.",
+    "constraints": "TypeScript only. Static export (output: export). Must deploy to Vercel. Must preserve all existing URLs exactly. No CMS. No database. Timetable and newsletter systems must continue to function.",
+    "success_criteria": "Plan is specific enough to implement without further research. Every existing page and system is accounted for. No hand-wavy steps."
+  },
+  "issues": [
+    {
+      "id": "A001",
+      "title": "A001 static export artifact shape is wrong",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": 3,
+      "builder_proposed": "addressed",
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "Export artifact shape is now pinned to `trailingSlash: false` `.html` outputs.",
+      "required_change": "",
+      "concrete_alternative": "Keep `trailingSlash: false` and `cleanUrls: true`; expect `out/range.html`, `out/lodge.html`, `out/newsletters/2026-03.html`; update pass criteria and curl tests accordingly."
+    },
+    {
+      "id": "A002",
+      "title": "A002 exact URL preservation contradicted by redirects",
+      "severity": "major",
+      "status": "open",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": null,
+      "builder_proposed": "addressed",
+      "auditor_proposed": "open",
+      "python_finalized": "open",
+      "claim": "Still wrong. Round 3 relies on `cleanUrls: true` making `/range.html` return 200, but Vercel documents that `cleanUrls: true` redirects extension paths with 308. `/newsletters/index.html` is also still missing from T29 and pass criteria. Source: https://vercel.com/docs/project-configuration/vercel-json#cleanurls",
+      "required_change": "Preserve existing `.html` and subdirectory index URLs with HTTP 200.",
+      "concrete_alternative": "Serve existing URLs with 200 via static aliases or Vercel rewrites; only redirect URLs proven non-canonical. Add explicit cases for `/index.html` and `/newsletters/index.html` so wildcards do not send them to `/index` or `/newsletters/index`."
+    },
+    {
+      "id": "A003",
+      "title": "A003 newsletter MDX is an injection surface",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": 2,
+      "builder_proposed": "addressed",
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "MDX was removed; automated newsletter content is no longer compiled as JavaScript.",
+      "required_change": "",
+      "concrete_alternative": "Emit Markdown or HTML fragments with frontmatter, sanitize with an allowlist, reject `script`, event attributes, `javascript:` URLs, MDX ESM, and expressions; add a malicious newsletter fixture before commit."
+    },
+    {
+      "id": "A004",
+      "title": "A004 Header hook placement cannot build as written",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": 2,
+      "builder_proposed": "addressed",
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "`usePathname` moved into a Client Component.",
+      "required_change": "",
+      "concrete_alternative": "Create `components/NavLinks.tsx` with `'use client'` and `usePathname`; import it from a server `Header`, or mark `Header` client. `next build` must be the acceptance test."
+    },
+    {
+      "id": "A005",
+      "title": "A005 CSP check is insufficient",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": 3,
+      "builder_proposed": "addressed",
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "CSP is now explicitly compatible with static export and tested against preview; `unsafe-inline` is documented as residual risk.",
+      "required_change": "",
+      "concrete_alternative": "Run Playwright against the Vercel preview with CSP enforced; fail on CSP console violations and assert hamburger behavior. If needed, add documented script hashes or a minimal compatible `script-src`."
+    },
+    {
+      "id": "A006",
+      "title": "A006 timetable validation is not implementable",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": 2,
+      "builder_proposed": "addressed",
+      "auditor_proposed": "open",
+      "python_finalized": "resolved",
+      "claim": "Reopened. D003/pass #5 say Python validates against JSON Schema generated from Zod, but no task creates, commits, regenerates, or checks that schema artifact. T18 still implies Python validation against `lib/timetable.ts`, which Python cannot import.",
+      "required_change": "Specify the schema artifact and generation/check workflow.",
+      "concrete_alternative": "Add `zod`, export `TimetableSchema`, create `npm run validate:timetable`, and call it from local tests plus `sync-timetable.yml`; or use JSON Schema consumed by both Python and TypeScript."
+    },
+    {
+      "id": "A007",
+      "title": "A007 workflows can commit broken deploys",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": 2,
+      "builder_proposed": "addressed",
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "Workflows now gate commits on validation and `npm run build`.",
+      "required_change": "",
+      "concrete_alternative": "In both workflows: generate, validate, run `npm ci && npm run build`, then commit only on success; on failure, upload artifacts and exit nonzero without committing."
+    },
+    {
+      "id": "A008",
+      "title": "A008 copied CSS can break moved asset URLs",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": 2,
+      "builder_proposed": "addressed",
+      "auditor_proposed": "open",
+      "python_finalized": "resolved",
+      "claim": "Reopened. T02 still says copy `css/styles.css` verbatim while T22 moves assets to `public/images`. If the copied CSS contains relative `url('../images/...')`, Next will resolve it from `app/globals.css` and either fail build or emit broken asset URLs.",
+      "required_change": "Make CSS asset URL migration explicit.",
+      "concrete_alternative": "Convert image/font URLs in global CSS to root-public paths like `url('/images/hero-bg.svg')`; add a build check and screenshot assertion that the hero image renders."
+    },
+    {
+      "id": "A009",
+      "title": "A009 visual diff criteria are hand-wavy",
+      "severity": "minor",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": 2,
+      "builder_proposed": "addressed",
+      "auditor_proposed": "open",
+      "python_finalized": "resolved",
+      "claim": "Reopened. Carried-forward tasks still say only `Visual diff`; the full pass criteria do not define tool, baseline URL, viewport set, masks, or failure threshold.",
+      "required_change": "Make visual parity objectively testable.",
+      "concrete_alternative": "Use Playwright screenshots for every migrated route at 360x800 and 1280x900 against current production, set an explicit diff threshold, and mask only documented dynamic timetable content."
+    },
+    {
+      "id": "A010",
+      "title": "A010 missing Python dependency contract",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 2,
+      "round_resolved": 3,
+      "builder_proposed": "addressed",
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "Workflow Python dependencies are now pinned and installed via `scripts/requirements.txt`.",
+      "required_change": "",
+      "concrete_alternative": "Add `requirements.txt` with exact `jsonschema` and `bleach` versions; T20/T21 must run `python -m pip install -r requirements.txt` before generators."
+    },
+    {
+      "id": "A011",
+      "title": "A011 newsletter sanitization behavior is contradictory",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 2,
+      "round_resolved": 3,
+      "builder_proposed": "addressed",
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "Newsletter content policy is now internally consistent: `.md`, no MDX, no raw HTML, renderer without `rehype-raw`.",
+      "required_change": "",
+      "concrete_alternative": "Use strict CommonMark/GFM only: generator rejects raw HTML/JS tokens before commit, renderer uses `react-markdown` without `rehype-raw`, and T21 expects known-bad input to fail without committing."
+    },
+    {
+      "id": "A012",
+      "title": "A012 preview test execution is not wired",
+      "severity": "major",
+      "status": "open",
+      "raised_by": "auditor",
+      "round_opened": 2,
+      "round_resolved": null,
+      "builder_proposed": "addressed",
+      "auditor_proposed": "open",
+      "python_finalized": "open",
+      "claim": "Still incomplete. T30's shown command captures `PREVIEW_URL` but does not write `.preview-url` or export it to T28/T29/T31. `vercel pull` and `vercel build` also omit the token used by deploy.",
+      "required_change": "Make preview URL acquisition and env propagation executable.",
+      "concrete_alternative": "Add T30: `vercel build && vercel deploy --prebuilt`, capture the returned URL into `PLAYWRIGHT_BASE_URL`, then run CSP, visual, and Lighthouse checks against that URL before production promotion."
+    },
+    {
+      "id": "A013",
+      "title": "A013",
+      "severity": "major",
+      "status": "open",
+      "raised_by": "auditor",
+      "round_opened": 3,
+      "round_resolved": null,
+      "builder_proposed": null,
+      "auditor_proposed": "open",
+      "python_finalized": "open",
+      "claim": "New. Pass #1 says `out/` produces exactly the listed HTML/public files. Next static export produces HTML/CSS/JS assets, including `_next/static/**`, so the criterion is impossible for a functional build. Source: https://nextjs.org/docs/app/guides/static-exports",
+      "required_change": "Stop asserting an impossible exact output tree.",
+      "concrete_alternative": "Assert required route/public artifacts exist and no unexpected routable `.html` pages exist, while explicitly allowing `_next/static/**` and other Next build assets."
+    },
+    {
+      "id": "A014",
+      "title": "A014",
+      "severity": "major",
+      "status": "open",
+      "raised_by": "auditor",
+      "round_opened": 3,
+      "round_resolved": null,
+      "builder_proposed": null,
+      "auditor_proposed": "open",
+      "python_finalized": "open",
+      "claim": "New. T14/T15/pass #5 require `gray-matter`, `react-markdown`, `remark-gfm`, `zod`, schema generation tooling, Playwright, Vitest, and LHCI, but no task installs or pins npm dependencies. `next build`/tests will fail with missing modules.",
+      "required_change": "Add the npm dependency contract.",
+      "concrete_alternative": "Add T01a to install runtime/dev packages, commit `package-lock.json`, and verify with `npm ci && npm run build && npm test`."
+    },
+    {
+      "id": "A015",
+      "title": "A015",
+      "severity": "major",
+      "status": "open",
+      "raised_by": "auditor",
+      "round_opened": 3,
+      "round_resolved": null,
+      "builder_proposed": null,
+      "auditor_proposed": "open",
+      "python_finalized": "open",
+      "claim": "New. T19 rejects raw HTML, T24 leaves the Cloudflare worker unchanged, and R11 admits existing newsletter content contains `<a>`, `<strong>`, and `<em>`. If the worker forwards HTML email bodies, the publish workflow now fails by design.",
+      "required_change": "Define the end-to-end newsletter input contract.",
+      "concrete_alternative": "Either update the worker to dispatch Markdown only and test that contract, or move HTML-to-Markdown conversion into `generate_newsletter.py` with pinned `markdownify`, then reject only after conversion and validation."
+    },
+    {
+      "id": "A016",
+      "title": "A016",
+      "severity": "major",
+      "status": "open",
+      "raised_by": "auditor",
+      "round_opened": 3,
+      "round_resolved": null,
+      "builder_proposed": null,
+      "auditor_proposed": "open",
+      "python_finalized": "open",
+      "claim": "New. Pass #13 says the timetable workflow commits `data/timetable.json` only and no other tracked file, but T18/T20 still carry forward updating `scripts/range_timetable.csv`. That contradicts the snapshot diff workflow.",
+      "required_change": "Make timetable snapshot ownership consistent.",
+      "concrete_alternative": "Either commit both `data/timetable.json` and `scripts/range_timetable.csv` when upstream CSV changes, or delete the CSV snapshot mechanism and compare against committed JSON only."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "D001",
+      "decision": "Newsletter content format is sanitized Markdown (`.md`), not MDX.",
+      "rationale": "Email-sourced content is untrusted. MDX compiles to JS; Markdown + rehype-sanitize cannot.",
+      "round_set": 1,
+      "status": "accepted"
+    },
+    {
+      "id": "D002",
+      "decision": "Existing `.html` URLs return 200; clean URLs are added, not substituted.",
+      "rationale": "Constraint says preserve every existing URL exactly. A 308 is not preservation.",
+      "round_set": 1,
+      "status": "accepted"
+    },
+    {
+      "id": "D003",
+      "decision": "Shared validation contract is a JSON Schema generated from a zod source of truth.",
+      "rationale": "Python script and TypeScript app must agree without duplicating definitions.",
+      "round_set": 1,
+      "status": "accepted"
+    },
+    {
+      "id": "D004",
+      "decision": "CSP for static export uses `script-src 'self' 'unsafe-inline'`; nonce/hash CSP is deferred.",
+      "rationale": "Next App Router with `output: 'export'` injects an inline hydration script per route at build time. Without a runtime, nonces are impossible; precomputing hashes for every Next-generated inline script is fragile across Next minor versions. `'unsafe-inline'` is the documented escape hatch and the site has no third-party scripts. Tracked as a follow-up in README.",
+      "round_set": 2,
+      "status": "accepted"
+    },
+    {
+      "id": "D005",
+      "decision": "Newsletter format is `.md` (CommonMark + GFM) rendered by `react-markdown`. No MDX, no raw HTML.",
+      "rationale": "Email-sourced content is untrusted. Dropping MDX removes the JS-execution surface entirely; dropping raw HTML removes the XSS surface. Renderer escapes any HTML it sees. Generator rejects raw HTML tokens at write time as defense-in-depth.",
+      "round_set": 2,
+      "status": "accepted"
+    },
+    {
+      "id": "D006",
+      "decision": "Legacy `.html` URLs are preserved as the actual served artifact (HTTP 200), not redirected.",
+      "rationale": "Constraint: 'Must preserve all existing URLs exactly.' Static export naturally emits `out/range.html`. With `cleanUrls: true`, both `/range` and `/range.html` serve the same file with 200. No redirect, no URL change visible to clients or crawlers.",
+      "round_set": 2,
+      "status": "accepted"
+    }
+  ],
+  "round_manifest": [
+    {
+      "round_num": 1,
+      "role": "codex",
+      "filename": "round_01_codex.md",
+      "parse_valid": true,
+      "status": "OPEN_ISSUES",
+      "content_hash": "dc067afa038e"
+    },
+    {
+      "round_num": 1,
+      "role": "claude",
+      "filename": "round_01_claude.md",
+      "parse_valid": true,
+      "status": "REVISED_PLAN",
+      "content_hash": "f594801a4858"
+    },
+    {
+      "round_num": 2,
+      "role": "codex",
+      "filename": "round_02_codex.md",
+      "parse_valid": true,
+      "status": "OPEN_ISSUES",
+      "content_hash": "903a2c995beb"
+    },
+    {
+      "round_num": 2,
+      "role": "claude",
+      "filename": "round_02_claude.md",
+      "parse_valid": true,
+      "status": "REVISED_PLAN",
+      "content_hash": "5dd343140efa"
+    },
+    {
+      "round_num": 3,
+      "role": "codex",
+      "filename": "round_03_codex.md",
+      "parse_valid": true,
+      "status": "OPEN_ISSUES",
+      "content_hash": "189f493e66ba"
+    }
+  ],
+  "context_files": [
+    {
+      "path": "otago-deerstalkers/migration-plan-draft.md",
+      "exists": true,
+      "included": true,
+      "content_hash": "5451cc80b7dd",
+      "truncated": false
+    },
+    {
+      "path": "otago-deerstalkers/CLAUDE.md",
+      "exists": true,
+      "included": true,
+      "content_hash": "dfe07198c54c",
+      "truncated": false
+    }
+  ],
+  "issue_counter": 16,
+  "decision_counter": 6,
+  "rounds_completed": 3,
+  "outcome": "MAX_ROUNDS"
+}
