@@ -74,7 +74,7 @@ export default function HomePage() {
                 <path d="M12 15v3"/><path d="M9 18h6"/><path d="M7 21h10"/>
               </svg>
               <h3>Competitions</h3>
-              <p>Trophy, photography, and more &#8212; annual competitions for members.</p>
+              <p>Trophy, photography, and more. Annual competitions for members.</p>
             </Link>
           </div>
         </div>
@@ -197,7 +197,7 @@ export default function HomePage() {
               <div className="event-date"><strong>Jun</strong><span>27</span></div>
               <div className="event-info">
                 <h4>Annual Deer Hunt</h4>
-                <p>Limited spots &#8212; register your interest at any club meeting.</p>
+                <p>Limited spots. Register your interest at any club meeting.</p>
               </div>
             </div>
             <div className="event-item">
@@ -237,11 +237,11 @@ export default function HomePage() {
               <cite>Otago Branch Member</cite>
             </div>
             <div className="quote-card">
-              <blockquote>&ldquo;The lodge at Beaumont is a genuine asset. $10 a night for your own base in the Blue Mountains &#8212; it&apos;s hard to beat. We use it two or three trips a year.&rdquo;</blockquote>
+              <blockquote>&ldquo;The lodge at Beaumont is a genuine asset. $10 a night for your own base in the Blue Mountains, hard to beat. We use it two or three trips a year.&rdquo;</blockquote>
               <cite>Otago Branch Member</cite>
             </div>
             <div className="quote-card">
-              <blockquote>&ldquo;Saturday afternoons at Leith Valley &#8212; there&apos;s always someone to help you sight in, and for $5 it&apos;s unbeatable. The range officers know their stuff.&rdquo;</blockquote>
+              <blockquote>&ldquo;Saturday afternoons at Leith Valley: there&apos;s always someone to help you sight in, and for $5 it&apos;s unbeatable. The range officers know their stuff.&rdquo;</blockquote>
               <cite>Otago Branch Member</cite>
             </div>
           </div>
