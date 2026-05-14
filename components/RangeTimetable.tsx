@@ -49,7 +49,7 @@ export default function RangeTimetable({ timetable }: { timetable: Timetable }) 
     <div>
       <div className="timetable-next-open">
         <span className="tno-label">Next open date</span>
-        <span className="tno-date">{nextOpenLabel ?? '—'}</span>
+        <span className="tno-date">{nextOpenLabel ?? 'TBC'}</span>
         <span className="tno-note">
           Always check the{' '}
           <a href="https://www.facebook.com/groups/1195200207197835/" target="_blank" rel="noopener">

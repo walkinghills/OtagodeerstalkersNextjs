@@ -1,5 +1,5 @@
 /**
- * Single source for breadcrumb labels — drives both the visible breadcrumb UI
+ * Single source for breadcrumb labels. Drives both the visible breadcrumb UI
  * and the BreadcrumbList JSON-LD so they cannot drift.
  */
 import { SITE_URL } from './siteConfig'

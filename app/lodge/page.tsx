@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { SITE_URL } from '@/lib/siteConfig'
+import { SITE_URL, OG_DEFAULTS } from '@/lib/siteConfig'
 import { lodgeSchema, jsonLdScript } from '@/lib/structuredData'
 
 export const metadata: Metadata = {
   title: 'Blue Mountains Lodge',
   description: 'Blue Mountains Lodge near Beaumont, 16-bed bunkhouse, 6 private huts, meat storage, and dog kennels. Otago Branch members $10 per night.',
-  openGraph: { title: 'Blue Mountains Lodge – NZDA Otago Branch', description: 'Blue Mountains Lodge near Beaumont, 16-bed bunkhouse, 6 private huts, meat storage, and dog kennels. Otago Branch members $10 per night.' },
+  openGraph: { ...OG_DEFAULTS, title: 'Blue Mountains Lodge – NZDA Otago Branch', description: 'Blue Mountains Lodge near Beaumont, 16-bed bunkhouse, 6 private huts, meat storage, and dog kennels. Otago Branch members $10 per night.' },
   alternates: { canonical: SITE_URL + '/lodge' },
 }
 

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { SITE_URL } from '@/lib/siteConfig'
+import { SITE_URL, OG_DEFAULTS } from '@/lib/siteConfig'
 import JoinButton from '@/components/JoinButton'
 import { webPageSchema, breadcrumbSchema, jsonLdScript } from '@/lib/structuredData'
 import { buildCrumbs } from '@/lib/breadcrumbs'
@@ -8,7 +8,7 @@ import { buildCrumbs } from '@/lib/breadcrumbs'
 export const metadata: Metadata = {
   title: 'Club Hunts',
   description: 'Otago Deerstalkers club hunts – annual organised hunting trips for members including deer, goat, tahr, and wallaby.',
-  openGraph: { title: 'Club Hunts – NZDA Otago Branch', description: 'Otago Deerstalkers club hunts – annual organised hunting trips for members including deer, goat, tahr, and wallaby.' },
+  openGraph: { ...OG_DEFAULTS, title: 'Club Hunts – NZDA Otago Branch', description: 'Otago Deerstalkers club hunts: annual organised hunting trips for members including deer, goat, tahr, and wallaby.' },
   alternates: { canonical: SITE_URL + '/club-hunts' },
 }
 
@@ -17,7 +17,7 @@ export default function ClubHuntsPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(webPageSchema({
-        title: 'Club Hunts — NZDA Otago Branch',
+        title: 'Club Hunts, NZDA Otago Branch',
         description: 'Otago Deerstalkers organised club hunts for deer, goat, tahr, and wallaby.',
         url: SITE_URL + '/club-hunts',
       }))} />

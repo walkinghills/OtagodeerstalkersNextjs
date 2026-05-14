@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { SITE_URL } from '@/lib/siteConfig'
+import { SITE_URL, OG_DEFAULTS } from '@/lib/siteConfig'
 import JoinButton from '@/components/JoinButton'
 import { webPageSchema, breadcrumbSchema, jsonLdScript } from '@/lib/structuredData'
 import { buildCrumbs } from '@/lib/breadcrumbs'
@@ -8,7 +8,7 @@ import { buildCrumbs } from '@/lib/breadcrumbs'
 export const metadata: Metadata = {
   title: 'Competitions',
   description: 'Annual Otago Deerstalkers competitions – trophy judging, photography, and more. Open to branch members.',
-  openGraph: { title: 'Competitions – NZDA Otago Branch', description: 'Annual Otago Deerstalkers competitions – trophy judging, photography, and more. Open to branch members.' },
+  openGraph: { ...OG_DEFAULTS, title: 'Competitions – NZDA Otago Branch', description: 'Annual Otago Deerstalkers competitions: trophy judging, photography, and more. Open to branch members.' },
   alternates: { canonical: SITE_URL + '/competitions' },
 }
 
@@ -25,7 +25,7 @@ export default function CompetitionsPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(webPageSchema({
-        title: 'Competitions — NZDA Otago Branch',
+        title: 'Competitions, NZDA Otago Branch',
         description: 'Annual trophy, photography, and video competitions open to members of the Otago Branch.',
         url: SITE_URL + '/competitions',
       }))} />

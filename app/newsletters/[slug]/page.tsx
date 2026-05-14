@@ -3,7 +3,7 @@ import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { getNewsletter, getAllNewsletterSlugs, formatNewsletterDate } from '@/lib/newsletters'
-import { SITE_URL } from '@/lib/siteConfig'
+import { SITE_URL, OG_DEFAULTS } from '@/lib/siteConfig'
 import { notFound } from 'next/navigation'
 import { articleSchema, breadcrumbSchema, jsonLdScript } from '@/lib/structuredData'
 import { buildCrumbs } from '@/lib/breadcrumbs'
@@ -25,6 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: nl.title,
     description: nl.excerpt,
     openGraph: {
+      ...OG_DEFAULTS,
       title: `${nl.title} – NZDA Otago Branch`,
       description: nl.excerpt,
       type: 'article',

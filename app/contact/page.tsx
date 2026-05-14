@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { SITE_URL } from '@/lib/siteConfig'
+import { SITE_URL, OG_DEFAULTS } from '@/lib/siteConfig'
 import { contactPageSchema, breadcrumbSchema, jsonLdScript } from '@/lib/structuredData'
 import { buildCrumbs } from '@/lib/breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'Contact',
   description: 'Contact the NZDA Otago Branch: clubrooms address, meeting times, and how to get in touch.',
-  openGraph: { title: 'Contact – NZDA Otago Branch', description: 'Contact the NZDA Otago Branch: clubrooms address, meeting times, and how to get in touch.' },
+  openGraph: { ...OG_DEFAULTS, title: 'Contact – NZDA Otago Branch', description: 'Contact the NZDA Otago Branch: clubrooms address, meeting times, and how to get in touch.' },
   alternates: { canonical: SITE_URL + '/contact' },
 }
 

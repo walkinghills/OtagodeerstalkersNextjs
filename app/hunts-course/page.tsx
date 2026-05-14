@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { SITE_URL } from '@/lib/siteConfig'
+import { SITE_URL, OG_DEFAULTS } from '@/lib/siteConfig'
 import { huntsCourseSchema, jsonLdScript } from '@/lib/structuredData'
 
 export const metadata: Metadata = {
   title: 'HUNTS Course',
   description: 'HUNTS, the Hunter National Training Scheme. New to hunting? Learn safe and responsible hunting from experienced NZDA instructors.',
-  openGraph: { title: 'HUNTS Hunter Education Course – NZDA Otago Branch', description: 'HUNTS, the Hunter National Training Scheme. New to hunting? Learn safe and responsible hunting from experienced NZDA instructors.' },
+  openGraph: { ...OG_DEFAULTS, title: 'HUNTS Hunter Education Course – NZDA Otago Branch', description: 'HUNTS, the Hunter National Training Scheme. New to hunting? Learn safe and responsible hunting from experienced NZDA instructors.' },
   alternates: { canonical: SITE_URL + '/hunts-course' },
 }
 

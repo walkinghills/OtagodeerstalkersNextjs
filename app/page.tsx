@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { SITE_URL } from '@/lib/siteConfig'
+import { SITE_URL, OG_DEFAULTS } from '@/lib/siteConfig'
 import { organizationSchema, jsonLdScript } from '@/lib/structuredData'
 import JoinButton from '@/components/JoinButton'
 
@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'Otago Deerstalkers Association',
   description: 'The Otago Branch of the New Zealand Deerstalkers Association, supporting hunters across the Otago region.',
   openGraph: {
+    ...OG_DEFAULTS,
     title: 'Otago Deerstalkers Association – NZDA Otago Branch',
     description: 'The Otago Branch of the New Zealand Deerstalkers Association, supporting hunters across the Otago region.',
   },

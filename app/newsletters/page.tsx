@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getAllNewsletters, formatNewsletterDate } from '@/lib/newsletters'
-import { SITE_URL } from '@/lib/siteConfig'
+import { SITE_URL, OG_DEFAULTS } from '@/lib/siteConfig'
 import TrackedNextLink from '@/components/TrackedNextLink'
 import { collectionPageSchema, breadcrumbSchema, jsonLdScript } from '@/lib/structuredData'
 import { buildCrumbs } from '@/lib/breadcrumbs'
@@ -9,7 +9,7 @@ import { buildCrumbs } from '@/lib/breadcrumbs'
 export const metadata: Metadata = {
   title: 'Newsletter',
   description: 'Stay up to date with the Otago Branch. Read the latest news from the committee, range updates, and upcoming events.',
-  openGraph: { title: 'Newsletter – NZDA Otago Branch', description: 'Latest news and updates from the Otago Deerstalkers.' },
+  openGraph: { ...OG_DEFAULTS, title: 'Newsletter – NZDA Otago Branch', description: 'Latest news and updates from the Otago Deerstalkers.' },
   alternates: { canonical: SITE_URL + '/newsletters' },
 }
 
@@ -20,7 +20,7 @@ export default function NewslettersPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(collectionPageSchema({
-        title: 'Newsletter — NZDA Otago Branch',
+        title: 'Newsletter, NZDA Otago Branch',
         description: 'Monthly newsletter archive for the Otago Branch.',
         url: SITE_URL + '/newsletters',
       }))} />

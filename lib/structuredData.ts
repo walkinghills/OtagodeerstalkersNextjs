@@ -1,7 +1,7 @@
 import { SITE_URL } from './siteConfig'
 
 const ORG_NAME = 'NZDA Otago Branch'
-const ORG_LEGAL_NAME = 'New Zealand Deerstalkers Association — Otago Branch'
+const ORG_LEGAL_NAME = 'New Zealand Deerstalkers Association, Otago Branch'
 const NATIONAL_URL = 'https://www.deerstalkers.org.nz'
 const CLUBROOMS_ADDRESS = {
   '@type': 'PostalAddress',

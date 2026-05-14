@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { SITE_URL } from '@/lib/siteConfig'
+import { SITE_URL, OG_DEFAULTS } from '@/lib/siteConfig'
 import { joinFaqSchema, jsonLdScript } from '@/lib/structuredData'
 import TrackedLink from '@/components/TrackedLink'
 import ExternalJoinButton from '@/components/ExternalJoinButton'
@@ -8,7 +8,7 @@ import ExternalJoinButton from '@/components/ExternalJoinButton'
 export const metadata: Metadata = {
   title: 'Join',
   description: 'Join the NZDA Otago Branch and gain access to the Chaz Forsyth Rifle Range, Blue Mountains Lodge, club hunts, and more.',
-  openGraph: { title: 'Join the Otago Deerstalkers – NZDA', description: 'Join the NZDA Otago Branch and gain access to the Chaz Forsyth Rifle Range, Blue Mountains Lodge, club hunts, and more.' },
+  openGraph: { ...OG_DEFAULTS, title: 'Join the Otago Deerstalkers – NZDA', description: 'Join the NZDA Otago Branch and gain access to the Chaz Forsyth Rifle Range, Blue Mountains Lodge, club hunts, and more.' },
   alternates: { canonical: SITE_URL + '/join' },
 }
 
@@ -91,7 +91,7 @@ export default function JoinPage() {
           <div className="section-heading">
             <h2>Discounts at 50+ retail and service partners</h2>
             <div className="divider"></div>
-            <p>Your NZDA membership unlocks ongoing discounts through the Deerstalkers App &mdash; from your weekly fuel to a backcountry helicopter flight.</p>
+            <p>Your NZDA membership unlocks ongoing discounts through the Deerstalkers App, from your weekly fuel to a backcountry helicopter flight.</p>
           </div>
 
           <div className="partner-grid">
