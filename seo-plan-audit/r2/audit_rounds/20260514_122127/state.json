@@ -1,0 +1,293 @@
+{
+  "run_id": "20260514_122127",
+  "project_name": "r2",
+  "builder_model": "claude-opus-4-7",
+  "auditor_model": "gpt-5.5",
+  "max_rounds": 2,
+  "scope": {
+    "goal": "A SEO/AI-indexing/analytics build that delivers measurable conversion insight and search-discoverability gains within 30 days, while remaining maintainable indefinitely by a single volunteer developer for a small NZ club brochure site.",
+    "constraints": "Stack: Next.js 15 + Vercel + GA4 (G-B62VVGCGP1) + Vercel Analytics (pageviews only, per locked D-VA). Budget zero NZD recurring. No consent banner; footer privacy line only. Locked CSP whitelist must not be broadened. House style: no em dashes in new content. Single volunteer developer maintenance. No infra that needs babysitting. Custom events to GA4 only (per locked D-VA, D-GA4-GATE).",
+    "success_criteria": "Each remaining build item delivers a question it answers, has zero ongoing maintenance burden, and is feasible inside the existing stack. T0 probe is a hard gate that actually proves event delivery, not just config presence. Join funnel answers: of visitors clicking Join on any page, how many reach the external NZDA signup, broken down by source page. Direct visits distinguished from internal-funnel traffic."
+  },
+  "issues": [
+    {
+      "id": "A001",
+      "title": "A101",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": null,
+      "builder_proposed": null,
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "204-response probing was replaced with event_callback plus DebugView.",
+      "required_change": "",
+      "concrete_alternative": ""
+    },
+    {
+      "id": "A002",
+      "title": "A102",
+      "severity": "minor",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": null,
+      "builder_proposed": null,
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "TTL is now explicitly tied to GA4 session_timeout.",
+      "required_change": "",
+      "concrete_alternative": ""
+    },
+    {
+      "id": "A003",
+      "title": "A103",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": 2,
+      "builder_proposed": null,
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "Same-site /join arrivals are no longer classified as direct; referrer_fallback addresses the original direct-vs-internal issue.",
+      "required_change": "",
+      "concrete_alternative": "On /join, derive internal-funnel fallback from document.referrer when referrer origin is the site and pathname is not /join; emit join_source_page from normalized referrer path with join_origin_method='referrer_fallback'."
+    },
+    {
+      "id": "A004",
+      "title": "A104",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": 2,
+      "builder_proposed": null,
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "Manual dynamic-route mapping and entropy fallback were removed in favor of generated route templates.",
+      "required_change": "",
+      "concrete_alternative": "Generate route templates at build/test time from app/**/[param]/page.tsx and fail CI if a dynamic route lacks a normalizer fixture."
+    },
+    {
+      "id": "A005",
+      "title": "A106",
+      "severity": "minor",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": null,
+      "builder_proposed": null,
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "Undefined gtag behavior now has explicit no-request and no-console-error verification.",
+      "required_change": "",
+      "concrete_alternative": ""
+    },
+    {
+      "id": "A006",
+      "title": "A107",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": 2,
+      "builder_proposed": null,
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "debug_mode is now checked at both the helper boundary and emitted build artifacts.",
+      "required_change": "",
+      "concrete_alternative": "After next build, run a recursive fixed-string search for debug_mode across .next excluding cache and trace artifacts, or better assert the built analytics helper never serializes debug_mode when NEXT_PUBLIC_VERCEL_ENV=production."
+    },
+    {
+      "id": "A007",
+      "title": "A109",
+      "severity": "minor",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": null,
+      "builder_proposed": null,
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "Probe now explicitly uses transport_type:'beacon'.",
+      "required_change": "",
+      "concrete_alternative": ""
+    },
+    {
+      "id": "A008",
+      "title": "A111",
+      "severity": "major",
+      "status": "open",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": null,
+      "builder_proposed": null,
+      "auditor_proposed": "open",
+      "python_finalized": "open",
+      "claim": "The T0 Playwright gate still proves request creation, not event delivery. page.on('request') fires before network completion, and the snippet never asserts response status or request failure state.",
+      "required_change": "Gate on a completed GA4 collect response, not request presence.",
+      "concrete_alternative": "Use Playwright to intercept the outgoing GA4 collect request and assert required event name, measurement ID, and params, then keep DebugView as a documented manual confirmation before production activation."
+    },
+    {
+      "id": "A009",
+      "title": "A112",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": 2,
+      "builder_proposed": null,
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "The join-funnel event names and required parameters are now specified.",
+      "required_change": "",
+      "concrete_alternative": "Specify cta_join_internal_click and cta_join_external_click params: join_source_page, current_page, link_destination_class, join_origin_method, and debug_mode only outside production; add tests asserting no URL query, email, name, or free-text values are emitted."
+    },
+    {
+      "id": "A010",
+      "title": "A113",
+      "severity": "major",
+      "status": "resolved",
+      "raised_by": "auditor",
+      "round_opened": 1,
+      "round_resolved": 2,
+      "builder_proposed": null,
+      "auditor_proposed": "resolved",
+      "python_finalized": "resolved",
+      "claim": "sessionStorage denied/full behavior now has explicit unit and Playwright coverage.",
+      "required_change": "",
+      "concrete_alternative": "Unit test get/set origin with sessionStorage throwing SecurityError and QuotaExceededError; Playwright init script overrides Storage.prototype.setItem/getItem to throw, then clicks Join and asserts no UI exception and external click falls back to direct or referrer_fallback."
+    },
+    {
+      "id": "A011",
+      "title": "A011",
+      "severity": "major",
+      "status": "open",
+      "raised_by": "auditor",
+      "round_opened": 2,
+      "round_resolved": null,
+      "builder_proposed": null,
+      "auditor_proposed": "open",
+      "python_finalized": "open",
+      "claim": "The schema is internally contradictory: D001 says direct omits join_source_page, while the Build Plan and pass criteria require join_source_page='(direct)'; D004 also lists join_source_page on internal clicks while the schema omits it.",
+      "required_change": "Make the event schema single-source and consistent before implementation.",
+      "concrete_alternative": "Use a TypeScript discriminated union: internal events have current_page only; external events always have join_source_page, using '(direct)' for direct. Update D001, D004, tests, and docs to match."
+    },
+    {
+      "id": "A012",
+      "title": "A012",
+      "severity": "major",
+      "status": "open",
+      "raised_by": "auditor",
+      "round_opened": 2,
+      "round_resolved": null,
+      "builder_proposed": null,
+      "auditor_proposed": "open",
+      "python_finalized": "open",
+      "claim": "New-tab, middle-click, and modifier Join clicks are still excluded from cta_join_internal_click because T5 remains left-click-only. External events can then be attributed by referrer, so the numerator includes source-page traffic the denominator never counted.",
+      "required_change": "Track every valid internal Join CTA activation used in the funnel denominator.",
+      "concrete_alternative": "Use click for primary activations and auxclick for middle-click activations; count modifier-key primary clicks; exclude right-click/context-menu only. Tests: left, middle, and ctrl/cmd click each emit one internal event; right-click emits zero."
+    },
+    {
+      "id": "A013",
+      "title": "A013",
+      "severity": "major",
+      "status": "open",
+      "raised_by": "auditor",
+      "round_opened": 2,
+      "round_resolved": null,
+      "builder_proposed": null,
+      "auditor_proposed": "open",
+      "python_finalized": "open",
+      "claim": "The route generator is underspecified for valid App Router cases: app/**/page.tsx misses page.ts/js/jsx/mdx, the generic dynamic regex also matches [[...slug]], and a segment-position matcher cannot normalize multi-segment catch-all paths unless catch-all consumption is explicitly implemented.",
+      "required_change": "Specify and test the full route parser before relying on it for GA4 cardinality control.",
+      "concrete_alternative": "Glob page.{js,jsx,ts,tsx,mdx}; parse optional catch-all before catch-all before single dynamic; compile templates to regex; add tests for /docs, /docs/a, /docs/a/b, and a page.ts dynamic fixture."
+    },
+    {
+      "id": "A014",
+      "title": "A014",
+      "severity": "major",
+      "status": "open",
+      "raised_by": "auditor",
+      "round_opened": 2,
+      "round_resolved": null,
+      "builder_proposed": null,
+      "auditor_proposed": "open",
+      "python_finalized": "open",
+      "claim": "The PII allowlist test is fixture-based, so it can pass while real call sites emit location.href, query strings, or free text.",
+      "required_change": "Tie PII enforcement to actual event construction, not a hand-maintained fixture.",
+      "concrete_alternative": "Expose typed event-builder functions, make trackEvent accept only the closed event union, normalize route values before emission, and run the allowlist assertions against builder outputs plus all call-site event names."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "D001",
+      "decision": "On /join, internal-funnel origin is resolved in this priority order: (1) sessionStorage join_origin (method=sessionStorage), (2) same-site document.referrer with referrer.pathname !== '/join' (method=referrer_fallback, join_source_page = normalised referrer path), (3) direct (method=direct, join_source_page omitted).",
+      "rationale": "Preserves the success criterion 'direct visits distinguished from internal-funnel traffic' even when sessionStorage is unavailable (incognito, multi-tab, storage denied, new-tab from internal Join). Referrer is same-origin so no PII leak; pathname is normalised through the same route-template function as the primary path.",
+      "round_set": 1,
+      "status": "accepted"
+    },
+    {
+      "id": "D002",
+      "decision": "Route templates are generated at build time from filesystem enumeration of app/**/page.tsx; the generated file is committed and CI fails on drift. No runtime entropy heuristic.",
+      "rationale": "Eliminates manual-map drift risk (A004) and removes the false-positive surface of entropy heuristics on legitimate static slugs. Single source of truth is the filesystem itself.",
+      "round_set": 1,
+      "status": "accepted"
+    },
+    {
+      "id": "D003",
+      "decision": "T0 automated gate is a Playwright network-interception test against preview; DebugView is a manual pre-prod step.",
+      "rationale": "Deterministic evidence, runnable in CI, no TAO requirement (Playwright sees request headers/body before any TAO restriction applies). DebugView retained for human spot-check but is not the gate.",
+      "round_set": 1,
+      "status": "accepted"
+    },
+    {
+      "id": "D004",
+      "decision": "Join-funnel event schema is frozen as cta_join_internal_click { join_source_page: string (route template), current_page: string (route template), link_destination_class: 'internal_cta' } and cta_join_external_click { join_source_page: string|'(direct)', join_origin_method: 'sessionStorage'|'referrer_fallback'|'direct', link_destination_class: 'external_nzda' }. debug_mode key only present when NEXT_PUBLIC_VERCEL_ENV !== 'production'.",
+      "rationale": "Answers the funnel question exactly (count of external clicks grouped by join_source_page) and makes the PII-allowlist test trivially expressible.",
+      "round_set": 1,
+      "status": "accepted"
+    }
+  ],
+  "round_manifest": [
+    {
+      "round_num": 1,
+      "role": "codex",
+      "filename": "round_01_codex.md",
+      "parse_valid": true,
+      "status": "OPEN_ISSUES",
+      "content_hash": "3949d023cd89"
+    },
+    {
+      "round_num": 1,
+      "role": "claude",
+      "filename": "round_01_claude.md",
+      "parse_valid": true,
+      "status": "REVISED_PLAN",
+      "content_hash": "94038ea6efc2"
+    },
+    {
+      "round_num": 2,
+      "role": "codex",
+      "filename": "round_02_codex.md",
+      "parse_valid": true,
+      "status": "OPEN_ISSUES",
+      "content_hash": "2c50816cea51"
+    }
+  ],
+  "context_files": [
+    {
+      "path": "c:/Users/User/Projects AI/otago-deerstalkers/seo-plan-audit/plan.md",
+      "exists": true,
+      "included": true,
+      "content_hash": "9a8e3f9a2492",
+      "truncated": false
+    }
+  ],
+  "issue_counter": 14,
+  "decision_counter": 4,
+  "rounds_completed": 2,
+  "outcome": "MAX_ROUNDS"
+}

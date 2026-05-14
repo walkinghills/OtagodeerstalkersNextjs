@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import FooterCredit from './FooterCredit'
+import JoinButton from './JoinButton'
 
 export default function SiteFooter() {
   return (
@@ -23,7 +24,7 @@ export default function SiteFooter() {
               <li><Link href="/club-hunts">Club Hunts</Link></li>
               <li><Link href="/hunts-course">HUNTS Course</Link></li>
               <li><Link href="/competitions">Competitions</Link></li>
-              <li><Link href="/join">Join</Link></li>
+              <li><JoinButton>Join</JoinButton></li>
               <li><Link href="/newsletters">Newsletter</Link></li>
               <li><Link href="/contact">Contact</Link></li>
             </ul>

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SITE_URL } from '@/lib/siteConfig'
 import { organizationSchema, jsonLdScript } from '@/lib/structuredData'
+import JoinButton from '@/components/JoinButton'
 
 export const metadata: Metadata = {
   title: 'Otago Deerstalkers Association',
@@ -24,7 +25,7 @@ export default function HomePage() {
             <h1>NZDA Otago Branch</h1>
             <p className="hero-sub">Club hunts, a lodge in the Blue Mountains, and a range in Leith Valley. Otago&apos;s hunting community.</p>
             <div className="hero-actions">
-              <Link href="/join" className="btn btn-amber">Become a Member</Link>
+              <JoinButton className="btn btn-amber">Become a Member</JoinButton>
             </div>
           </div>
         </div>
@@ -105,7 +106,7 @@ export default function HomePage() {
                 <li><span className="di">✓</span><div>Hunter education through the HUNTS programme</div></li>
                 <li><span className="di">✓</span><div>Annual competitions recognising hunting achievement</div></li>
               </ul>
-              <Link href="/join" className="btn btn-primary">Join the Branch</Link>
+              <JoinButton className="btn btn-primary">Join the Branch</JoinButton>
             </div>
           </div>
         </div>
@@ -250,7 +251,7 @@ export default function HomePage() {
 
       <section className="section section-alt">
         <div className="container" style={{ textAlign: 'center' }}>
-          <Link href="/join" className="btn btn-primary">View Benefits &amp; Join &#8594;</Link>
+          <JoinButton className="btn btn-primary">View Benefits &amp; Join &#8594;</JoinButton>
         </div>
       </section>
 

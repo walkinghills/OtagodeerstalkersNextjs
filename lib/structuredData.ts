@@ -124,6 +124,40 @@ export function breadcrumbSchema(crumbs: { name: string; url: string }[]) {
   }
 }
 
+export function webPageSchema(opts: { title: string; description: string; url: string }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: opts.title,
+    description: opts.description,
+    url: opts.url,
+    isPartOf: { '@type': 'WebSite', name: ORG_NAME, url: SITE_URL },
+    publisher: { '@type': 'SportsOrganization', name: ORG_NAME, url: SITE_URL },
+  }
+}
+
+export function contactPageSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: 'Contact NZDA Otago Branch',
+    url: `${SITE_URL}/contact`,
+    isPartOf: { '@type': 'WebSite', name: ORG_NAME, url: SITE_URL },
+    mainEntity: { '@type': 'SportsOrganization', '@id': `${SITE_URL}/#org`, name: ORG_NAME, url: SITE_URL },
+  }
+}
+
+export function collectionPageSchema(opts: { title: string; description: string; url: string }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: opts.title,
+    description: opts.description,
+    url: opts.url,
+    isPartOf: { '@type': 'WebSite', name: ORG_NAME, url: SITE_URL },
+  }
+}
+
 export function jsonLdScript(schema: unknown) {
   return {
     __html: JSON.stringify(schema),

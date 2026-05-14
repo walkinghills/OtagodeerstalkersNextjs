@@ -1,17 +1,22 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SITE_URL } from '@/lib/siteConfig'
+import { contactPageSchema, breadcrumbSchema, jsonLdScript } from '@/lib/structuredData'
+import { buildCrumbs } from '@/lib/breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'Contact',
-  description: 'Contact the NZDA Otago Branch — clubrooms address, meeting times, and how to get in touch.',
-  openGraph: { title: 'Contact – NZDA Otago Branch', description: 'Contact the NZDA Otago Branch — clubrooms address, meeting times, and how to get in touch.' },
+  description: 'Contact the NZDA Otago Branch: clubrooms address, meeting times, and how to get in touch.',
+  openGraph: { title: 'Contact – NZDA Otago Branch', description: 'Contact the NZDA Otago Branch: clubrooms address, meeting times, and how to get in touch.' },
   alternates: { canonical: SITE_URL + '/contact' },
 }
 
 export default function ContactPage() {
+  const crumbs = buildCrumbs('/contact')
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(contactPageSchema())} />
+      {crumbs && <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(breadcrumbSchema(crumbs))} />}
       <section className="page-hero page-hero--photo page-hero--contact">
         <div className="container">
           <p className="breadcrumb"><Link href="/">Home</Link> / Contact</p>

@@ -5,6 +5,8 @@ import remarkGfm from 'remark-gfm'
 import { getNewsletter, getAllNewsletterSlugs, formatNewsletterDate } from '@/lib/newsletters'
 import { SITE_URL } from '@/lib/siteConfig'
 import { notFound } from 'next/navigation'
+import { articleSchema, breadcrumbSchema, jsonLdScript } from '@/lib/structuredData'
+import { buildCrumbs } from '@/lib/breadcrumbs'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -38,9 +40,17 @@ export default async function NewsletterPage({ params }: Props) {
   if (!nl) notFound()
 
   const monthYear = formatNewsletterDate(nl.date)
+  const crumbs = buildCrumbs(`/newsletters/${slug}`, nl.title)
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(articleSchema({
+        title: nl.title,
+        description: nl.excerpt,
+        url: `${SITE_URL}/newsletters/${slug}`,
+        datePublished: nl.date,
+      }))} />
+      {crumbs && <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(breadcrumbSchema(crumbs))} />}
       <section className="newsletter-masthead">
         <div className="container">
           <div className="newsletter-meta-bar">

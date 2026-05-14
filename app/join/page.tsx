@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { SITE_URL } from '@/lib/siteConfig'
 import { joinFaqSchema, jsonLdScript } from '@/lib/structuredData'
 import TrackedLink from '@/components/TrackedLink'
+import ExternalJoinButton from '@/components/ExternalJoinButton'
 
 export const metadata: Metadata = {
   title: 'Join',
@@ -80,7 +81,7 @@ export default function JoinPage() {
           </div>
 
           <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-            <TrackedLink event="cta_join_click" href="https://www.deerstalkers.org.nz/branches/south-island/otago/" target="_blank" rel="noopener" className="btn btn-primary" style={{ fontSize: '1.05rem', padding: '0.85rem 2rem' }}>Join &rarr;</TrackedLink>
+            <ExternalJoinButton className="btn btn-primary" style={{ fontSize: '1.05rem', padding: '0.85rem 2rem' }}>Join &rarr;</ExternalJoinButton>
           </div>
         </div>
       </section>
@@ -111,7 +112,7 @@ export default function JoinPage() {
           <p className="partner-note">Plus Go Fuel, and dozens more across insurance, retail, freight, and outdoor brands. Full list visible inside the NZDA app.</p>
 
           <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <TrackedLink event="cta_join_click" href="https://www.deerstalkers.org.nz/branches/south-island/otago/" target="_blank" rel="noopener" className="btn btn-primary" style={{ fontSize: '1.05rem', padding: '0.85rem 2rem' }}>Join &rarr;</TrackedLink>
+            <ExternalJoinButton className="btn btn-primary" style={{ fontSize: '1.05rem', padding: '0.85rem 2rem' }}>Join &rarr;</ExternalJoinButton>
           </div>
         </div>
       </section>

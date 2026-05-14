@@ -17,6 +17,17 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: 'Otago Deerstalkers – NZDA',
+    images: [
+      {
+        url: '/og.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'NZDA Otago Branch — Otago Deerstalkers',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
   },
   icons: { icon: '/favicon.svg' },
 }

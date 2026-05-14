@@ -1,0 +1,19 @@
+constraints: 'Stack: Next.js 15 + Vercel + GA4 (G-B62VVGCGP1) + Vercel Analytics.
+  Budget zero NZD recurring. No consent banner; footer privacy line only. Locked CSP
+  whitelist must not be broadened. House style: no em dashes in new content. Single
+  volunteer developer maintenance. No infra that needs babysitting. Cookieless tools
+  preferred where possible.'
+domain_context: ''
+goal: A SEO/AI-indexing/analytics build that delivers measurable conversion insight
+  and search-discoverability gains within 30 days, while remaining maintainable indefinitely
+  by a single volunteer developer for a small NZ club brochure site.
+non_negotiables: No PII in event props. SessionStorage usage must handle incognito
+  and multi-tab gracefully. GA4 forwarding must not break if gtag is blocked or absent.
+  No CSP broadening. No third-party scripts beyond what is already whitelisted. Tracking
+  must remain cookieless or compatible with the existing footer disclosure (no banner
+  additions). Analytics calls must never throw unhandled exceptions in the UI.
+success_criteria: 'Each remaining build item delivers a question it answers, has zero
+  ongoing maintenance burden, and has been validated as deliverable inside the existing
+  stack. Join funnel tracking specifically answers: of visitors clicking Join on any
+  page, how many reach the external NZDA signup, broken down by source page. Event
+  taxonomy: every event maps to a question someone will actually ask.'

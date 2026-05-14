@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SITE_URL } from '@/lib/siteConfig'
+import JoinButton from '@/components/JoinButton'
+import { webPageSchema, breadcrumbSchema, jsonLdScript } from '@/lib/structuredData'
+import { buildCrumbs } from '@/lib/breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'Club Hunts',
@@ -10,8 +13,15 @@ export const metadata: Metadata = {
 }
 
 export default function ClubHuntsPage() {
+  const crumbs = buildCrumbs('/club-hunts')
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(webPageSchema({
+        title: 'Club Hunts — NZDA Otago Branch',
+        description: 'Otago Deerstalkers organised club hunts for deer, goat, tahr, and wallaby.',
+        url: SITE_URL + '/club-hunts',
+      }))} />
+      {crumbs && <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(breadcrumbSchema(crumbs))} />}
       <section className="page-hero page-hero--photo page-hero--club-hunts">
         <div className="container">
           <p className="breadcrumb"><Link href="/">Home</Link> / Club Hunts</p>
@@ -79,7 +89,7 @@ export default function ClubHuntsPage() {
           <div className="card" style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
             <div className="card-body">
               <p>Club hunts are open to financial members. Come along to a monthly meeting to hear what&rsquo;s planned and put your name forward &#8211; numbers are sometimes limited so early interest is worthwhile.</p>
-              <Link href="/join" className="btn btn-primary" style={{ marginTop: '1rem' }}>Join Now &rarr;</Link>
+              <JoinButton className="btn btn-primary" style={{ marginTop: '1rem' }}>Join Now &rarr;</JoinButton>
             </div>
           </div>
         </div>
