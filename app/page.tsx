@@ -101,11 +101,11 @@ export default function HomePage() {
               <p>Beyond the facilities, we advocate for fair firearms legislation, support hunter education, and run annual competitions that celebrate the best trophies and photography from the season.</p>
               <h4 className="list-label">Our purpose</h4>
               <ul className="detail-list" style={{ marginBottom: '1.5rem' }}>
-                <li><span className="di">✓</span><div>Advocacy for hunting access and firearms rights</div></li>
-                <li><span className="di">✓</span><div>Promotion of safe, ethical, and skilled hunting</div></li>
-                <li><span className="di">✓</span><div>Conservation projects and pest control</div></li>
-                <li><span className="di">✓</span><div>Hunter education through the HUNTS programme</div></li>
-                <li><span className="di">✓</span><div>Annual competitions recognising hunting achievement</div></li>
+                <li><div>Advocacy for hunting access and firearms rights</div></li>
+                <li><div>Promotion of safe, ethical, and skilled hunting</div></li>
+                <li><div>Conservation projects and pest control</div></li>
+                <li><div>Hunter education through the HUNTS programme</div></li>
+                <li><div>Annual competitions recognising hunting achievement</div></li>
               </ul>
               <JoinButton className="btn btn-primary">Join the Branch</JoinButton>
             </div>
@@ -134,8 +134,8 @@ export default function HomePage() {
               <div className="card-body">
                 <p>Meetings are held on the <strong>2nd Monday of every month at 7:30pm</strong>, excluding January and April.</p>
                 <ul className="detail-list">
-                  <li><span className="di">✓</span><div>Doors open from 7:00pm</div></li>
-                  <li><span className="di">✓</span><div>All members welcome, visitors encouraged</div></li>
+                  <li><div>Doors open from 7:00pm</div></li>
+                  <li><div>All members welcome, visitors encouraged</div></li>
                 </ul>
               </div>
             </div>
@@ -152,8 +152,8 @@ export default function HomePage() {
               <div className="card-body">
                 <p>Meetings are held at our clubrooms at <strong><a href="https://maps.google.com/?q=53+Malvern+Street+Woodhaugh+Dunedin" target="_blank" rel="noopener">53 Malvern Street, Woodhaugh, Dunedin</a></strong>.</p>
                 <ul className="detail-list">
-                  <li><span className="di">✓</span><div>Free parking on street</div></li>
-                  <li><span className="di">✓</span><div><a href="https://maps.google.com/?q=53+Malvern+Street+Woodhaugh+Dunedin" target="_blank" rel="noopener">Open in Google Maps &#8594;</a></div></li>
+                  <li><div>Free parking on street</div></li>
+                  <li><div><a href="https://maps.google.com/?q=53+Malvern+Street+Woodhaugh+Dunedin" target="_blank" rel="noopener">Open in Google Maps &#8594;</a></div></li>
                 </ul>
               </div>
             </div>
@@ -171,9 +171,9 @@ export default function HomePage() {
               </div>
               <div className="card-body">
                 <ul className="detail-list">
-                  <li><span className="di">✓</span><div>Guest speakers on hunting and conservation</div></li>
-                  <li><span className="di">✓</span><div>Trip reports and hunt planning</div></li>
-                  <li><span className="di">✓</span><div>Club news and updates</div></li>
+                  <li><div>Guest speakers on hunting and conservation</div></li>
+                  <li><div>Trip reports and hunt planning</div></li>
+                  <li><div>Club news and updates</div></li>
                 </ul>
               </div>
             </div>
