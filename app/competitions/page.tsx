@@ -1,11 +1,14 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { SITE_URL } from '@/lib/siteConfig'
+import { SITE_URL, OG_DEFAULTS } from '@/lib/siteConfig'
+import JoinButton from '@/components/JoinButton'
+import { webPageSchema, breadcrumbSchema, jsonLdScript } from '@/lib/structuredData'
+import { buildCrumbs } from '@/lib/breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'Competitions',
   description: 'Annual Otago Deerstalkers competitions – trophy judging, photography, and more. Open to branch members.',
-  openGraph: { title: 'Competitions – NZDA Otago Branch', description: 'Annual Otago Deerstalkers competitions – trophy judging, photography, and more. Open to branch members.' },
+  openGraph: { ...OG_DEFAULTS, title: 'Competitions – NZDA Otago Branch', description: 'Annual Otago Deerstalkers competitions: trophy judging, photography, and more. Open to branch members.' },
   alternates: { canonical: SITE_URL + '/competitions' },
 }
 
@@ -18,8 +21,15 @@ const StarIcon = () => (
 )
 
 export default function CompetitionsPage() {
+  const crumbs = buildCrumbs('/competitions')
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(webPageSchema({
+        title: 'Competitions, NZDA Otago Branch',
+        description: 'Annual trophy, photography, and video competitions open to members of the Otago Branch.',
+        url: SITE_URL + '/competitions',
+      }))} />
+      {crumbs && <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(breadcrumbSchema(crumbs))} />}
       <section className="page-hero page-hero--photo page-hero--competitions">
         <div className="container">
           <p className="breadcrumb"><Link href="/">Home</Link> / Competitions</p>
@@ -147,7 +157,7 @@ export default function CompetitionsPage() {
               <div className="card-header"><span className="icon">1</span><h3>Be a Financial Member</h3></div>
               <div className="card-body">
                 <p>Competitions are open to current Otago Branch members. Make sure your membership is up to date before submitting entries.</p>
-                <Link href="/join" className="btn btn-outline" style={{ fontSize: '0.85rem', padding: '0.5rem 1rem' }}>Join &rarr;</Link>
+                <JoinButton className="btn btn-outline" style={{ fontSize: '0.85rem', padding: '0.5rem 1rem' }}>Join &rarr;</JoinButton>
               </div>
             </div>
             <div className="card">

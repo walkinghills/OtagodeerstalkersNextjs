@@ -1,15 +1,16 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { SITE_URL } from '@/lib/siteConfig'
+import { SITE_URL, OG_DEFAULTS } from '@/lib/siteConfig'
 import { TimetableSchema } from '@/lib/timetable'
 import RangeTimetable from '@/components/RangeTimetable'
 import timetableData from '@/data/timetable.json'
 import { rifleRangeSchema, jsonLdScript } from '@/lib/structuredData'
+import JoinButton from '@/components/JoinButton'
 
 export const metadata: Metadata = {
   title: 'Chaz Forsyth Rifle Range',
   description: 'Chaz Forsyth Rifle Range, 25, 50 and 100 metre outdoor shooting range. Open most Saturdays 1pm to 4pm.',
-  openGraph: { title: 'Chaz Forsyth Rifle Range – NZDA Otago Branch', description: 'Chaz Forsyth Rifle Range, 25, 50 and 100 metre outdoor shooting range. Open most Saturdays 1pm to 4pm.' },
+  openGraph: { ...OG_DEFAULTS, title: 'Chaz Forsyth Rifle Range – NZDA Otago Branch', description: 'Chaz Forsyth Rifle Range, 25, 50 and 100 metre outdoor shooting range. Open most Saturdays 1pm to 4pm.' },
   alternates: { canonical: SITE_URL + '/range' },
 }
 
@@ -163,7 +164,7 @@ export default function RangePage() {
         <div className="container" style={{ textAlign: 'center' }}>
           <h2 style={{ marginBottom: '1rem' }}>Not yet a member?</h2>
           <p style={{ color: 'var(--text-light)', marginBottom: '1.5rem' }}>Members pay half the range fee.</p>
-          <Link href="/join" className="btn btn-primary">Join the Otago Branch &rarr;</Link>
+          <JoinButton className="btn btn-primary">Join the Otago Branch &rarr;</JoinButton>
         </div>
       </section>
     </>

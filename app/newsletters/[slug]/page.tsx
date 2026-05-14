@@ -3,8 +3,10 @@ import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { getNewsletter, getAllNewsletterSlugs, formatNewsletterDate } from '@/lib/newsletters'
-import { SITE_URL } from '@/lib/siteConfig'
+import { SITE_URL, OG_DEFAULTS } from '@/lib/siteConfig'
 import { notFound } from 'next/navigation'
+import { articleSchema, breadcrumbSchema, jsonLdScript } from '@/lib/structuredData'
+import { buildCrumbs } from '@/lib/breadcrumbs'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -23,6 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: nl.title,
     description: nl.excerpt,
     openGraph: {
+      ...OG_DEFAULTS,
       title: `${nl.title} – NZDA Otago Branch`,
       description: nl.excerpt,
       type: 'article',
@@ -38,9 +41,17 @@ export default async function NewsletterPage({ params }: Props) {
   if (!nl) notFound()
 
   const monthYear = formatNewsletterDate(nl.date)
+  const crumbs = buildCrumbs(`/newsletters/${slug}`, nl.title)
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(articleSchema({
+        title: nl.title,
+        description: nl.excerpt,
+        url: `${SITE_URL}/newsletters/${slug}`,
+        datePublished: nl.date,
+      }))} />
+      {crumbs && <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(breadcrumbSchema(crumbs))} />}
       <section className="newsletter-masthead">
         <div className="container">
           <div className="newsletter-meta-bar">

@@ -1,0 +1,125 @@
+---
+role: builder
+round: 3
+status: REVISED_PLAN
+proposed_resolutions:
+  - ref: "A009"
+    proposed_status: addressed
+    action: "Confirmed Vercel Custom Events are Pro-tier only. Removed Vercel custom events as a fallback. Added explicit gate: if GA4 client is unavailable, funnel analytics item is marked BLOCKED and surfaces a scope decision to the user. Vercel Analytics retained only for page views (Hobby-included)."
+  - ref: "A010"
+    proposed_status: addressed
+    action: "Replaced CSP-only check with runtime tag verification. T0 now sets GA4_CLIENT_AVAILABLE=true only if `window.dataLayer` exists AND `G-B62VVGCGP1` is present in a loaded gtag config call. No new script is added. Detection logged once to console in preview for verification."
+  - ref: "A011"
+    proposed_status: addressed
+    action: "External CTA stays as native `<a href>`. Tracking moved to `pointerdown` for pointer users plus `click` as deduped fallback (per-activation token cleared on next tick). Removed Space-on-anchor handling."
+  - ref: "A012"
+    proposed_status: addressed
+    action: "Added explicit DebugView path: Tag Assistant Chrome extension for manual QA, plus `debug_mode: true` injected into analytics events only when `location.hostname === 'localhost'` or `process.env.VERCEL_ENV === 'preview'`. Production strips it."
+new_decisions:
+  - id: D_TEMP_6
+    decision: "Vercel Custom Events removed from plan entirely. Vercel Analytics retained only for built-in page views (free tier)."
+    rationale: "Vercel docs (https://vercel.com/docs/analytics/limits-and-pricing) confirm Custom Events are Pro/Enterprise. Zero-budget constraint forbids paid tier."
+  - id: D_TEMP_7
+    decision: "If GA4_CLIENT_AVAILABLE=false after T0, funnel item (T3-T6, T9) is marked BLOCKED and a NEEDS_USER decision is surfaced before any build work begins."
+    rationale: "Without GA4 there is no zero-cost path to the funnel question. Better to block and ask than ship dead code."
+  - id: D_TEMP_8
+    decision: "GA4 detection is runtime probe of `window.dataLayer` + measurement ID, not CSP grep."
+    rationale: "CSP allows the script; it does not prove the script ran. The funnel depends on the script having run."
+open_questions: []
+---
+
+### Scope
+Unchanged. Goal and constraints intact. The auditor's pushback on Vercel custom events tightens (not redefines) the zero-budget rule. The plan now treats GA4 as the sole funnel transport and explicitly blocks the milestone if GA4 is not live.
+
+### Open Decisions
+
+**A009 — CONCEDE.** Auditor is correct. Vercel Custom Events require Pro tier. The original plan's "dual-write" framing implied Vercel was a free fallback; it is not for custom events. Plan revised:
+- Vercel Analytics stays for page views only (free, Hobby-tier).
+- Custom events go to GA4 exclusively.
+- If GA4 is unavailable at T0 probe, the funnel work blocks and asks the user. No silent degradation.
+
+**A010 — CONCEDE.** CSP allowlist proves the network path is open, not that the tag actually loaded with the correct measurement ID. Revised T0:
+```ts
+// lib/analytics/probe.ts
+export function isGA4Available(): boolean {
+  if (typeof window === 'undefined') return false;
+  const dl = (window as any).dataLayer;
+  if (!Array.isArray(dl)) return false;
+  // gtag('config', 'G-B62VVGCGP1', ...) pushes ['config', 'G-...', ...]
+  return dl.some((e: any) =>
+    Array.isArray(e) && e[0] === 'config' && e[1] === 'G-B62VVGCGP1'
+  );
+}
+```
+T0 runs this on `/`, `/range`, `/join` in preview. Result documented in `docs/analytics_probe_results.md`. If false on any page, surface NEEDS_USER.
+
+**A011 — CONCEDE.** Native anchor activation semantics:
+- Keep `<a href="...external...">` — no JS-driven navigation.
+- `onPointerDown`: fire `trackEvent` and set `__joinTrackedAt = Date.now()`.
+- `onClick`: if `Date.now() - __joinTrackedAt > 200ms` (i.e. pointerdown didn't fire, likely AT or programmatic), fire `trackEvent`. Otherwise dedupe.
+- Remove Space handling. Space on anchors is not a native activator; Enter is, and Enter generates `click`.
+
+**A012 — CONCEDE.** DebugView reproducibility added:
+- Manual QA path: Tag Assistant Companion extension, documented in README.
+- Automated preview path: `trackEvent` injects `debug_mode: true` when:
+  ```ts
+  const isDebug = typeof window !== 'undefined' &&
+    (window.location.hostname === 'localhost' ||
+     window.location.hostname.endsWith('.vercel.app'));
+  ```
+- Production (`otagodeerstalkers.co.nz`) never sends `debug_mode`. Verified in pass criteria.
+
+### Steelman Risks
+Round 3 additions only:
+
+11. **T0 probe false-negative on first paint.** `dataLayer.push(['config', ...])` happens when gtag.js executes. If the probe runs before gtag.js finishes loading (e.g. during SSR hydration), it returns false and the milestone wrongly blocks. Mitigation: probe runs inside `useEffect` with a 2-second retry budget (5x400ms), only declares unavailable after retries exhaust.
+
+12. **`debug_mode` leaking to production via preview-domain typo.** If the brochure site ever moves to a custom preview domain that doesn't end in `.vercel.app`, prod data gets polluted with debug events. Mitigation: use `process.env.NEXT_PUBLIC_VERCEL_ENV !== 'production'` as the gate, which Vercel injects at build time and is unambiguous.
+
+### Build Plan
+
+| task-id | file(s) | what changes | tests required |
+|---|---|---|---|
+| T0 | `lib/analytics/probe.ts` (new), `docs/analytics_probe_results.md` (new) | Implement `isGA4Available()` runtime probe. Run on `/`, `/range`, `/join` in preview deploy, log to console, document results. **Hard gate**: if false on any page, status flips to NEEDS_USER and T3-T6, T9 do not proceed. | Probe returns false on a page with no gtag; returns true when `dataLayer` contains a `['config','G-B62VVGCGP1',...]` entry. |
+| T1 | `app/layout.tsx` | Add `metadata.openGraph.images = [{url:'/og.png', width:1200, height:630}]` and `metadata.twitter.card = 'summary_large_image'` | curl rendered HTML, grep `og:image`; opengraph.xyz preview |
+| T2 | `public/og.png` | 1200x630 branded PNG, < 200KB, no em dashes | dimensions + filesize check |
+| T3 | `lib/analytics/track.ts` (new) | Export `trackEvent(name, props)`. GA4 only via `window.gtag('event', name, {...props, transport_type:'beacon', ...(isDebug && {debug_mode:true})})`. Wrapped in try/catch. No-op if `gtag` undefined. **Gated on T0 PASS.** | Unit: gtag undefined → no throw; debug_mode injected only when `NEXT_PUBLIC_VERCEL_ENV !== 'production'` |
+| T4 | `lib/analytics/joinFunnel.ts` (new) | `setJoinOrigin(routeTemplate)` and `getJoinOrigin()`. Storage `{origin, ts}`, 30min TTL, returns `'direct'` on miss/expiry/throw. Route-template normalization (e.g. `/newsletters/[slug]`). | Unit: incognito throw, expired TTL, malformed JSON, missing key all → `'direct'` |
+| T5 | `components/JoinButton.tsx` | Internal Join CTAs: `onPointerDown` → `setJoinOrigin(routeTemplate)` + `trackEvent('cta_join_internal_click', {join_source_page: routeTemplate})`. `onClick` deduped fallback (200ms window). Native `<Link>` navigation preserved. | Manual: click in dev preview, Tag Assistant shows event |
+| T6 | `app/join/page.tsx` external CTA | Native `<a href="https://nzda.org.nz/signup">`. `onPointerDown` reads `getJoinOrigin()`, fires `trackEvent('cta_join_external_click', {join_source_page: origin})`. `onClick` deduped fallback. Beacon transport from T3. | Manual: /range → click Join → /join → click external; DebugView shows `join_source_page=/range` |
+| T7 | `app/competitions/page.tsx`, `app/club-hunts/page.tsx`, `app/contact/page.tsx`, `app/newsletters/page.tsx`, `app/newsletters/[slug]/page.tsx` | JSON-LD per D003: WebPage for competitions/club-hunts, ContactPage (with `@id` ref to home SportsOrganization) for contact, CollectionPage for newsletters index, Article for slug pages. **No Event/SportsEvent.** | Google Rich Results Test: zero errors each |
+| T8 | `components/Breadcrumbs.tsx`, `lib/breadcrumbs.ts` (new) | Single pathname-to-label map. Visible breadcrumb + BreadcrumbList JSON-LD render from same data. Only depth >= 2. | Snapshot: visible labels === JSON-LD itemListElement names |
+| T9 | GA4 Admin (manual) | Register `join_source_page` as event-scoped custom dimension (single dim per D001). Document in README. **Gated on T0 PASS.** | Confirmed visible in Funnel Exploration UI |
+| T10 | `README.md` | Document funnel events, GA4 custom dim registration, 30-min TTL, Tag Assistant QA path, T0 probe procedure | n/a |
+| T11 | (verification) Existing CSP | Confirm `connect-src` covers `*.google-analytics.com` AND `*.analytics.google.com`; `script-src` covers `www.googletagmanager.com`. Read-only check. | No console CSP violations after T3-T6 ship to preview |
+
+### Pass Criteria
+
+- [ ] T0 probe documented in `docs/analytics_probe_results.md` with PASS/FAIL per page
+- [ ] If T0 FAIL: milestone status = NEEDS_USER, T3-T6 and T9 not shipped
+- [ ] If T0 PASS: all funnel pass criteria below apply
+- [ ] `og:image` meta tag present on every page; opengraph.xyz preview renders correctly
+- [ ] Internal Join click writes `joinFunnelOrigin` with timestamp and route-template pathname
+- [ ] External Join click on /join fires `cta_join_external_click` with correct `join_source_page` (verified in GA4 DebugView with `debug_mode:true` from preview deploy for 3 entry pages: `/`, `/range`, `/join` direct)
+- [ ] Incognito: sessionStorage disabled does not throw; external click fires with `join_source_page='direct'`
+- [ ] Stale origin (>30min) → `'direct'`
+- [ ] `gtag` undefined → no throw, no event (acceptable degradation, documented)
+- [ ] PointerDown + Click dedupe: single event per activation verified in DebugView (no doubles)
+- [ ] `debug_mode` absent from production events (verified by GA4 realtime on otagodeerstalkers.co.nz showing no debug filter matches)
+- [ ] All JSON-LD passes Rich Results Test with zero errors
+- [ ] BreadcrumbList itemListElement names === visible breadcrumb text (snapshot)
+- [ ] Zero CSP violations in browser console
+- [ ] Zero new em dashes in diff (`git diff | grep '—'` returns nothing)
+- [ ] Lighthouse LCP/CLS/INP unchanged within ±5% on `/`, `/range`, `/join`
+- [ ] GA4 `join_source_page` custom dimension registered and selectable in Funnel Exploration
+
+### Not Claimed / Deferred
+
+- Vercel Custom Events (D_TEMP_6: blocked by Pro-tier requirement; out of scope at zero budget)
+- Event/SportsEvent JSON-LD (D003: maintenance burden)
+- Per-page OG images (D_TEMP_1)
+- UTM integration in funnel events
+- Server-side Measurement Protocol fallback for ad-blocker users
+- A/B testing on Join CTA
+- Meta Pixel conversion tracking
+- Per-page custom dimensions beyond `join_source_page` (D001: single-dimension model)

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { NAV_LINKS } from '@/lib/siteConfig'
+import JoinButton from './JoinButton'
 
 export default function SiteHeader() {
   const pathname = usePathname()
@@ -63,9 +64,9 @@ export default function SiteHeader() {
                 </li>
               ))}
               <li>
-                <Link href="/join" className={`btn-join${isActive('/join') ? ' active' : ''}`} onClick={close}>
+                <JoinButton className={`btn-join${isActive('/join') ? ' active' : ''}`} onClick={close}>
                   Join
-                </Link>
+                </JoinButton>
               </li>
             </ul>
           </nav>
